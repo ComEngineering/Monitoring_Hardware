@@ -1,0 +1,7 @@
+/Project_PCB/**/__Previews/*
+/Project_PCB/**/History/*
+/Project_PCB/**/Project Logs for Aircool_PCB/*
+ 
+/Project_PROG/**/Project/*
+!/Project_PROG/**/*.uvproj
+!/Project_PROG/**/*.hex
