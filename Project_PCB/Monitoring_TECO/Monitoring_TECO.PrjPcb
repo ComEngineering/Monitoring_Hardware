@@ -408,7 +408,7 @@ ClassGenCCAutoRoomEnabled=1
 ClassGenNCAutoScope=None
 DItemRevisionGUID=
 GenerateClassCluster=0
-DocumentUniqueId=
+DocumentUniqueId=XFSMKYUS
 
 [Document23]
 DocumentPath=..\..\..\AirCoolController_Hardware\Project_PCB\My_Altium_lib\Relay.SchLib
@@ -425,7 +425,7 @@ ClassGenCCAutoRoomEnabled=1
 ClassGenNCAutoScope=None
 DItemRevisionGUID=
 GenerateClassCluster=0
-DocumentUniqueId=
+DocumentUniqueId=ILCLQXJN
 
 [Document24]
 DocumentPath=..\..\..\AirCoolController_Hardware\Project_PCB\My_Altium_lib\Resistors.PcbLib
@@ -528,6 +528,23 @@ ClassGenNCAutoScope=None
 DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=
+
+[Document30]
+DocumentPath=A10-OLinuXino-LIME.PcbDoc
+AnnotationEnabled=1
+AnnotateStartValue=1
+AnnotationIndexControlEnabled=0
+AnnotateSuffix=
+AnnotateScope=All
+AnnotateOrder=-1
+DoLibraryUpdate=1
+DoDatabaseUpdate=1
+ClassGenCCAutoEnabled=1
+ClassGenCCAutoRoomEnabled=1
+ClassGenNCAutoScope=None
+DItemRevisionGUID=
+GenerateClassCluster=0
+DocumentUniqueId=LRMHUQAT
 
 [Configuration1]
 Name=Default Configuration
