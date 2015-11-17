@@ -28,7 +28,7 @@ PowerPortNamesTakePriority=0
 PushECOToAnnotationFile=1
 DItemRevisionGUID=
 ReportSuppressedErrorsInMessages=0
-OutputPath=
+OutputPath=Project Outputs for Monitoring_TECO
 LogFolderPath=
 ManagedProjectGUID=
 
@@ -187,7 +187,7 @@ ClassGenCCAutoRoomEnabled=1
 ClassGenNCAutoScope=None
 DItemRevisionGUID=
 GenerateClassCluster=0
-DocumentUniqueId=
+DocumentUniqueId=MVBLVRRK
 
 [Document10]
 DocumentPath=..\..\..\AirCoolController_Hardware\Project_PCB\My_Altium_lib\Connect.SchLib
@@ -204,7 +204,7 @@ ClassGenCCAutoRoomEnabled=1
 ClassGenNCAutoScope=None
 DItemRevisionGUID=
 GenerateClassCluster=0
-DocumentUniqueId=
+DocumentUniqueId=PFJQUTFP
 
 [Document11]
 DocumentPath=..\..\..\AirCoolController_Hardware\Project_PCB\My_Altium_lib\Diode.PcbLib
@@ -530,6 +530,23 @@ GenerateClassCluster=0
 DocumentUniqueId=
 
 [Document30]
+DocumentPath=Sheet_RS-485.SchDoc
+AnnotationEnabled=1
+AnnotateStartValue=1
+AnnotationIndexControlEnabled=0
+AnnotateSuffix=
+AnnotateScope=All
+AnnotateOrder=-1
+DoLibraryUpdate=1
+DoDatabaseUpdate=1
+ClassGenCCAutoEnabled=1
+ClassGenCCAutoRoomEnabled=1
+ClassGenNCAutoScope=None
+DItemRevisionGUID=
+GenerateClassCluster=0
+DocumentUniqueId=IYEYJVTJ
+
+[Document31]
 DocumentPath=A10-OLinuXino-LIME.PcbDoc
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -546,6 +563,40 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=LRMHUQAT
 
+[Document32]
+DocumentPath=Sheet_AD_inputs_connectors.SchDoc
+AnnotationEnabled=1
+AnnotateStartValue=1
+AnnotationIndexControlEnabled=0
+AnnotateSuffix=
+AnnotateScope=All
+AnnotateOrder=-1
+DoLibraryUpdate=1
+DoDatabaseUpdate=1
+ClassGenCCAutoEnabled=1
+ClassGenCCAutoRoomEnabled=1
+ClassGenNCAutoScope=None
+DItemRevisionGUID=
+GenerateClassCluster=0
+DocumentUniqueId=YOLSRLXM
+
+[Document33]
+DocumentPath=Job1.OutJob
+AnnotationEnabled=1
+AnnotateStartValue=1
+AnnotationIndexControlEnabled=0
+AnnotateSuffix=
+AnnotateScope=All
+AnnotateOrder=-1
+DoLibraryUpdate=1
+DoDatabaseUpdate=1
+ClassGenCCAutoEnabled=1
+ClassGenCCAutoRoomEnabled=1
+ClassGenNCAutoScope=None
+DItemRevisionGUID=
+GenerateClassCluster=0
+DocumentUniqueId=
+
 [Configuration1]
 Name=Default Configuration
 ParameterCount=0
@@ -555,6 +606,9 @@ CurrentRevision=
 Variant=[No Variations]
 GenerateBOM=1
 OutputJobsCount=0
+
+[Generic_EDE]
+OutputDir=Project Outputs for Monitoring_TECO
 
 [OutputGroup1]
 Name=Netlist Outputs
