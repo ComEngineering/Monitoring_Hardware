@@ -28,7 +28,7 @@ PowerPortNamesTakePriority=0
 PushECOToAnnotationFile=1
 DItemRevisionGUID=
 ReportSuppressedErrorsInMessages=0
-OutputPath=Project Outputs for Monitoring_TECO
+OutputPath=
 LogFolderPath=
 ManagedProjectGUID=
 
@@ -357,7 +357,7 @@ ClassGenCCAutoRoomEnabled=1
 ClassGenNCAutoScope=None
 DItemRevisionGUID=
 GenerateClassCluster=0
-DocumentUniqueId=
+DocumentUniqueId=HIVSSDKN
 
 [Document20]
 DocumentPath=..\..\..\AirCoolController_Hardware\Project_PCB\My_Altium_lib\Other.SchLib
@@ -374,7 +374,7 @@ ClassGenCCAutoRoomEnabled=1
 ClassGenNCAutoScope=None
 DItemRevisionGUID=
 GenerateClassCluster=0
-DocumentUniqueId=
+DocumentUniqueId=NURTYHJA
 
 [Document21]
 DocumentPath=..\..\..\AirCoolController_Hardware\Project_PCB\My_Altium_lib\Power.SchLib
@@ -564,7 +564,7 @@ GenerateClassCluster=0
 DocumentUniqueId=LRMHUQAT
 
 [Document32]
-DocumentPath=Sheet_AD_inputs_connectors.SchDoc
+DocumentPath=Sheet_connect.SchDoc
 AnnotationEnabled=1
 AnnotateStartValue=1
 AnnotationIndexControlEnabled=0
@@ -597,6 +597,23 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=
 
+[Document34]
+DocumentPath=PCB_monitoring_IO.PcbDoc
+AnnotationEnabled=1
+AnnotateStartValue=1
+AnnotationIndexControlEnabled=0
+AnnotateSuffix=
+AnnotateScope=All
+AnnotateOrder=-1
+DoLibraryUpdate=1
+DoDatabaseUpdate=1
+ClassGenCCAutoEnabled=1
+ClassGenCCAutoRoomEnabled=1
+ClassGenNCAutoScope=None
+DItemRevisionGUID=
+GenerateClassCluster=0
+DocumentUniqueId=WNBMYCPR
+
 [Configuration1]
 Name=Default Configuration
 ParameterCount=0
@@ -608,7 +625,7 @@ GenerateBOM=1
 OutputJobsCount=0
 
 [Generic_EDE]
-OutputDir=Project Outputs for Monitoring_TECO
+OutputDir=
 
 [OutputGroup1]
 Name=Netlist Outputs
