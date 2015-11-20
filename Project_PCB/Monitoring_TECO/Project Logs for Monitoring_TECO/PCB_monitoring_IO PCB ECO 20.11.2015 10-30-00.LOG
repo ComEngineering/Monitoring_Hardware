@@ -1,0 +1,22 @@
+Removed Pin From Net: NetName=12V Pin=C3-1
+Removed Pin From Net: NetName=12V Pin=D1-2
+Removed Pin From Net: NetName=12V Pin=F1-1
+Removed Pin From Net: NetName=12V Pin=F1-2
+Removed Pin From Net: NetName=12V Pin=F2-2
+Removed Pin From Net: NetName=12V Pin=F3-2
+Removed Pin From Net: NetName=12V Pin=F4-2
+Removed Pin From Net: NetName=12V Pin=U1-1
+Added Component: Designator=F5(Fuse RFTQ)
+Added Pin To Net: NetName=12V Pin=F5-1
+Added Pin To Net: NetName=12V_INT Pin=D1-2
+Added Pin To Net: NetName=12V_INT Pin=F1-2
+Added Pin To Net: NetName=12V_INT Pin=F2-2
+Added Pin To Net: NetName=12V_INT Pin=F3-2
+Added Pin To Net: NetName=12V_INT Pin=F4-2
+Added Pin To Net: NetName=12V_INT Pin=F5-2
+Added Net: Name=12V_INT
+Added Pin To Net: NetName=NetC3_1 Pin=C3-1
+Added Pin To Net: NetName=NetC3_1 Pin=F1-1
+Added Pin To Net: NetName=NetC3_1 Pin=U1-1
+Added Net: Name=NetC3_1
+Added Member To Class: ClassName=Sheet_Power Member=Component F5 RFTQ-1A

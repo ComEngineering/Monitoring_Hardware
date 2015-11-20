@@ -1,6 +1,6 @@
 [Design]
 Version=1.0
-HierarchyMode=0
+HierarchyMode=3
 ChannelRoomNamingStyle=0
 ReleasesFolder=
 ReleaseVaultGUID=
@@ -28,7 +28,7 @@ PowerPortNamesTakePriority=0
 PushECOToAnnotationFile=1
 DItemRevisionGUID=
 ReportSuppressedErrorsInMessages=0
-OutputPath=Project Outputs for Monitoring_TECO
+OutputPath=
 LogFolderPath=
 ManagedProjectGUID=
 
@@ -564,23 +564,6 @@ GenerateClassCluster=0
 DocumentUniqueId=LRMHUQAT
 
 [Document32]
-DocumentPath=..\..\Структурная схема мониторинга\Структурная схема мониторинга.SchDoc
-AnnotationEnabled=1
-AnnotateStartValue=1
-AnnotationIndexControlEnabled=0
-AnnotateSuffix=
-AnnotateScope=All
-AnnotateOrder=4
-DoLibraryUpdate=1
-DoDatabaseUpdate=1
-ClassGenCCAutoEnabled=1
-ClassGenCCAutoRoomEnabled=1
-ClassGenNCAutoScope=None
-DItemRevisionGUID=
-GenerateClassCluster=0
-DocumentUniqueId=EANSAIED
-
-[Document33]
 DocumentPath=Sheet_connect.SchDoc
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -597,7 +580,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=YOLSRLXM
 
-[Document34]
+[Document33]
 DocumentPath=Job1.OutJob
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -614,7 +597,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=
 
-[Document35]
+[Document34]
 DocumentPath=PCB_monitoring_IO.PcbDoc
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -631,7 +614,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=WNBMYCPR
 
-[Document36]
+[Document35]
 DocumentPath=Sheet_MCU_IO.Harness
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -659,7 +642,7 @@ GenerateBOM=1
 OutputJobsCount=0
 
 [Generic_EDE]
-OutputDir=Project Outputs for Monitoring_TECO
+OutputDir=
 
 [OutputGroup1]
 Name=Netlist Outputs

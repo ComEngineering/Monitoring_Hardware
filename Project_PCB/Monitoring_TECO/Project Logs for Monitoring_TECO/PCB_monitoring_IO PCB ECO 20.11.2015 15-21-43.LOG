@@ -1,0 +1,34 @@
+Removed Pin From Net: NetName=USART1_TX Pin=P1-7
+Removed Pin From Net: NetName=USART1_RX Pin=P1-9
+Removed Pin From Net: NetName=USART1_DE Pin=P1-11
+Removed Pin From Net: NetName=NetP1_13 Pin=U31-6
+Change Component DesignItemId : Designator=P1 Old DesignItemId=BH-16 New DesignItemId=BH-14
+Change Component Footprint: Designator=P1 Old Footprint=BH-16 New Footprint=BH-14
+Change Component Comment : Designator=P1 Old Comment=BH-16 New Comment=BH-14
+Change Component Comment : Designator=X1 Old Comment=DG300_2pin New Comment=DG300-5.0-02P
+Change Component Comment : Designator=X2 Old Comment=DG300_2pin New Comment=DG300-5.0-02P
+Change Component Comment : Designator=X3 Old Comment=PLS-4 New Comment=ZL2029
+Change Component Comment : Designator=X9 Old Comment=PLS-4 New Comment=ZL2029
+Change Component Description : Designator=XS1 Old Description=Connector RJ-11 New Description=TJ4-4P4C
+Change Component Description : Designator=XS2 Old Description=Connector RJ-11 New Description=TJ4-4P4C
+Change Component Description : Designator=XS3 Old Description=Connector RJ-11 New Description=TJ4-4P4C
+Change Component Description : Designator=XS4 Old Description=Connector RJ-11 New Description=TJ4-4P4C
+Change Component Description : Designator=XS5 Old Description=Connector RJ-11 New Description=TJ4-4P4C
+Change Component Description : Designator=XS6 Old Description=Connector RJ-11 New Description=TJ4-4P4C
+Change Component Description : Designator=XS7 Old Description=Connector RJ-11 New Description=TJ4-4P4C
+Change Component Description : Designator=XS8 Old Description=Connector RJ-11 New Description=TJ4-4P4C
+Change Component Description : Designator=XS9 Old Description=Connector RJ-12 New Description=TJ4-6P6C
+Change Component Description : Designator=XS10 Old Description=Connector RJ-12 New Description=TJ4-6P6C
+Change Component Description : Designator=X16 Old Description=Header, 4-Pin New Description=ZL201-04G
+Change Component Description : Designator=X4 Old Description=Header, 4-Pin New Description=ZL2029
+Change Component Description : Designator=X5 Old Description=Header, 4-Pin New Description=ZL2029
+Change Component Description : Designator=X6 Old Description=Header, 4-Pin New Description=ZL2029
+Change Component Description : Designator=X13 Old Description=Header, 4-Pin New Description=ZL2029
+Change Component Description : Designator=X17 Old Description=Header, 4-Pin New Description=ZL2029
+Added Pin To Net: NetName=USART1_TX Pin=P1-5
+Added Pin To Net: NetName=USART1_RX Pin=P1-7
+Added Pin To Net: NetName=USART1_DE Pin=P1-9
+Added Pin To Net: NetName=NetP1_13 Pin=U31-7
+Added Pin To Net: NetName=NetP1_11 Pin=P1-11
+Added Pin To Net: NetName=NetP1_11 Pin=U31-6
+Added Net: Name=NetP1_11
