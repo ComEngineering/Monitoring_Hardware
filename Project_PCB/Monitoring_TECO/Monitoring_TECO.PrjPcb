@@ -530,40 +530,6 @@ GenerateClassCluster=0
 DocumentUniqueId=
 
 [Document30]
-DocumentPath=Sheet_RS-485.SchDoc
-AnnotationEnabled=1
-AnnotateStartValue=1
-AnnotationIndexControlEnabled=0
-AnnotateSuffix=
-AnnotateScope=All
-AnnotateOrder=2
-DoLibraryUpdate=1
-DoDatabaseUpdate=1
-ClassGenCCAutoEnabled=1
-ClassGenCCAutoRoomEnabled=1
-ClassGenNCAutoScope=None
-DItemRevisionGUID=
-GenerateClassCluster=0
-DocumentUniqueId=IYEYJVTJ
-
-[Document31]
-DocumentPath=Sheet_connect.SchDoc
-AnnotationEnabled=1
-AnnotateStartValue=1
-AnnotationIndexControlEnabled=0
-AnnotateSuffix=
-AnnotateScope=All
-AnnotateOrder=3
-DoLibraryUpdate=1
-DoDatabaseUpdate=1
-ClassGenCCAutoEnabled=1
-ClassGenCCAutoRoomEnabled=1
-ClassGenNCAutoScope=None
-DItemRevisionGUID=
-GenerateClassCluster=0
-DocumentUniqueId=YOLSRLXM
-
-[Document32]
 DocumentPath=Job1.OutJob
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -580,7 +546,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=
 
-[Document33]
+[Document31]
 DocumentPath=PCB_monitoring_IO.PcbDoc
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -597,7 +563,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=WNBMYCPR
 
-[Document34]
+[Document32]
 DocumentPath=A10-OLinuXino-LIME.PcbDoc
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -614,7 +580,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=LRMHUQAT
 
-[Document35]
+[Document33]
 DocumentPath=Sheet_MCU_IO.Harness
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -631,7 +597,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=
 
-[Document36]
+[Document34]
 DocumentPath=Sheet_Top_Front.SchDoc
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -648,7 +614,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=MVASBUDU
 
-[Document37]
+[Document35]
 DocumentPath=Sheet_Top_Back.SchDoc
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -665,7 +631,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=NAKPOAKQ
 
-[Document38]
+[Document36]
 DocumentPath=Sheet_Bott_Back.SchDoc
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -682,9 +648,39 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=XOOLLALW
 
-[GeneratedDocument1]
-DocumentPath=Project Outputs for Monitoring_TECO\Board Information - PCB_monitoring_IO.html
+[Document37]
+DocumentPath=Sheet_Bott_Back.Harness
+AnnotationEnabled=1
+AnnotateStartValue=1
+AnnotationIndexControlEnabled=0
+AnnotateSuffix=
+AnnotateScope=All
+AnnotateOrder=-1
+DoLibraryUpdate=1
+DoDatabaseUpdate=1
+ClassGenCCAutoEnabled=1
+ClassGenCCAutoRoomEnabled=1
+ClassGenNCAutoScope=None
 DItemRevisionGUID=
+GenerateClassCluster=0
+DocumentUniqueId=
+
+[Document38]
+DocumentPath=Sheet_Top_Back.Harness
+AnnotationEnabled=1
+AnnotateStartValue=1
+AnnotationIndexControlEnabled=0
+AnnotateSuffix=
+AnnotateScope=All
+AnnotateOrder=-1
+DoLibraryUpdate=1
+DoDatabaseUpdate=1
+ClassGenCCAutoEnabled=1
+ClassGenCCAutoRoomEnabled=1
+ClassGenNCAutoScope=None
+DItemRevisionGUID=
+GenerateClassCluster=0
+DocumentUniqueId=
 
 [Configuration1]
 Name=Default Configuration
