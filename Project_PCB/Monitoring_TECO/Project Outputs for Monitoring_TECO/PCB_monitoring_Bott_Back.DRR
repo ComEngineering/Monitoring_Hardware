@@ -1,0 +1,20 @@
+---------------------------------------------------------------------------
+NCDrill File Report For: PCB_monitoring_Bott_Back.PcbDoc   02.12.2015  16:55:20
+---------------------------------------------------------------------------
+
+Layer Pair : Top Layer to Bottom Layer
+ASCII RoundHoles File : PCB_monitoring_Bott_Back.TXT
+
+Tool         Hole Size           Hole Type     Hole Count Plated       Tool Travel
+---------------------------------------------------------------------------
+T1        0.5mm (19.685mil)        Round          3                77.05 mm (3.03 Inch)
+T2        0.8mm (31.496mil)        Round          56               302.86 mm (11.92 Inch)
+T3        0.9mm (35.433mil)        Round          28               134.26 mm (5.29 Inch)
+T4        1.3mm (51.181mil)        Round          12               55.00 mm (2.17 Inch)
+T5        1.4mm (55.118mil)        Round          28               98.15 mm (3.86 Inch)
+T6        1.5mm (59.055mil)        Round          20               193.92 mm (7.63 Inch)
+T7        3mm (118.11mil)          Round          2                110.00 mm (4.33 Inch)
+---------------------------------------------------------------------------
+Totals                                            149              971.24 mm (38.24 Inch)
+
+Total Processing Time (hh:mm:ss) : 00:00:00

@@ -1,0 +1,18 @@
+---------------------------------------------------------------------------
+NCDrill File Report For: PCB_monitoring_Top_Front.PcbDoc   02.12.2015  16:42:24
+---------------------------------------------------------------------------
+
+Layer Pair : Top Layer to Bottom Layer
+ASCII RoundHoles File : PCB_monitoring_Top_Front.TXT
+
+Tool         Hole Size           Hole Type     Hole Count Plated       Tool Travel
+---------------------------------------------------------------------------
+T1        0.9mm (35.433mil)        Round          54               231.80 mm (9.13 Inch)
+T2        1mm (39.37mil)           Round          24               111.12 mm (4.37 Inch)
+T3        1.4mm (55.118mil)        Round          8                24.50 mm (0.96 Inch)
+T4        3mm (118.11mil)          Round          1                0.00 mm (0.00 Inch)
+T5        3mm (118.11mil)          Round          12        NPTH   74.66 mm (2.94 Inch)
+---------------------------------------------------------------------------
+Totals                                            99               442.08 mm (17.40 Inch)
+
+Total Processing Time (hh:mm:ss) : 00:00:00
