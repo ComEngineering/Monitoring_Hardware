@@ -78,13 +78,13 @@ Configuration3_Item1=CaptionAsName
 Configuration3_Name2=Filter
 Configuration3_Item2=545046300E5446696C74657257726170706572000D46696C7465722E416374697665090F46696C7465722E43726974657269610A04000000000000000000
 Configuration3_Name3=General
-Configuration3_Item3=OpenExported=False|AddToProject=False|ForceFit=False|NotFitted=False|Database=False|DatabasePriority=False|IncludePCBData=False|IncludeVaultData=False|ShowExportOptions=True|TemplateFilename=|BatchMode=5|FormWidth=997|FormHeight=660|SupplierProdQty=1|SupplierAutoQty=False|SupplierUseCachedPricing=False|SupplierCurrency=<none>
+Configuration3_Item3=OpenExported=False|AddToProject=False|ForceFit=False|NotFitted=False|Database=False|DatabasePriority=False|IncludePCBData=False|IncludeVaultData=False|ShowExportOptions=True|TemplateFilename=|BatchMode=5|FormWidth=997|FormHeight=860|SupplierProdQty=1|SupplierAutoQty=False|SupplierUseCachedPricing=False|SupplierCurrency=<none>
 Configuration3_Name4=GroupOrder
 Configuration3_Item4=Value=True|Comment=True|Footprint=True
 Configuration3_Name5=SortOrder
 Configuration3_Item5=Designator=Up
 Configuration3_Name6=VisibleOrder
-Configuration3_Item6=Comment=95|Description=112|Designator=200|Footprint=96|LibRef=58|Quantity=105|Value=84
+Configuration3_Item6=Designator=200|Description=112|Footprint=96|Comment=95|Value=109|Quantity=51
 OutputType4=Schematic Print
 OutputName4=Copy of Copy of Schematic Prints
 OutputCategory4=Documentation
@@ -126,7 +126,7 @@ OutputEnabled6_OutputMedium4=0
 OutputDefault6=0
 PageOptions6=Record=PageOptions|CenterHorizontal=True|CenterVertical=True|PrintScale=0.94|XCorrection=1.00|YCorrection=1.00|PrintKind=0|BorderSize=5000000|LeftOffset=0|BottomOffset=0|Orientation=2|PaperLength=1000|PaperWidth=1000|Scale=100|PaperSource=7|PrintQuality=-3|MediaType=1|DitherType=10|PrintScaleMode=1|PaperKind=A4|PaperIndex=9
 Configuration6_Name1=OutputConfigurationParameter1
-Configuration6_Item1=Record=Pcb3DPrintView|ResX=300|ResY=300|ViewX=124419331|ViewY=59531101|LookAtX=180329664|LookAtY=141613616|LookAtZ=18446092|QuatX=-0.442149728536606|QuatY=0.192335188388824|QuatZ=-0.291039705276489|QuatW=0.826321125030518|Zoom=1.49333707957515E-5|UnitsPercent=True|UnitsDPI=True|LockResAspect=True|ViewConfigType=.config_3d|CustomCamera=True|ViewFromTop=True|ViewConfig= 
+Configuration6_Item1=Record=Pcb3DPrintView|ResX=300|ResY=300|ViewX=124419331|ViewY=59531101|LookAtX=180329664|LookAtY=141613616|LookAtZ=18446092|QuatX=-0.442149728536606|QuatY=0.192335188388824|QuatZ=-0.291039705276489|QuatW=0.826321125030518|Zoom=1.49333707957515E-5|UnitsPercent=True|UnitsDPI=True|LockResAspect=True|ViewConfigType=.config_3d|CustomCamera=True|ViewFromTop=True|ViewConfig=
 OutputType7=PCB 3D Print
 OutputName7=Copy of PCB 3D Print
 OutputCategory7=Documentation
@@ -140,7 +140,7 @@ OutputEnabled7_OutputMedium4=0
 OutputDefault7=0
 PageOptions7=Record=PageOptions|CenterHorizontal=True|CenterVertical=True|PrintScale=0.90|XCorrection=1.00|YCorrection=1.00|PrintKind=0|BorderSize=5000000|LeftOffset=0|BottomOffset=0|Orientation=2|PaperLength=1000|PaperWidth=1000|Scale=100|PaperSource=7|PrintQuality=-3|MediaType=1|DitherType=10|PrintScaleMode=1|PaperKind=A4|PaperIndex=9
 Configuration7_Name1=OutputConfigurationParameter1
-Configuration7_Item1=Record=Pcb3DPrintView|ResX=300|ResY=300|ViewX=129241654|ViewY=61838445|LookAtX=159748032|LookAtY=108592088|LookAtZ=15537863|QuatX=-0.112665496766567|QuatY=-0.421735405921936|QuatZ=0.872099697589874|QuatW=0.221105635166168|Zoom=1.43761700310846E-5|UnitsPercent=True|UnitsDPI=True|LockResAspect=True|ViewConfigType=.config_3d|CustomCamera=True|ViewFromTop=True|ViewConfig= 
+Configuration7_Item1=Record=Pcb3DPrintView|ResX=300|ResY=300|ViewX=129241654|ViewY=61838445|LookAtX=159748032|LookAtY=108592088|LookAtZ=15537863|QuatX=-0.112665496766567|QuatY=-0.421735405921936|QuatZ=0.872099697589874|QuatW=0.221105635166168|Zoom=1.43761700310846E-5|UnitsPercent=True|UnitsDPI=True|LockResAspect=True|ViewConfigType=.config_3d|CustomCamera=True|ViewFromTop=True|ViewConfig=
 OutputType8=PCB 3D Print
 OutputName8=Copy of Copy of PCB 3D Print
 OutputCategory8=Documentation
@@ -354,7 +354,7 @@ OutputEnabled18_OutputMedium4=0
 OutputDefault18=0
 PageOptions18=Record=PageOptions|CenterHorizontal=True|CenterVertical=True|PrintScale=1.63|XCorrection=1.00|YCorrection=1.00|PrintKind=1|BorderSize=5000000|LeftOffset=0|BottomOffset=0|Orientation=2|PaperLength=1000|PaperWidth=1000|Scale=100|PaperSource=7|PrintQuality=-3|MediaType=1|DitherType=10|PrintScaleMode=1|PaperKind=A4|PaperIndex=9
 Configuration18_Name1=OutputConfigurationParameter1
-Configuration18_Item1=Record=Pcb3DPrintView|ResX=300|ResY=300|ViewX=71543285|ViewY=34231421|LookAtX=40936472|LookAtY=37445060|LookAtZ=1.00000047683716|QuatX=0|QuatY=0|QuatZ=0|QuatW=0.999999940395355|Zoom=2.59702919396684E-5|UnitsPercent=True|UnitsDPI=True|LockResAspect=True|ViewConfigType=.config_3d|CustomCamera=True|ViewFromTop=True|ViewConfig= 
+Configuration18_Item1=Record=Pcb3DPrintView|ResX=300|ResY=300|ViewX=71543285|ViewY=34231421|LookAtX=40936472|LookAtY=37445060|LookAtZ=1.00000047683716|QuatX=0|QuatY=0|QuatZ=0|QuatW=0.999999940395355|Zoom=2.59702919396684E-5|UnitsPercent=True|UnitsDPI=True|LockResAspect=True|ViewConfigType=.config_3d|CustomCamera=True|ViewFromTop=True|ViewConfig=
 OutputType19=PCB 3D Print
 OutputName19=Copy of Copy of Copy of Copy of Copy of Copy of Copy of PCB 3D Print
 OutputCategory19=Documentation
@@ -368,7 +368,7 @@ OutputEnabled19_OutputMedium4=0
 OutputDefault19=0
 PageOptions19=Record=PageOptions|CenterHorizontal=True|CenterVertical=True|PrintScale=1.63|XCorrection=1.00|YCorrection=1.00|PrintKind=1|BorderSize=5000000|LeftOffset=0|BottomOffset=0|Orientation=2|PaperLength=1000|PaperWidth=1000|Scale=100|PaperSource=7|PrintQuality=-3|MediaType=1|DitherType=10|PrintScaleMode=1|PaperKind=A4|PaperIndex=9
 Configuration19_Name1=OutputConfigurationParameter1
-Configuration19_Item1=Record=Pcb3DPrintView|ResX=300|ResY=300|ViewX=71543285|ViewY=34231421|LookAtX=42987752|LookAtY=37560584|LookAtZ=608550.3125|QuatX=0|QuatY=1|QuatZ=0|QuatW=4.37113882867379E-8|Zoom=2.59702919375063E-5|UnitsPercent=True|UnitsDPI=True|LockResAspect=True|ViewConfigType=.config_3d|CustomCamera=True|ViewFromTop=True|ViewConfig= 
+Configuration19_Item1=Record=Pcb3DPrintView|ResX=300|ResY=300|ViewX=71543285|ViewY=34231421|LookAtX=42987752|LookAtY=37560584|LookAtZ=608550.3125|QuatX=0|QuatY=1|QuatZ=0|QuatW=4.37113882867379E-8|Zoom=2.59702919375063E-5|UnitsPercent=True|UnitsDPI=True|LockResAspect=True|ViewConfigType=.config_3d|CustomCamera=True|ViewFromTop=True|ViewConfig=
 
 [PublishSettings]
 OutputFilePath2=Project Outputs for Free Documents\.PDF
