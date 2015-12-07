@@ -67,7 +67,7 @@
 
 //Device Identification
 extern char CompanyID[4];
-extern char ProdCode[7];
+extern char ProdCode[5];
 extern char Version[5];
 
 //[1]-адрес ВНУТРЕННИЙ, [2]-адрес ВНЕШНИЙ

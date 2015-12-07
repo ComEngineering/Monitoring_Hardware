@@ -13,9 +13,9 @@
 
 
 
-char CompanyID[4] = "****";
-char ProdCode[7] = "Aircool";
-char Version[5] = "2.0.2";
+char CompanyID[4] = "TECO";
+char ProdCode[5] = "SM-IO";
+char Version[5] = "1.0.1";
 
 //Номера адресов ModBus
 uint8_t SET_PAR[3];							//[1]-адрес ВНУТРЕННИЙ, [2]-адрес ВНЕШНИЙ
