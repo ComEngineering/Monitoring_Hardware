@@ -772,8 +772,8 @@ void TX_43(typeDef_UART_DATA *MODBUS)
 			MODBUS->buffer[18]= ProdCode[2];				//Object Value	"r"
 			MODBUS->buffer[19]= ProdCode[3];				//Object Value	"c"
 			MODBUS->buffer[20]= ProdCode[4];				//Object Value	"o"
-			MODBUS->buffer[21]= ProdCode[5];				//Object Value	"o"
-			MODBUS->buffer[22]= ProdCode[6];				//Object Value	"l"
+//			MODBUS->buffer[21]= ProdCode[5];				//Object Value	"o"
+//			MODBUS->buffer[22]= ProdCode[6];				//Object Value	"l"
 			MODBUS->buffer[23]= 0x02;								//Object Id
 			MODBUS->buffer[24]= 5;									//Object Length
 			MODBUS->buffer[25]= Version[0];					//Object Value	"x"
