@@ -5,8 +5,7 @@
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
-static uint8_t dowcrc; 						//для проверки CRC
-static uint8_t countErrCRC;
+
 
 const uint8_t dscrc_table[] = {0, 94,188,226, 97, 63,221,131,194,156,126, 32,163,253, 31, 65,
       157,195, 33,127,252,162, 64, 30, 95,  1,227,189, 62, 96,130,220,
@@ -134,15 +133,19 @@ void one_ware_convert_t(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
 }	
 
 
-//Функция ЧТЕНИЯ одного байта с проверкой CRC(8 бит)
+//Функция ЧТЕНИЯ температуры с проверкой ошибок
+// return: 
+// >5 - температура
+// 
 uint16_t one_wire_read_byte(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
 {
-	
+	uint8_t dowcrc = 0; 						//для проверки CRC
+	uint8_t countErrCRC;
 	uint8_t stat = 0;
 	uint8_t Nbyte = 0;
 	uint8_t arr[9];	
-	uint16_t dataT = 0;
-	dowcrc = 0;
+	int16_t dataT = 0;
+	int16_t temp = 0;
 	
 	stat = send_presence(GPIOx, GPIO_Pin);													//Сброс датчика
 	if(!stat){																											//Проверка шины на ошибки
@@ -152,17 +155,14 @@ uint16_t one_wire_read_byte(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
 		{
 			arr[Nbyte] = read_byte(GPIOx, GPIO_Pin);
 			if(Nbyte<8){
-				ow_crc(arr[Nbyte]);													//Проверка CRC
+				dowcrc = dscrc_table[dowcrc^arr[Nbyte]];		//Вычисление CRC
 			}
 		}
-		*((uint8_t *)&dataT) = arr[0];									//Извлекаем младший байт температуры
-		*((uint8_t *)&dataT+1) = arr[1];								//Извлекаем старший байт и объединеняем с младшим
-		dataT = dataT >> 4;															//Отбрасываем значение после запятой					
-		
 		//Если CRC неверно
 		if(dowcrc != arr[8]){		
 			countErrCRC++;
-			if(countErrCRC < 10){											 		//если счётчик ошибок меньше 10
+			//если счётчик ошибок меньше 10
+			if(countErrCRC < 1){											 		
 				return one_wire_read_byte(GPIOx, GPIO_Pin);	//повторяем чтение
 			}
 			else{
@@ -173,9 +173,32 @@ uint16_t one_wire_read_byte(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
 		countErrCRC = 0;
 		
 		
-		if(dataT & 0x80){														//Если температура отрицательна
-			return  (uint8_t)((~dataT)|0x0080);				//Возвращаем значение в виде 0b1xxxxxxx
+		
+		
+		*((uint8_t *)&temp) = arr[0];									//Извлекаем младший байт температуры
+		*((uint8_t *)&temp+1) = arr[1];								//Извлекаем старший байт и объединеняем с младшим
+		temp = temp >> 4;															//Отбрасываем значение после запятой
+		//Если температура отрицательная
+		if(arr[1] & 0x80){
+			//если значение после запятой равно 0,5
+			if(!(arr[0] & 0x08)){
+				dataT = ~((~(temp|0xF000)) * 10 + 5)+1;
+			}
+			else{
+				dataT = ~((~(temp|0xF000)) * 10)+1;
+			}
 		}
+		//иначе если температура положительная
+		else{
+			//если значение после запятой равно 0,5
+			if(arr[0] & 0x08){
+				dataT = temp * 10 + 5;	
+			}
+				else{
+				dataT = temp * 10;
+			}
+		}
+
 		return  dataT;															//Возвращаем полученное значение в виде 0b0xxxxxxx
 	}
 	else{
@@ -186,12 +209,13 @@ uint16_t one_wire_read_byte(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
 
 
 //Функция вычисления контрольной суммы crc8 для DS18B20
+/*
 uint8_t ow_crc(uint8_t x)
 {
 	dowcrc = dscrc_table[dowcrc^x];
 return dowcrc;
 }
-
+*/
 
 //Функция переключает пин в IN
 void pin_IN(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
