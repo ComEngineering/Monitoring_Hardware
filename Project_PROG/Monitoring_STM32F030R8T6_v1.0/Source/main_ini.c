@@ -19,14 +19,14 @@ extern uint16_t Channel1Pulse, Channel2Pulse, Channel3Pulse, Channel4Pulse;
 //*****************************************************************************
 void init_GPIO_one_wire(void)
 {
-	one_wire_ini_setting(PIN_ONE_WIRE_T1);
-	one_wire_ini_setting(PIN_ONE_WIRE_T2);
-	one_wire_ini_setting(PIN_ONE_WIRE_T3);
-	one_wire_ini_setting(PIN_ONE_WIRE_T4);
-	one_wire_ini_setting(PIN_ONE_WIRE_T5);
-	one_wire_ini_setting(PIN_ONE_WIRE_T6);
-	one_wire_ini_setting(PIN_ONE_WIRE_T7);
-	one_wire_ini_setting(PIN_ONE_WIRE_T8);
+	one_wire_init_setting(PIN_ONE_WIRE_T1);
+	one_wire_init_setting(PIN_ONE_WIRE_T2);
+	one_wire_init_setting(PIN_ONE_WIRE_T3);
+	one_wire_init_setting(PIN_ONE_WIRE_T4);
+	one_wire_init_setting(PIN_ONE_WIRE_T5);
+	one_wire_init_setting(PIN_ONE_WIRE_T6);
+	one_wire_init_setting(PIN_ONE_WIRE_T7);
+	one_wire_init_setting(PIN_ONE_WIRE_T8);
 }
 
 

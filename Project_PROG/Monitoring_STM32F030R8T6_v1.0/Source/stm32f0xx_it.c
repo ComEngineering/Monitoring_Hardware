@@ -110,7 +110,7 @@ void TIM17_IRQHandler(void)
 	TIM17->SR &= ~TIM_SR_UIF; 									//Сбрасываем флаг UIF
 	
 	
-	uint16_t temp;
+	int16_t temp;
 	GPIO_ToggleBits(PIN_LED_BLINK);							//led blink
 	
 	countReqUSART1++;
@@ -213,7 +213,7 @@ void TIM17_IRQHandler(void)
 //Обновление значений температур
 /************************************************************/	
 	temp = one_wire_read_byte(PIN_ONE_WIRE_T1);			//темп. окружающей среды
-	if((temp == 85) && count85C[1] < 3){
+	if((temp == 850) && count85C[1] < 3){
 		count85C[1]++;
 	}
 	else{
@@ -222,7 +222,7 @@ void TIM17_IRQHandler(void)
 	}
 /************************************************************/	
 	temp = one_wire_read_byte(PIN_ONE_WIRE_T2);			//темп. на входе фрикулинга (внутренний поток)
-	if((temp == 85) && count85C[2] < 3){
+	if((temp == 850) && count85C[2] < 3){
 		count85C[2]++;
 	}
 	else{
@@ -231,7 +231,7 @@ void TIM17_IRQHandler(void)
 	}
 /************************************************************/	
 	temp = one_wire_read_byte(PIN_ONE_WIRE_T3);			//темп. температуры на входе (внутренняя)
-	if((temp == 85) && count85C[3] < 3){
+	if((temp == 850) && count85C[3] < 3){
 		count85C[3]++;
 	}
 	else{
@@ -240,7 +240,7 @@ void TIM17_IRQHandler(void)
 	}
 /************************************************************/
 	temp = one_wire_read_byte(PIN_ONE_WIRE_T4);			//темп. на выходе испарителя
-	if((temp == 85) && count85C[4] < 3){
+	if((temp == 850) && count85C[4] < 3){
 		count85C[4]++;
 	}
 	else{
@@ -248,8 +248,8 @@ void TIM17_IRQHandler(void)
 		R_T4_EVAP_OUT = temp;
 	}
 /************************************************************/	
-/*	temp = one_wire_read_byte(PIN_ONE_WIRE_T5);			//темп. наружного воздуха на выходе фрикулинга
-	if((temp == 85) && count85C[5] < 3){
+	temp = one_wire_read_byte(PIN_ONE_WIRE_T5);			//темп. наружного воздуха на выходе фрикулинга
+	if((temp == 850) && count85C[5] < 3){
 		count85C[5]++;
 	}
 	else{
@@ -257,11 +257,9 @@ void TIM17_IRQHandler(void)
 	
 		R_T5_OUT_FCOOL = temp;
 	}
-	*/
-	R_T5_OUT_FCOOL = 0;
 /************************************************************/	
 	temp = one_wire_read_byte(PIN_ONE_WIRE_T6);			//темп. на всасывающей трубе на выходе испарителя
-	if((temp == 85) && count85C[6] < 3){
+	if((temp == 850) && count85C[6] < 3){
 		count85C[6]++;
 	}
 	else{
@@ -270,7 +268,7 @@ void TIM17_IRQHandler(void)
 	}
 /************************************************************/	
 	temp = one_wire_read_byte(PIN_ONE_WIRE_T7);			//темп. на сливе конденсатора
-	if((temp == 85) && count85C[7] < 3){
+	if((temp == 850) && count85C[7] < 3){
 		count85C[7]++;
 	}
 	else{
@@ -279,7 +277,7 @@ void TIM17_IRQHandler(void)
 	}
 /************************************************************/	
 	temp = one_wire_read_byte(PIN_ONE_WIRE_T8);			//темп. картера
-	if((temp == 85) && count85C[8] < 3){
+	if((temp == 850) && count85C[8] < 3){
 		count85C[8]++;
 	}
 	else{

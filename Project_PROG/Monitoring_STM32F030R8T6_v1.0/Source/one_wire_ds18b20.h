@@ -12,15 +12,14 @@
  
  
 /* Private function prototypes -----------------------------------------------*/
-uint8_t one_wire_ini_setting(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
+int16_t one_wire_read_byte(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
+uint8_t one_wire_init_setting(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
 uint8_t send_presence(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
 void one_wire_write_bit(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin, uint8_t bit);
 uint8_t one_wire_read_bit(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
 uint8_t read_byte(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
 void one_wire_write_byte(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin, uint8_t data);
 void one_ware_convert_t(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
-uint16_t one_wire_read_byte(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
-//uint8_t ow_crc(uint8_t x);
 void pin_IN(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
 void pin_OUT_OD(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
 void pin_OUT_PP(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);

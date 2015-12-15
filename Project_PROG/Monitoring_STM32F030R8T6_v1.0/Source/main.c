@@ -251,16 +251,6 @@ int main(void)
 	init_EXTI_GPIO();												//Инициализация пина отслеживания 220В
 	init_GPIO_one_wire();										//Инициализация датчиков температуры
 	
-	//Первый запуск измерения температур
-	one_ware_convert_t(PIN_ONE_WIRE_T1);
-	one_ware_convert_t(PIN_ONE_WIRE_T2);
-	one_ware_convert_t(PIN_ONE_WIRE_T3);
-	one_ware_convert_t(PIN_ONE_WIRE_T4);
-	one_ware_convert_t(PIN_ONE_WIRE_T5);
-	one_ware_convert_t(PIN_ONE_WIRE_T6);
-	one_ware_convert_t(PIN_ONE_WIRE_T7);
-	one_ware_convert_t(PIN_ONE_WIRE_T8);
-	
 	delay_ms(10);
 	TIM17_IRQHandler();
 	init_TIM17_delay_IRQ();									//Инициализация таймера для вызова секундного прерывания
@@ -277,8 +267,8 @@ int main(void)
 	//19200 - 19
 	//uart1.speed = 3;												//скорость для ВНУТРЕННЕГО
 	uart2.speed = W_SPEED;									//скорость для ВНЕШНЕГО
-	uart2.delay = 38; 											//таймаут приема ВНЕШНЕГО
-	uart1.delay = 38; 											//таймаут приема
+	uart2.delay = 200; 											//таймаут приема ВНЕШНЕГО
+	uart1.delay = 200; 											//таймаут приема
 	SET_PAR[1] = 1;													//адрес устройства	ВНУТРЕННИЙ
 	SET_PAR[2] = W_ADDRESS;									//адрес устройства	ВНЕШНИЙ
 	
