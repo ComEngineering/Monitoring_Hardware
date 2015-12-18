@@ -10,14 +10,8 @@
 //Дефайны используемых портов
 //***************************************************************************
 //Температурные датчики
-#define PIN_ONE_WIRE_T1				GPIOB, GPIO_Pin_11		//t окружающей среды
-#define PIN_ONE_WIRE_T2				GPIOB, GPIO_Pin_2			//t на входе фрикулинга (внутренний поток)
-#define PIN_ONE_WIRE_T3				GPIOB, GPIO_Pin_8			//t температуры на входе (внутренняя)
-#define PIN_ONE_WIRE_T4				GPIOB, GPIO_Pin_3			//t на выходе испарителя
-#define PIN_ONE_WIRE_T5				GPIOB, GPIO_Pin_10		//t наружного воздуха на выходе фрикулинга
-#define PIN_ONE_WIRE_T6				GPIOB, GPIO_Pin_9			//t на всасывающей трубе на выходе испарителя
-#define PIN_ONE_WIRE_T7				GPIOB, GPIO_Pin_4			//t на сливе конденсатора
-#define PIN_ONE_WIRE_T8				GPIOA, GPIO_Pin_15		//t картера компрессора
+#define PIN_ONE_WIRE_T1				GPIOB, GPIO_Pin_2			//пин датчика Dt1
+#define PIN_ONE_WIRE_T2				GPIOB, GPIO_Pin_10		//пин датчика Dt2
 
 #define PIN_FAN_FCOOL 				GPIOB, GPIO_Pin_0			//пин для вкл/выкл вентилятора фрикулинга
 #define PIN_FAN_EVAP 					GPIOB, GPIO_Pin_1			//пин для вкл/выкл вентилятора испарителя
@@ -25,8 +19,9 @@
 #define PIN_RELAY_HEAT_BOX				GPIO_Pin_13				//пин для вкл/выкл тэна обогрева шкафа
 #define PIN_RELAY_HEAT_DRAIN 			GPIO_Pin_14				//пин для вкл/выкл подогрева дренажа
 #define PIN_RELAY_HEAT_CARTER 		GPIO_Pin_15				//пин для вкл/выкл подогрева картера компрессора
-#define PIN_LED_BLINK 				GPIOC, GPIO_Pin_13		//пин для светодиода состояния
-#define PIN_STAT_48V 					GPIOA, GPIO_Pin_5			//пин для отслеживания состояния 48В
+
+#define PIN_OVERLOAD_12V 			GPIOA, GPIO_Pin_0			//пин для светодиода состояния
+#define PIN_LED_BLINK 				GPIOF, GPIO_Pin_5			//пин для светодиода состояния
 
 //Команды управления датчиком DS18B20
 #define THERM_CMD_CONVERTTEMP 	0x44								//запуск преобразования температуры
@@ -37,32 +32,14 @@
 //***************************************************************************
 //Дефайны для работы ModBus
 //***************************************************************************
-#define OBJ_SZ_F3_6 50															//количество регистров для функций 3 и 6
+#define OBJ_SZ_F3_6 30															//количество регистров для функций 3 и 6
 #define OBJ_SZ_F1_5 2																//количество байт для функций 1 и 5
-
-//***************************************************************************
-//Дефайны для работы TIM1_PWM
-//***************************************************************************
-#define VAL_ARR		2000															//Максимальное значение, до которого таймер TIM_PWM ведет счет 2000
-#define MIN_SPEED_CH1		((30 * TIM1->ARR) / 100)		//Значение min скорости для вентелятора конденсатора (30%)
 
 
 //***************************************************************************
 //Дефайны для работы с данными и FLASH
 //***************************************************************************
-#define ADDRESS_PAGE_63 FLASH_BASE+63*1024	//63 - номер страницы
-
-
-//остальные параметры
-#define DEF_DIF_ALARM_HI						2								//дельта отключения аварии высокой температуры	(в tC)
-#define DEF_DIF_ALARM_LO						2								//дельта отключения аварии низкой температуры	(в tC)
-#define DEF_DIF_ALARM_EVAP					1								//разность температур для инкремента времени на отработку аварии неисправности испарителя	(в tC) 
-#define DEF_ALARM_TEMP_COMPRES 			90							//аварийная температура компрессора при которой выкл. компрессор	(в tC)
-#define DEF_DIF_ALARM_TEMP_COMPRES	2								//дельта отключения аварии компрессора	(в tC)
-#define DEF_DELAY_ALARM_COND				1800						//время задержки на отработку аварии неисправности кондиционера (в сек.)
-#define DEF_DELAY_ALARM_FCOOL				1800						//время задержки на отработку аварии неисправности фрикулинга (в сек.)
-#define DEF_DELAY_WORK_FAN_COND			30							//время задержки на "переход в рабочий режим" вентилятора конденсатора	(в сек.)
-#define DEF_DELAY_WORK_FAN_EVAP			10							//время задержки на "переход в рабочий режим" вентилятора испарителя	(в сек.)
+#define ADDRESS_PAGE_63 FLASH_BASE+63*1024	//63 - номер страницы (для сохранения данных)
 
 
 //Device Identification
@@ -85,34 +62,21 @@ typedef struct{
 extern typeDef_table res_table;
 
 
-/*для функций 3 и 6
-0x1xxxxxxx - минусовая температура
-0x0xxxxxxx - плюсовая температура
-0x10xxxxxxxx - короткое замыкание датчика на землю
-0x01xxxxxxxx - обрыв датчика
-*/
-#define R_STATES 						res_table.regsF3_6[0]				/*!< Регистр состояний */
-#define STATE_220V 						(R_STATES & 0x01)						/*!< бит состояния напряжения 220 вольт 		(1 - вкл, 0 - выкл) */
-#define STATE_COMPRESSOR 			(R_STATES & 0x02)						/*!< бит состояния компрессора 							(1 - вкл, 0 - выкл) */
-#define STATE_HEAT_CARTER 		(R_STATES & 0x04)						/*!< бит состояния подогрева картера 				(1 - вкл, 0 - выкл) */
-#define STATE_HEAT_DRAIN 			(R_STATES & 0x08)						/*!< бит состояния подогрева дренажа 				(1 - вкл, 0 - выкл) */
-#define STATE_HEAT_BOX 				(R_STATES & 0x10)						/*!< бит состояния подогрева шкафа 					(1 - вкл, 0 - выкл) */
-#define STATE_FAN_FCOOL 			(R_STATES & 0x20)						/*!< бит состояния вентилятора фрикулинга 	(1 - вкл, 0 - выкл) */
-#define STATE_FAN_EVAP 				(R_STATES & 0x40)						/*!< бит состояния вентилятора испарителя 	(1 - вкл, 0 - выкл) */
-#define STATE_FAN_CONDENSER 	(R_STATES & 0x80)						/*!< бит состояния вентилятора конденсатора (1 - вкл, 0 - выкл) */
+/* для функций 3 и 6 */
+#define R_STATES 							res_table.regsF3_6[0]				/*!< регистр состояний */
+#define STATE_OVERLOAD_12V 		(R_STATES & 0x01)						/*!< перегрузка по выходному внешнему питанию 12В 400 мА 	(0–ok, 1–err) */
+#define STATE_DISCON_DT1 			(R_STATES & 0x02)						/*!< обрыв Dt1 (0–ok, 1–обрыв) */
+#define STATE_SHORT_DT1 			(R_STATES & 0x04)						/*!< замыкание Dt1 (0–ok, 1–кз) */
+#define STATE_CRC_ERR_DT1 		(R_STATES & 0x08)						/*!< ошибка CRC Dt1 (0–ok, 1–err) */
+#define STATE_DISCON_DT2 			(R_STATES & 0x10)						/*!< обрыв Dt2 (0–ok, 1–обрыв) */
+#define STATE_SHORT_DT2 			(R_STATES & 0x20)						/*!< замыкание Dt2 (0–ok, 1–кз) */
+#define STATE_CRC_ERR_DT2 		(R_STATES & 0x40)						/*!< ошибка CRC Dt2 (0–ok, 1–err) */
 
 
-#define R_ALARM							res_table.regsF3_6[1]				/*!< Регистр аварий */
-#define ALARM_HI_INT_TEMP 		(R_ALARM & 0x01)						/*!< бит аварии по высокой внутренней температуре 	(1 - alarm, 0 - ok) */
-#define ALARM_LO_INT_TEMP 		(R_ALARM & 0x02)						/*!< бит аварии по низкой внутренней температуре 		(1 - alarm, 0 - ok) */
-#define ALARM_HI_PRESS 				(R_ALARM & 0x04)						/*!< бит аварии по высокому давлению 								(1 - alarm, 0 - ok) */
-#define ALARM_AIRCOOL_FAULTY	(R_ALARM & 0x08)						/*!< бит аварии об неисправности кондиционера 			(1 - alarm, 0 - ok) */
-#define ALARM_COMPRES_FAULTY 	(R_ALARM & 0x10)						/*!< бит аварии об неисправности компрессора (t8>90)(1 - alarm, 0 - ok) */
-#define ALARM_FCOOL_FAULTY 		(R_ALARM & 0x20)						/*!< бит аварии об неисправности фрикулинга 				(1 - alarm, 0 - ok) */
-#define ALARM_220V 						(R_ALARM & 0x40)						/*!< бит аварии об отсутствии напряжения 220 вольт 	(1 - alarm, 0 - ok) */
-#define ALARM_48V 						(R_ALARM & 0x80)						/*!< бит аварии об отсутствии напряжения 48 вольт 	(1 - alarm, 0 - ok) */
 
-#define R_T3_INTERNAL 		res_table.regsF3_6[2]					//Внутреняя температура в шкафу
+#define R_DT1							res_table.regsF3_6[1]						/*!< значение температуры Dt1 */
+#define R_DT2							res_table.regsF3_6[2]						/*!< значение температуры Dt1 */
+
 #define R_T1_AMBIENT 			res_table.regsF3_6[3]					//Температура окруж. среды
 #define R_T7_COND_DRAIN 	res_table.regsF3_6[4]					//Температура на сливе конденсатора
 #define R_T8_CARTER 			res_table.regsF3_6[5]					//Температура картера
@@ -185,11 +149,10 @@ uint8_t speed;						//скорость передачи данных
 uint16_t delay;						//задержка
 }typeDef_UART_DATA;
 
-extern typeDef_UART_DATA uart1, uart2;				//структуры для соответсвующих усартов
+extern typeDef_UART_DATA uart1;				//структуры для соответсвующих усартов
 
 
 void modbus_slave1(typeDef_UART_DATA *MODBUS);	//функция обработки ModBus и формирования ответа ВНУТРЕННИЙ
-void modbus_slave2(typeDef_UART_DATA *MODBUS);	//функция обработки ModBus и формирования ответа ВНЕШНИЙ
 unsigned int Crc16(unsigned char *ptrByte, int byte_cnt);
 void TX_01(typeDef_UART_DATA *MODBUS);
 void TX_03_04(typeDef_UART_DATA *MODBUS);
@@ -198,42 +161,8 @@ void TX_06(typeDef_UART_DATA *MODBUS);
 void TX_43(typeDef_UART_DATA *MODBUS);
 void TX_EXCEPTION(typeDef_UART_DATA *MODBUS,unsigned char error_type);
 
-//***************************************************************************
-//Данные для работы компрессора
-//***************************************************************************
-typedef struct{
-	uint16_t time_compres;		//таймер компрессора (сек.)
-	uint8_t statN;						//состояние
-	unsigned _startON: 	1;		//флаг разрешения включения кондиционера
-	unsigned _temp85: 	1;		//флаг подтверждения температуры +85
-}typeDef_statCompress;
-
-extern typeDef_statCompress statCompress;	
-
-//***************************************************************************
-//Данные для работы конденсатора
-//***************************************************************************
-extern uint16_t time_fanCond;			//таймер вентилятора конденсатора (сек.)
-extern uint16_t incZP;						//значение инкремента для зон "+"
-extern uint16_t decZM;						//значение декремента для зон "-"
-extern uint8_t statCond;					//первоначальное состояние вент. конденсатора
 
 
-//***************************************************************************
-//Данные для работы испарителя
-//***************************************************************************
-extern uint16_t time_alarm_freez;	//таймер аварии испарителя (сек.)
-extern uint16_t time_freez;				//таймер испарителя (сек.)
 
-//***************************************************************************
-//Данные для работы фрикулинга
-//***************************************************************************
-extern uint16_t time_freeCool;		//таймер фрикулинга (сек.)
-
-//***************************************************************************
-extern uint8_t countReqUSART1;				//счётчик запросов для USART1
-extern uint8_t countReqUSART2;				//счётчик запросов для USART2
-extern uint8_t ac_220;						//состояние 220В
-extern uint8_t dc_48;							//состояние 48В
 #endif
 

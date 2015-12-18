@@ -64,60 +64,6 @@ void modbus_slave1(typeDef_UART_DATA *MODBUS)
 }
 
 
-void modbus_slave2(typeDef_UART_DATA *MODBUS)
-{
-  unsigned int tmp;
-
-     //recive and checking rx query
-	if((MODBUS->buffer[0]!=0) & (MODBUS->rxcnt>5) & ((MODBUS->buffer[0]==SET_PAR[2]) | (MODBUS->buffer[0]==255)))
- {
-		tmp=Crc16(MODBUS->buffer,MODBUS->rxcnt-2);
-
-		if((MODBUS->buffer[MODBUS->rxcnt-2]==(tmp&0x00FF)) & (MODBUS->buffer[MODBUS->rxcnt-1]==(tmp>>8)))
-    {
-			//choosing function
-			switch(MODBUS->buffer[1])
-			{
-//				case 1:
-//				TX_01(MODBUS);
-//				break;
-				
-				case 3:
-				TX_03_04(MODBUS);
-				break;
-
-				case 4:
-				TX_03_04(MODBUS);
-				break;
-				
-				case 5:
-				TX_05(MODBUS);
-				break;
-
-				case 6:
-				TX_06(MODBUS);
-				break;
-				
-				case 43:
-				TX_43(MODBUS);
-				break;
-
-				default:
-				//illegal operation
-				TX_EXCEPTION(MODBUS,0x01);
-			}
-				//adding CRC16 to reply
-				tmp=Crc16(MODBUS->buffer,MODBUS->txlen-2);
-				MODBUS->buffer[MODBUS->txlen-2]=tmp;
-				MODBUS->buffer[MODBUS->txlen-1]=tmp>>8;
-				MODBUS->txcnt=0;
-		}
- }
-	  MODBUS->rxgap=0;
-	  MODBUS->rxcnt=0;
-	  MODBUS->rxtimer=0xFFFF;
-}
-
 
 
 //*******************************************************
