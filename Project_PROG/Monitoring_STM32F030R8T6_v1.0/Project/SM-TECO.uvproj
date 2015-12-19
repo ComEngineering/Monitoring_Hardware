@@ -456,11 +456,6 @@
               <FilePath>..\StdLib\src\stm32f0xx_rcc.c</FilePath>
             </File>
             <File>
-              <FileName>stm32f0xx_spi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\StdLib\src\stm32f0xx_spi.c</FilePath>
-            </File>
-            <File>
               <FileName>stm32f0xx_syscfg.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\StdLib\src\stm32f0xx_syscfg.c</FilePath>
@@ -479,6 +474,11 @@
               <FileName>stm32f0xx_wwdg.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\StdLib\src\stm32f0xx_wwdg.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f0xx_adc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\StdLib\src\stm32f0xx_adc.c</FilePath>
             </File>
           </Files>
         </Group>

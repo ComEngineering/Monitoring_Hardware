@@ -123,7 +123,7 @@ void TIM17_IRQHandler(void)
 	}
 	else{
 		count85C[1] = 0;
-		R_T1_AMBIENT = temp;
+		R_DT1 = temp;
 	}
 /************************************************************/	
 	temp = one_wire_read_byte(PIN_ONE_WIRE_T2);			//темп. на входе фрикулинга (внутренний поток)
@@ -132,7 +132,7 @@ void TIM17_IRQHandler(void)
 	}
 	else{
 		count85C[2] = 0;
-		R_T2_IN_FCOOL = temp;
+		R_DT2 = temp;
 	}
 
 /************************************************************/	

@@ -6,7 +6,7 @@
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 
-//Таблица для расчёта CRC
+/* Таблица для расчёта CRC */
 const uint8_t dscrc_table[] = {0, 94,188,226, 97, 63,221,131,194,156,126, 32,163,253, 31, 65,
       157,195, 33,127,252,162, 64, 30, 95,  1,227,189, 62, 96,130,220,
        35,125,159,193, 66, 28,254,160,225,191, 93,  3,128,222, 60, 98,
@@ -27,183 +27,237 @@ const uint8_t dscrc_table[] = {0, 94,188,226, 97, 63,221,131,194,156,126, 32,163
 
 
 /**
-* @brief  Функция ЧТЕНИЯ значения температуры с проверкой ошибок.
-* @param  GPIOx: здесь x это буква порта переферии (A, B, C, D, E or F).
-* @param  GPIO_Pin: определяет бит порта для чтения.
-* @note   Данная функция возвращает значение температуры датчика DS18B20 с точностью 9 бит (0,5°C). 
-					Значение температуры конвертируется в дополнительный код и умножается на 10. 
-					Полученное значение кратно 5.
-					т.е. значение 215 = 0xD7 = +21,5°C
+	* @brief  Функция вычитывает значения температуры датчика ds18b20.
+	* @param  GPIOx: здесь x это буква порта переферии (A, B, C, D, E or F).
+	* @param  GPIO_Pin: определяет бит порта для чтения.
+	* @note   Данная функция возвращает значение температуры датчика DS18B20 с точностью 9 бит (0,5°C). 
+						Значение температуры конвертируется в дополнительный код и умножается на 10. 
+						Полученное значение кратно 5.
+						т.е. значение 215 = 0xD7 = +21,5°C
 													5 = 0x05 = +0,5°C
 												 -5 = 0xFFFB = -0,5°C
 											 -215 = 0xFF29 = -21,5°C							
-					В случае обрыва, замыкания на 0 или неправильной CRC функция возвращает код ошибки.
-* @retval valueTemp: значение температуры в дополнительном коде умноженное на 10.
-										 если датчик не подключен - возвращает 0xFFFF (-1)
-					statErr: код состояния ошибки: 0x01 – обрыв
-																				 0x02 – короткое замыкание шины данных на 0
-																				 0x04 – ошибка CRC
-*/
+						В случае обрыва, замыкания на 0 или неправильной CRC функция возвращает код ошибки.
+	* @retval valueTemp: значение температуры в дополнительном коде умноженное на 10.
+											если датчик не подключен - возвращает 0xFFFF (-1).
+						statErr: код ошибки: 	0x01 – короткое замыкание шины данных на 0
+																	0x02 – ошибка CRC
+	*/
 int16_t one_wire_read_byte(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
 {
-	uint8_t dowCRC = 0; 						/*!< для проверки CRC  */
-	uint8_t countErrCRC;						/*!< счётчик ошибок CRC  */
-	uint8_t statErr = 0;						/*!< статус ошибки  */
-	uint8_t numberByte = 0;					/*!< номер байта для чтения  */
-	uint8_t dataArr[9];							/*!< массив считанных данных  */
-	int16_t valueTemp = 0;					/*!< значение температуры  */
+	uint8_t dowCRC = 0; 						/*!< для проверки CRC */
+	uint8_t countErrCRC;						/*!< счётчик ошибок CRC */
+	uint8_t statErr = 0;						/*!< статус ошибки */
+	uint8_t numberByte = 0;					/*!< номер байта для чтения */
+	uint8_t dataArr[9];							/*!< массив считанных с датчика данных */
+	int16_t valueTemp = 0;					/*!< значение температуры */
 	int16_t temp = 0;								/*!< буфер  */
 	
-	statErr = send_presence(GPIOx, GPIO_Pin);													/*!< Сброс датчика  (сигнал presence)*/
+	statErr = send_presence(GPIOx, GPIO_Pin);												/*!< Сброс датчика  (сигнал presence) */
 	/* Если нет ошибок датчика*/
 	if(!statErr){																											
-		one_wire_write_byte(GPIOx, GPIO_Pin, THERM_CMD_SKIPROM);			//Обращаемся к единственному устройству на шине
-		one_wire_write_byte(GPIOx, GPIO_Pin, THERM_CMD_RSCRATCHPAD);	//Чтение регистров
-		for(numberByte = 0; numberByte < 9; numberByte++)															//Чтение 9 байт из RAM
+		one_wire_write_byte(GPIOx, GPIO_Pin, THERM_CMD_SKIPROM);			/*!< Обращаемся к единственному устройству на шине */
+		one_wire_write_byte(GPIOx, GPIO_Pin, THERM_CMD_RSCRATCHPAD);	/*!< Чтение регистров */
+		for(numberByte = 0; numberByte < 9; numberByte++)							/*!< Чтение 9 байт из RAM */
 		{
 			dataArr[numberByte] = read_byte(GPIOx, GPIO_Pin);
 			if(numberByte<8){
-				dowCRC = dscrc_table[dowCRC^dataArr[numberByte]];		//Вычисление CRC
+				dowCRC = dscrc_table[dowCRC^dataArr[numberByte]];					/*!< Вычисление CRC */
 			}
 		}
-		//Если CRC неверно
+		/* Проверка CRC */
 		if(dowCRC != dataArr[8]){		
 			countErrCRC++;
-			//если счётчик ошибок меньше 10
-			if(countErrCRC < 1){											 		
-				return one_wire_read_byte(GPIOx, GPIO_Pin);	//повторяем чтение
+			/* если счётчик ошибок меньше 10 */
+			if(countErrCRC < 10){											 		
+				return one_wire_read_byte(GPIOx, GPIO_Pin);		/*!< повторяем чтение */
 			}
 			else{
 				countErrCRC = 0;
-				return 0x04;																//возвращаем ошибку CRC (поломка датчика)
+				return 0x02;																	/*!< возвращаем ошибку CRC (поломка датчика) */
 			}
 		}
 		countErrCRC = 0;
 
-		*((uint8_t *)&temp) = dataArr[0];									//Извлекаем младший байт температуры
-		*((uint8_t *)&temp+1) = dataArr[1];								//Извлекаем старший байт и объединеняем с младшим
-		temp = temp >> 4;															//Отбрасываем значение после запятой
-		//Если температура отрицательная
+		*((uint8_t *)&temp) = dataArr[0];									/*!< Извлекаем младший байт температуры */
+		*((uint8_t *)&temp+1) = dataArr[1];								/*!< Извлекаем старший байт и объединеняем с младшим */
+		temp = temp >> 4;																	/*!< Копируем целую часть в буффер */
+		/* Если температура отрицательная */
 		if(dataArr[1] & 0x80){
-			//если значение после запятой равно 0,5
+			/* если значение после запятой равно 0,5 */
 			if(!(dataArr[0] & 0x08)){
-				valueTemp = ~((~(temp|0xF000)) * 10 + 5)+1;
+				valueTemp = ~((~(temp|0xF000)) * 10 + 5)+1;		/*!< Преобразуем значение в дополнительный код и умножаем на 10 */
 			}
 			else{
-				valueTemp = ~((~(temp|0xF000)) * 10)+1;
+				valueTemp = ~((~(temp|0xF000)) * 10)+1;				/*!< Преобразуем значение в дополнительный код и умножаем на 10 */
 			}
 		}
-		//иначе если температура положительная
+		/* иначе если температура положительная */
 		else{
-			//если значение после запятой равно 0,5
+			/* если значение после запятой равно 0,5 */
 			if(dataArr[0] & 0x08){
-				valueTemp = temp * 10 + 5;	
+				valueTemp = temp * 10 + 5;										/*!< Значение умножаем на 10 */
 			}
 				else{
-				valueTemp = temp * 10;
+				valueTemp = temp * 10;												/*!< Значение умножаем на 10 */
 			}
 		}
-
-		return  valueTemp;															//Возвращаем полученное значение в виде 0b0xxxxxxx
+		return  valueTemp;																/*!< Возвращаем полученное значение */
 	}
 	else{
-		return (statErr << 8);													//Возвращаем ошибку если на шине нет датчика или замыкание
+		/* если датчик не подключен */
+		if(statErr == 0x04){
+			return 0xFFFF;
+		}
+		else{
+			return statErr;																	/*!< Возвращаем ошибку */
+		}
 	}
 }
 
+
 /**
-* @brief  Функция ЧТЕНИЯ значения температуры с проверкой ошибок.
-* @param  GPIOx: 		задаёт порт который будет использоваться (GPIOA - GPIOE)
-* @param  GPIO_Pin: задаёт номер пина (GPIO_Pin_0 - GPIO_Pin_15)
-* @info		Задержки реализованы на свободных циклах под частоту МК 48MHz
-*/
-	
-			
-//Функция производит первоначальную настройку порта и датчика DS18B20
-uint8_t one_wire_init_setting(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
+	* @brief  Функция производит первоначальную настройку порта и датчика DS18B20.
+	* @param  GPIOx: здесь x это буква порта переферии (A, B, C, D, E or F).
+	* @param  GPIO_Pin: определяет бит порта для чтения.
+	* @note   Функция производит первоначальную настройку порта и датчика DS18B20.
+	* @retval statErr: код ошибки: 	0x00 - no err
+																0x01 – короткое замыкание шины данных на 0
+																0x04 – на шине нет датчика
+	*/
+uint8_t init_one_wire_setting(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
 {
-	GPIO_InitTypeDef GPIO_InitStruct;
-	uint8_t stat = 0;
-	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA, ENABLE);
-	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOB, ENABLE);
+	uint8_t statErr = 0;
+	if(GPIOx == GPIOA){
+			RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA, ENABLE);
+	}
+	else if(GPIOx == GPIOB){
+			RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOB, ENABLE);
+	}
+	else if(GPIOx == GPIOC){
+			RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOC, ENABLE);
+	}
+	else if(GPIOx == GPIOD){
+			RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOD, ENABLE);
+	}
+	else if(GPIOx == GPIOE){
+			RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOE, ENABLE);
+	}
+	else{ 
+		if(GPIOx == GPIOF){
+			RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOF, ENABLE);
+		}
+	}
 	
-	//Кофигурируем пин
-	GPIO_InitStruct.GPIO_Pin = GPIO_Pin;
-	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_Level_2;
-	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_OUT;
-	GPIO_InitStruct.GPIO_OType = GPIO_OType_OD;
-	GPIO_Init(GPIOx, &GPIO_InitStruct);
-	//Первоначальное конфигурирование датчика DS18B20
-	stat = send_presence(GPIOx, GPIO_Pin);
-	one_wire_write_byte(GPIOx, GPIO_Pin, THERM_CMD_SKIPROM);			//обращаемся к единственному устройству на шине
-	one_wire_write_byte(GPIOx, GPIO_Pin, THERM_CMD_WSCRATCHPAD);	//запись в регистры
-	one_wire_write_byte(GPIOx, GPIO_Pin, 0x7D);										//верхний порог тревоги +125
-	one_wire_write_byte(GPIOx, GPIO_Pin, 0xB2);										//нижний порог тревоги -50
-	one_wire_write_byte(GPIOx, GPIO_Pin, 0x1F);										//разрядность 9 бит
-	return stat;
+	/* Кофигурируем пин как open drain*/
+	pin_OUT_OD(GPIOx, GPIO_Pin);
+
+	/* Первоначальное конфигурирование датчика DS18B20 */
+	statErr = send_presence(GPIOx, GPIO_Pin);
+	one_wire_write_byte(GPIOx, GPIO_Pin, THERM_CMD_SKIPROM);			/*!< обращаемся к единственному устройству на шине */
+	one_wire_write_byte(GPIOx, GPIO_Pin, THERM_CMD_WSCRATCHPAD);	/*!< запись в регистры */
+	one_wire_write_byte(GPIOx, GPIO_Pin, 0x7D);										/*!< верхний порог тревоги +125 */
+	one_wire_write_byte(GPIOx, GPIO_Pin, 0xB2);										/*!< нижний порог тревоги -50 */
+	one_wire_write_byte(GPIOx, GPIO_Pin, 0x1F);										/*!< разрядность 9 бит */
+	return statErr;
 }
 
 
-//Функция выдаёт сигнал сброса для инициализации One-Wire (сигнал presence)
+/**
+	* @brief  Функция выдаёт сигнал сброса для инициализации One-Wire (сигнал presence).
+	* @param  GPIOx: здесь x это буква порта переферии (A, B, C, D, E or F).
+	* @param  GPIO_Pin: определяет бит порта для чтения.
+	* @note   Функция выдаёт сигнал сброса для инициализации One-Wire (сигнал presence).
+	* @retval statErr: код ошибки: 	0x00 - no err
+																0x01 – короткое замыкание шины данных на 0
+																0x04 – на шине нет датчика
+	*/
 uint8_t send_presence(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin) 
 { 	
 	uint8_t statErr = 0;
-	if((GPIOx->IDR&GPIO_Pin)==0)return 2;			//Проверка замыкания на шину земли
+	if((GPIOx->IDR&GPIO_Pin)==0)return 1;			/*!< Проверка замыкания на шину земли */
 	pin_OUT_OD(GPIOx, GPIO_Pin);
-	GPIOx->BRR = GPIO_Pin;										//Притягиваем шину к земле
-	delay_mks(480);             							//Ждём минимум 480us
-	GPIOx->BSRR = GPIO_Pin;										//Отпускаем шину
+	GPIOx->BRR = GPIO_Pin;										/*!< Притягиваем шину к земле */
+	delay_mks(480);             							/*!< Ждём минимум 480us */
+	GPIOx->BSRR = GPIO_Pin;										/*!< Отпускаем шину */
 	pin_IN(GPIOx, GPIO_Pin);
-	delay_mks(60);														//Ждём 30-100us
-	statErr = (GPIOx->IDR&GPIO_Pin?1:0);					//Проверка присутствия датчика
-	delay_mks(420);														//Ждём 420us
-	return statErr;															//Возвращаем состояние 0-ok, 1-на шине нет датчика
+	delay_mks(60);														/*!< Ждём 30-100us */
+	statErr = (GPIOx->IDR&GPIO_Pin?4:0);			/*!< Проверка присутствия датчика */
+	delay_mks(420);														/*!< Ждём 420us */
+	return statErr;														/*!< Возвращаем состояние 0-ok, 4-на шине нет датчика */
 }
 
 
-//Функция ЗАПИСИ одного бита
+/**
+	* @brief  Функция ЗАПИСИ одного бита.
+	* @param  GPIOx: здесь x это буква порта переферии (A, B, C, D, E or F).
+	* @param  GPIO_Pin: определяет бит порта для чтения.
+	* @param  bit: записываемый бит (0 или 1).
+	* @note   Функция ЗАПИСИ одного бита.
+	* @retval None
+	*/
 void one_wire_write_bit(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin, uint8_t bit)
 {
-	pin_OUT_OD(GPIOx, GPIO_Pin);							//Настраиваем пин на выход
-	GPIOx->BRR = GPIO_Pin;										//Притягиваем шину к "0"
-	delay_mks(3);															//Ждём 3us
-	if(bit){GPIOx->BSRR = GPIO_Pin;}					//Если хотим отправить "1", отпускаем шину
-	delay_mks(80);														//Ждём от 60us до 120us
-	GPIOx->BSRR = GPIO_Pin;										//Отпускаем шину
+	pin_OUT_OD(GPIOx, GPIO_Pin);							/*!< Настраиваем пин на выход */
+	GPIOx->BRR = GPIO_Pin;										/*!< Притягиваем шину к "0" */
+	delay_mks(3);															/*!< Ждём 3us */
+	if(bit){GPIOx->BSRR = GPIO_Pin;}					/*!< Если хотим отправить "1", отпускаем шину */
+	delay_mks(80);														/*!< Ждём от 60us до 120us */
+	GPIOx->BSRR = GPIO_Pin;										/*!< Отпускаем шину */
 }
 
 
-//Функция ЧТЕНИЯ одного бита
+/**
+	* @brief  Функция ЧТЕНИЯ одного бита.
+	* @param  GPIOx: здесь x это буква порта переферии (A, B, C, D, E or F).
+	* @param  GPIO_Pin: определяет бит порта для чтения.
+	* @note   Функция ЧТЕНИЯ одного бита.
+	* @retval bit_val: считанный бит.
+	*/
 uint8_t one_wire_read_bit(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
 {
-	uint8_t bit = 0;
-	pin_OUT_OD(GPIOx, GPIO_Pin);							//Настраиваем пин на выход
-	GPIOx->BRR = GPIO_Pin;										//Притягиваем шину к "0"
-	delay_mks(1);															//Ждём 1us 
-	GPIOx->BSRR = GPIO_Pin;										//Отпускаем шину
-	delay_mks(1);															//Ждём 14us
-	pin_IN(GPIOx, GPIO_Pin);									//Настраиваем пин на вход
-	bit = (GPIOx->IDR&GPIO_Pin?1:0);					//Читаем бит
-	delay_mks(45);														//Ждём 45us 
-	return bit;																//Возвращаем прочитанный бит
+	uint8_t bit_val = 0;
+	pin_OUT_OD(GPIOx, GPIO_Pin);							/*!< Настраиваем пин на выход */
+	GPIOx->BRR = GPIO_Pin;										/*!< Притягиваем шину к "0" */
+	delay_mks(1);															/*!< Ждём 1us */
+	GPIOx->BSRR = GPIO_Pin;										/*!< Отпускаем шину */
+	delay_mks(1);															/*!< Ждём 14us */
+	pin_IN(GPIOx, GPIO_Pin);									/*!< Настраиваем пин на вход */
+	bit_val = (GPIOx->IDR&GPIO_Pin?1:0);			/*!< Читаем бит */
+	delay_mks(45);														/*!< Ждём 45us */
+	return bit_val;														/*!< Возвращаем прочитанный бит */
 }
 
-//Функция ЧТЕНИЯ одного байта
+
+/**
+	* @brief  Функция ЧТЕНИЯ одного байта.
+	* @param  GPIOx: здесь x это буква порта переферии (A, B, C, D, E or F).
+	* @param  GPIO_Pin: определяет бит порта для чтения.
+	* @note   Функция ЧТЕНИЯ одного байта.
+	* @retval byte_val: считанный бит.
+	*/
 uint8_t read_byte(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
 {
 uint8_t i;
-uint8_t value = 0;
+uint8_t byte_val = 0;
 
 	for (i=0; i<8; i++)
 	{
-	if(one_wire_read_bit(GPIOx, GPIO_Pin)) value|=0x01<<i;
+	if(one_wire_read_bit(GPIOx, GPIO_Pin)) byte_val|=0x01<<i;
 	//delay_mks(120);
 	}
-return(value);
+return byte_val;
 }
 
 
-//Функция ЗАПИСИ одного байта (8 бит)
+/**
+	* @brief  Функция ЗАПИСИ одного байта (8 бит).
+	* @param  GPIOx: здесь x это буква порта переферии (A, B, C, D, E or F).
+	* @param  GPIO_Pin: определяет бит порта для чтения.
+	* @param  data: записываемый байт.
+	* @note   Функция ЗАПИСИ одного байта (8 бит).
+	* @retval None
+	*/
 void one_wire_write_byte(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin, uint8_t data)
 {
 	uint8_t i;
@@ -212,7 +266,14 @@ void one_wire_write_byte(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin, uint8_t data)
 }
 
 
-//Функция запускает измерение температуры
+
+/**
+	* @brief  Функция запускает измерение температуры.
+	* @param  GPIOx: здесь x это буква порта переферии (A, B, C, D, E or F).
+	* @param  GPIO_Pin: определяет бит порта для чтения.
+	* @note   Функция запускает измерение температуры.
+	* @retval None
+	*/
 void one_ware_convert_t(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
 {
 		send_presence(GPIOx, GPIO_Pin);																//Сброс
@@ -221,35 +282,54 @@ void one_ware_convert_t(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
 }	
 
 
-//Функция переключает пин в IN
+/**
+	* @brief  Функция переключает пин в IN.
+	* @param  GPIOx: здесь x это буква порта переферии (A, B, C, D, E or F).
+	* @param  GPIO_Pin: определяет бит порта для чтения.
+	* @note   Функция переключает пин на ВХОД.
+	* @retval None
+	*/
 void pin_IN(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
 {
 	GPIO_InitTypeDef GPIO_InitStruct;
 	GPIO_InitStruct.GPIO_Pin = GPIO_Pin;
-	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_Level_2;
+	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_10MHz;
 	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_IN;
 	GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_NOPULL;
 	GPIO_Init(GPIOx, &GPIO_InitStruct);
 }
 
 
-//Функция переключает пин в OUT_OD
+/**
+	* @brief  Функция переключает пин в OUT_OD.
+	* @param  GPIOx: здесь x это буква порта переферии (A, B, C, D, E or F).
+	* @param  GPIO_Pin: определяет бит порта для чтения.
+	* @note   Функция переключает пин на ВЫХОД open drain.
+	* @retval None
+	*/
 void pin_OUT_OD(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
 {
 	GPIO_InitTypeDef GPIO_InitStruct;
 	GPIO_InitStruct.GPIO_Pin = GPIO_Pin;
-	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_Level_2;
+	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_10MHz;
 	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_OUT;
 	GPIO_InitStruct.GPIO_OType = GPIO_OType_OD;
 	GPIO_Init(GPIOx, &GPIO_InitStruct);
 }
 
-//Функция переключает пин в OUT_OD
+
+/**
+	* @brief  Функция переключает пин в OUT_PP.
+	* @param  GPIOx: здесь x это буква порта переферии (A, B, C, D, E or F).
+	* @param  GPIO_Pin: определяет бит порта для чтения.
+	* @note   Функция переключает пин на ВЫХОД push pull.
+	* @retval None
+	*/
 void pin_OUT_PP(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
 {
 	GPIO_InitTypeDef GPIO_InitStruct;
 	GPIO_InitStruct.GPIO_Pin=GPIO_Pin;
-	GPIO_InitStruct.GPIO_Speed=GPIO_Speed_Level_2;
+	GPIO_InitStruct.GPIO_Speed=GPIO_Speed_10MHz;
 	GPIO_InitStruct.GPIO_Mode=GPIO_Mode_OUT;
 	GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;
 	GPIO_Init(GPIOx, &GPIO_InitStruct);

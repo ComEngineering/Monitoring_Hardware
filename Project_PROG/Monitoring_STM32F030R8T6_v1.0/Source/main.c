@@ -35,8 +35,6 @@ uint32_t N_Speed_uart[]= {2400,			//0
 																
 uint8_t countReqUSART1;													
 													
-uint16_t TimerPeriod = 0;												
-													
 typeDef_UART_DATA uart1;				
 typeDef_table res_table;
 
@@ -148,20 +146,10 @@ uint32_t Flash_Read(uint32_t address)
 //i - тип сброса (0-первоначальный, 1-рабочий)
 void write_value_default(uint8_t i)
 {
-	W_T_INT = 30;									//(default) Внутренняя температура (tвн)
-	W_DT_INT = 5;									//(default) Δt вкл/выкл компрессора
-	W_TA1 = 31;										//(default) Температура(ta1) для срочного включения компрессора игнорируя все задержки
-	W_TA2 = 40;										//(default) Аварийно-высокая температура в шкафу (ta2)
-	W_TH1 = 18;										//(default) Температура(th1) срочного выключения компрессора игнорируя все задержки
-	W_TH2 = 7;										//(default) Аварийно-низкая температура в шкафу (th2)
-	W_ADDRESS = 1;								//(default) Адрес устройства	для ВНЕШНЕГО ModBus
-	W_SPEED = 3;									//(default) Скорость передачи для ВНЕШНЕГО ModBus
-	if(i != 1){
-		W_T7_ALARM = 60;						//(default) Аварийная температура хладагента
-		W_DT7_ALARM = 5;						//(default) Δt аварийной температуры хладагента
-	}
-
-
+	W_ADDRESS = 127;							//(default)
+	W_SPEED = 3;									//(default)
+	W_SDCO = 0;										//(default)
+	W_PDCO = 0;										//(default)
 
 	FLASH_Unlock();
 	Flash_Erase(ADDRESS_PAGE_63); 	//стираем 63 страницу в памяти
@@ -201,13 +189,12 @@ int main(void)
 //	}
 //	read_flash_value();											//Чтение параметрируемых значений из FLASH
 	
-	init_GPIO();														//Инициализация пинов
-	init_TIM6_delay();											//Инициализация таймера для задержек
-	//init_GPIO_one_wire();										//Инициализация датчиков температуры
-	
-	delay_ms(10);
-	TIM17_IRQHandler();
-	init_TIM17_delay_IRQ();									//Инициализация таймера для вызова секундного прерывания
+	init_TIM6_delay();											/*!< Инициализация таймера для временных задержек */
+	init_GPIO();														/*!< Инициализация пинов входов и выходов */
+	init_ADC((uint32_t*) &R_ADC_IN1);				/*!< Инициализация АЦП */
+	init_one_wire_setting(PIN_ONE_WIRE_T1); /*!< Инициализация датчика и пина под датчик (DS18B20) */
+	init_one_wire_setting(PIN_ONE_WIRE_T2); /*!< Инициализация датчика и пина под датчик (DS18B20) */
+	init_TIM17_delay_IRQ();									/*!< Инициализация таймера для вызова секундного прерывания */
 	
 	
 	//Настройка переферии для ModBus
@@ -218,7 +205,7 @@ int main(void)
 	//9600 	- 38
 	//14400	- 25
 	//19200 - 19
-	uart1.speed = 3;									//скорость для ВНУТРЕННЕГО
+	uart1.speed = 3;												//скорость для ВНУТРЕННЕГО
 	uart1.delay = 400; 											//таймаут приема
 	SET_PAR[1] = 1;													//адрес устройства	ВНУТРЕННИЙ
 	
