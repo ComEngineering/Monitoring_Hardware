@@ -83,7 +83,8 @@ void net_tx1(typeDef_UART_DATA *uart)
 		USART_ITConfig(USART1, USART_IT_TC, ENABLE);
 
 		//rs485 DE enable
-		GPIOA->BSRR = GPIO_Pin_12;
+		//GPIOA->BSRR = GPIO_Pin_12;
+		GPIO_WriteBit(PIN_USART_DE, Bit_SET);
 		USART_SendData(USART1, uart->buffer[uart->txcnt++]);
   }
 }
@@ -191,9 +192,9 @@ int main(void)
 	
 	init_TIM6_delay();											/*!< Инициализация таймера для временных задержек */
 	init_GPIO();														/*!< Инициализация пинов входов и выходов */
-	init_ADC((uint32_t*) &R_ADC_IN1);				/*!< Инициализация АЦП */
-	init_one_wire_setting(PIN_ONE_WIRE_T1); /*!< Инициализация датчика и пина под датчик (DS18B20) */
-	init_one_wire_setting(PIN_ONE_WIRE_T2); /*!< Инициализация датчика и пина под датчик (DS18B20) */
+	init_ADC((uint32_t*) &R_ADC_IN1);				/*!< Инициализация АЦП в связке с DMA*/
+	init_one_wire_setting(PIN_ONE_WIRE_T1); /*!< Инициализация порта и датчика Dt1(DS18B20) */
+	init_one_wire_setting(PIN_ONE_WIRE_T2); /*!< Инициализация порта и датчика Dt2(DS18B20) */
 	init_TIM17_delay_IRQ();									/*!< Инициализация таймера для вызова секундного прерывания */
 	
 	

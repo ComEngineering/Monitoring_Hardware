@@ -50,7 +50,7 @@ void init_EXTI_GPIO(void)
 */
 
 //*****************************************************************************
-//Настраиваем порты 
+//Настраиваем порты дискретных входов/выходов
 //*****************************************************************************
 void init_GPIO(void)
 {
@@ -59,23 +59,64 @@ void init_GPIO(void)
 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA, ENABLE);
 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOB, ENABLE);
 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOC, ENABLE);
+	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOD, ENABLE);
 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOF, ENABLE);
-	/* Init port_A  Input*/
+	/* Init port_A  Input */
 	GPIO_InitStruct.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7;	
 	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_10MHz;
 	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_IN;
 	GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;
 	GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_DOWN;
 	GPIO_Init(GPIOA, &GPIO_InitStruct);
-	/*Init port_B */
-	GPIO_InitStruct.GPIO_Pin = GPIO_Pin_0|GPIO_Pin_1|GPIO_Pin_12|GPIO_Pin_13|GPIO_Pin_14|GPIO_Pin_15;
+	/* Init port_B Input */
+	GPIO_InitStruct.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_12 | GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15;	
+	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_10MHz;
+	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_IN;
+	GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;
+	GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_DOWN;
+	GPIO_Init(GPIOB, &GPIO_InitStruct);
+	/* Init port_С Input */
+	GPIO_InitStruct.GPIO_Pin = GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7 | GPIO_Pin_8 | GPIO_Pin_9;	
+	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_10MHz;
+	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_IN;
+	GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;
+	GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_DOWN;
+	GPIO_Init(GPIOC, &GPIO_InitStruct);
+	
+	/* Init port_A Output */
+	GPIO_InitStruct.GPIO_Pin = GPIO_Pin_15;
+	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_10MHz;
+	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_OUT;
+	GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;
+	GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_DOWN;
+	GPIO_Init(GPIOA, &GPIO_InitStruct);
+	/* Init port_B Output */
+	GPIO_InitStruct.GPIO_Pin = GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7 | GPIO_Pin_8 | GPIO_Pin_9;
 	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_10MHz;
 	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_OUT;
 	GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;
 	GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_DOWN;
 	GPIO_Init(GPIOB, &GPIO_InitStruct);
-	/* Init port_F */
-	GPIO_InitStruct.GPIO_Pin = GPIO_Pin_5;
+	/* Init port_C Output */
+	GPIO_InitStruct.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_10 | GPIO_Pin_11 | GPIO_Pin_12;
+	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_10MHz;
+	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_OUT;
+	GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;
+	GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_DOWN;
+	GPIO_Init(GPIOC, &GPIO_InitStruct);
+	/* Init port_D Output */
+	GPIO_InitStruct.GPIO_Pin = GPIO_Pin_2;
+	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_10MHz;
+	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_OUT;
+	GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;
+	GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_DOWN;
+	GPIO_Init(GPIOD, &GPIO_InitStruct);
+	/* Init port_F Output */
+	GPIO_InitStruct.GPIO_Pin = GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7;
+	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_10MHz;
+	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_OUT;
+	GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;
+	GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_DOWN;
 	GPIO_Init(GPIOF, &GPIO_InitStruct);
 }
 
@@ -89,22 +130,18 @@ void init_ADC(uint32_t* lynkADC){
 	DMA_InitTypeDef DMA_InitStructure;
 	ADC_InitTypeDef ADC_InitStructure;
 	
-	RCC_APB2PeriphClockCmd(RCC_AHBPeriph_GPIOA, ENABLE);
+	/* Enable DMA1 and GPIOA clock */
+	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1, ENABLE);
+	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA, ENABLE);
 
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2|GPIO_Pin_3;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_Init(GPIOA, &GPIO_InitStructure);
 
-	RCC_ADCCLKConfig(RCC_ADCCLK_PCLK_Div2);
-
-	
-	/* Enable DMA1 clock */
-	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1, ENABLE);
-
 	/* DMA1 channel1 configuration ----------------------------------------------*/
 	DMA_DeInit(DMA1_Channel1);
-	DMA_InitStructure.DMA_PeripheralBaseAddr = 0x40012440;											// Адрес периферии (откуда берём данные)
+	DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t) (&(ADC1->DR));				// Адрес периферии (откуда берём данные)
 	DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t) lynkADC;									// Адрес памяти (куда кладём данные)
 	DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralSRC;													// Из периферии в память
 	DMA_InitStructure.DMA_BufferSize = 2;																				// Количество данных
@@ -120,6 +157,7 @@ void init_ADC(uint32_t* lynkADC){
 
 
 	//ADC settings
+	//RCC_ADCCLKConfig(RCC_ADCCLK_PCLK_Div2);
 	// enable ADC system clock
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE);
 	
@@ -129,8 +167,8 @@ void init_ADC(uint32_t* lynkADC){
 	ADC_Init(ADC1, &ADC_InitStructure);
 
 	//Настройка каналов
-	ADC_ChannelConfig(ADC1, ADC_Channel_2, ADC_SampleTime_239_5Cycles);
-	ADC_ChannelConfig(ADC1, ADC_Channel_3, ADC_SampleTime_239_5Cycles);
+	ADC_ChannelConfig(ADC1, ADC_Channel_2, ADC_SampleTime_55_5Cycles);
+	ADC_ChannelConfig(ADC1, ADC_Channel_3, ADC_SampleTime_55_5Cycles);
 
 	ADC_DMACmd(ADC1, ENABLE); //Enable ADC1 DMA
 	ADC_DMARequestModeConfig(ADC1, ADC_DMAMode_Circular);
@@ -139,7 +177,15 @@ void init_ADC(uint32_t* lynkADC){
 
 	//Calibration
 	ADC_GetCalibrationFactor(ADC1); //calibration
-	while(!ADC_GetFlagStatus(ADC1, ADC_FLAG_ADCAL));
+	uint16_t count_time = 0;
+	while(ADC_GetFlagStatus(ADC1, ADC_FLAG_ADCAL) != 0){
+		count_time++;
+		if(count_time > 0xf000){
+			HardFault_Handler();
+		}
+	}
+	
+	ADC_StartOfConversion(ADC1); //start conversion
 }
 
 

@@ -9,7 +9,8 @@
 //***************************************************************************
 //Дефайны используемых портов
 //***************************************************************************
-//Температурные датчики
+#define PIN_USART_DE					GPIOA, GPIO_Pin_12		//пин DE usart1
+
 #define PIN_ONE_WIRE_T1				GPIOB, GPIO_Pin_2			//пин датчика Dt1
 #define PIN_ONE_WIRE_T2				GPIOB, GPIO_Pin_10		//пин датчика Dt2
 #define PIN_ADC_IN1						GPIOA, GPIO_Pin_2			//пин аналогового входа IN1
@@ -17,6 +18,24 @@
 #define PIN_OVERLOAD_12V 			GPIOA, GPIO_Pin_0			//пин детектора перегрузки по выходному внешнему питанию 12В 400 мА
 #define PIN_LED_BLINK 				GPIOF, GPIO_Pin_5			//пин для светодиода состояния перегрузки
 
+
+#define PIN_DIN1 							GPIOA, GPIO_Pin_4			//пин дискретного сигнального входа 1
+#define PIN_DIN2 							GPIOA, GPIO_Pin_5			//пин дискретного сигнального входа 2
+#define PIN_DIN3 							GPIOA, GPIO_Pin_6			//пин дискретного сигнального входа 3
+#define PIN_DIN4 							GPIOA, GPIO_Pin_7			//пин дискретного сигнального входа 4
+#define PIN_DIN5 							GPIOС, GPIO_Pin_4			//пин дискретного сигнального входа 5
+#define PIN_DIN6 							GPIOС, GPIO_Pin_5			//пин дискретного сигнального входа 6
+#define PIN_DIN7 							GPIOB, GPIO_Pin_0			//пин дискретного сигнального входа 7
+#define PIN_DIN8 							GPIOB, GPIO_Pin_1			//пин дискретного сигнального входа 8
+
+#define PIN_DCIN1 						GPIOС, GPIO_Pin_6			//пин входа сухого контата 1
+#define PIN_DCIN2 						GPIOС, GPIO_Pin_7			//пин входа сухого контата 2
+#define PIN_DCIN3 						GPIOС, GPIO_Pin_8			//пин входа сухого контата 3
+#define PIN_DCIN4 						GPIOС, GPIO_Pin_9			//пин входа сухого контата 4
+#define PIN_DCIN5 						GPIOB, GPIO_Pin_12		//пин входа сухого контата 5
+#define PIN_DCIN6 						GPIOB, GPIO_Pin_13		//пин входа сухого контата 6
+#define PIN_DCIN7 						GPIOB, GPIO_Pin_14		//пин входа сухого контата 7
+#define PIN_DCIN8 						GPIOB, GPIO_Pin_15		//пин входа сухого контата 8
 
 
 //***************************************************************************

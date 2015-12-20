@@ -7,7 +7,7 @@
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
-static uint8_t count85C[9];
+static uint8_t count85C[2];
 //extern value_dTem data_T;
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
@@ -103,41 +103,35 @@ void EXTI4_15_IRQHandler(void)
 
 
 //***************************************************************************
-//Обработчик прерывания TIM17
+//Обработчик прерывания TIM17 (секундное прерывание)
 //***************************************************************************
 void TIM17_IRQHandler(void)
 {
 	TIM17->SR &= ~TIM_SR_UIF; 									//Сбрасываем флаг UIF
-	
-	
-	int16_t temp;
 	//GPIO_ToggleBits(PIN_LED_BLINK);							//led blink
-	
-	
 	
 //Обновление значений температур
 /************************************************************/	
-	temp = one_wire_read_byte(PIN_ONE_WIRE_T1);			//темп. окружающей среды
+	int16_t temp;
+	temp = one_wire_read_byte(PIN_ONE_WIRE_T1);
+	if((temp == 850) && count85C[0] < 3){
+		count85C[0]++;
+	}
+	else{
+		count85C[0] = 0;
+		R_DT1 = temp;
+	}
+/************************************************************/	
+	temp = one_wire_read_byte(PIN_ONE_WIRE_T2);
 	if((temp == 850) && count85C[1] < 3){
 		count85C[1]++;
 	}
 	else{
 		count85C[1] = 0;
-		R_DT1 = temp;
-	}
-/************************************************************/	
-	temp = one_wire_read_byte(PIN_ONE_WIRE_T2);			//темп. на входе фрикулинга (внутренний поток)
-	if((temp == 850) && count85C[2] < 3){
-		count85C[2]++;
-	}
-	else{
-		count85C[2] = 0;
 		R_DT2 = temp;
 	}
-
 /************************************************************/	
-
-	//Запуск измерения температур
+//Запуск измерения температур
 	one_ware_convert_t(PIN_ONE_WIRE_T1);
 	one_ware_convert_t(PIN_ONE_WIRE_T2);
 }
@@ -146,7 +140,6 @@ void TIM17_IRQHandler(void)
 
 //***************************************************************************
 //Обработчик прерывания USART1 
-//ВНУТРЕННИЙ ModBus
 //***************************************************************************
 void USART1_IRQHandler(void)
 {
@@ -178,7 +171,8 @@ void USART1_IRQHandler(void)
 			USART_ReceiveData (USART1);
 			uart1.txlen=0;
 			//rs485 DE disable
-			GPIOA->BRR = GPIO_Pin_12;
+			//GPIOA->BRR = GPIO_Pin_12;
+			GPIO_WriteBit(PIN_USART_DE, Bit_RESET);
 			USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);
 			USART_ITConfig(USART1, USART_IT_TC, DISABLE);
 		}
@@ -210,7 +204,7 @@ void TIM14_IRQHandler(void)
 //		GPIO_WriteBit(GPIOA,GPIO_Pin_5,Bit_SET);
 		
 	//проверяем окончание приёма uart1
-	if((uart1.rxtimer++>uart1.delay)&(uart1.rxcnt>1)){
+	if((uart1.rxtimer++ > uart1.delay) & (uart1.rxcnt > 1)){
 		uart1.rxgap=1;
 	}
 	else{

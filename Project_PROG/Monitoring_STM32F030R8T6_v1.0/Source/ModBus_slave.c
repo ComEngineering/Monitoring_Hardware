@@ -14,7 +14,7 @@ void modbus_slave1(typeDef_UART_DATA *MODBUS)
   unsigned int tmp;
 	
      //recive and checking rx query
-	if((MODBUS->buffer[0]!=0) & (MODBUS->rxcnt>5) & ((MODBUS->buffer[0]==SET_PAR[1]) | (MODBUS->buffer[0]==255)))
+	if((MODBUS->buffer[0] != 0) & (MODBUS->rxcnt > 5) & ((MODBUS->buffer[0] == SET_PAR[1]) | (MODBUS->buffer[0] == 255)))
  {
 		tmp=Crc16(MODBUS->buffer,MODBUS->rxcnt-2);
 
