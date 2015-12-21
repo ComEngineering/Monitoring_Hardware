@@ -12,42 +12,41 @@
 //*****************************************************************************
 //Инициализация прерывания от пина отслеживания перехода через ноль
 //*****************************************************************************
-/*
+
 void init_EXTI_GPIO(void)
 {
-	NVIC_InitTypeDef NVIC_InitStructure;
+//	NVIC_InitTypeDef NVIC_InitStructure;
 	GPIO_InitTypeDef GPIO_InitStruct;
 	EXTI_InitTypeDef EXTI_InitStruct;
 	
 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA, ENABLE);
 	//Init port_A
-	GPIO_InitStruct.GPIO_Pin = GPIO_Pin_12;	
-	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_Level_3;
+	GPIO_InitStruct.GPIO_Pin = GPIO_Pin_0;	
+	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_10MHz;
 	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_AF;
 	GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;
 	GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_DOWN;
 	GPIO_Init(GPIOA, &GPIO_InitStruct);
-	GPIO_PinAFConfig(GPIOA, GPIO_PinSource12, GPIO_AF_2);
+	GPIO_PinAFConfig(GPIOA, GPIO_PinSource0, GPIO_AF_0);
 	
 	
 	RCC_APB2PeriphClockCmd(RCC_APB2ENR_SYSCFGEN, ENABLE);
-	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOA, EXTI_PinSource12);
+	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOA, EXTI_PinSource0);
 	
-	EXTI_InitStruct.EXTI_Line = EXTI_Line12;
+	EXTI_InitStruct.EXTI_Line = EXTI_Line0;
   EXTI_InitStruct.EXTI_Mode = EXTI_Mode_Interrupt;
   EXTI_InitStruct.EXTI_Trigger = EXTI_Trigger_Rising_Falling;
   EXTI_InitStruct.EXTI_LineCmd = ENABLE;
 	EXTI_Init(&EXTI_InitStruct);
-	
-	NVIC_InitStructure.NVIC_IRQChannel = EXTI4_15_IRQn;
-	NVIC_InitStructure.NVIC_IRQChannelPriority = 3;
-	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-	NVIC_Init(&NVIC_InitStructure);
-	
-	//NVIC_EnableIRQ(EXTI4_15_IRQn); 				//разрешение прерывания EXTI4_15
-	//NVIC_SetPriority(EXTI4_15_IRQn, 3); 	//задаем приоритет прерывания
+
+//	NVIC_InitStructure.NVIC_IRQChannel = EXTI0_1_IRQn;
+//	NVIC_InitStructure.NVIC_IRQChannelPriority = 3;
+//	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+//	NVIC_Init(&NVIC_InitStructure);
+	NVIC_SetPriority(EXTI0_1_IRQn, 3); 	//задаем приоритет прерывания
+	NVIC_EnableIRQ(EXTI0_1_IRQn); 				//разрешение прерывания EXTI0_1
 }
-*/
+
 
 //*****************************************************************************
 //Настраиваем порты дискретных входов/выходов
@@ -62,7 +61,7 @@ void init_GPIO(void)
 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOD, ENABLE);
 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOF, ENABLE);
 	/* Init port_A  Input */
-	GPIO_InitStruct.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7;	
+	GPIO_InitStruct.GPIO_Pin = GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7;	
 	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_10MHz;
 	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_IN;
 	GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;
@@ -157,7 +156,7 @@ void init_ADC(uint32_t* lynkADC){
 
 
 	//ADC settings
-	//RCC_ADCCLKConfig(RCC_ADCCLK_PCLK_Div2);
+	//RCC_ADCCLKConfig(RCC_ADCCLK_PCLK_Div4);
 	// enable ADC system clock
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE);
 	
@@ -167,23 +166,19 @@ void init_ADC(uint32_t* lynkADC){
 	ADC_Init(ADC1, &ADC_InitStructure);
 
 	//Настройка каналов
-	ADC_ChannelConfig(ADC1, ADC_Channel_2, ADC_SampleTime_55_5Cycles);
-	ADC_ChannelConfig(ADC1, ADC_Channel_3, ADC_SampleTime_55_5Cycles);
+	ADC_ChannelConfig(ADC1, ADC_Channel_2, ADC_SampleTime_239_5Cycles);
+	ADC_ChannelConfig(ADC1, ADC_Channel_3, ADC_SampleTime_239_5Cycles);
 
 	ADC_DMACmd(ADC1, ENABLE); //Enable ADC1 DMA
 	ADC_DMARequestModeConfig(ADC1, ADC_DMAMode_Circular);
-	
-	ADC_Cmd(ADC1, ENABLE); //enable ADC1
 
 	//Calibration
 	ADC_GetCalibrationFactor(ADC1); //calibration
-	uint16_t count_time = 0;
-	while(ADC_GetFlagStatus(ADC1, ADC_FLAG_ADCAL) != 0){
-		count_time++;
-		if(count_time > 0xf000){
-			HardFault_Handler();
-		}
-	}
+	
+	ADC_Cmd(ADC1, ENABLE); //enable ADC1
+	
+	/* Wait the ADCEN flag */
+  while(!ADC_GetFlagStatus(ADC1, ADC_FLAG_ADEN));
 	
 	ADC_StartOfConversion(ADC1); //start conversion
 }
@@ -206,21 +201,21 @@ void init_TIM6_delay(void)
 //*****************************************************************************
 void init_TIM17_delay_IRQ(void)
 {
-	NVIC_InitTypeDef NVIC_InitStructure;
+//	NVIC_InitTypeDef NVIC_InitStructure;
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_TIM17,ENABLE);
 	
 	TIM17->PSC = 48000 - 1; 				//Настраиваем делитель на милисекунды
-  TIM17->ARR = 1000; 							//Прерывание раз в 1с
+  TIM17->ARR = 500; 							//Прерывание раз в 1с
   TIM17->DIER |= TIM_DIER_UIE; 		//Разрешаем прерывание от таймера
-  TIM17->CR1 |= TIM_CR1_CEN; 			//Начать отсчёт!
-	//NVIC_EnableIRQ(TIM17_IRQn); 		//Разрешение TIM14_IRQn прерывания 
-	//NVIC_SetPriority(TIM17_IRQn, 3); //задаем приоритет прерывания
+	NVIC_SetPriority(TIM17_IRQn, 3); //задаем приоритет прерывания
+	NVIC_EnableIRQ(TIM17_IRQn); 			//Разрешение TIM14_IRQn прерывания 
+	TIM17->CR1 |= TIM_CR1_CEN; 			//Начать отсчёт!
 	
 	//Настройка прерывания
-	NVIC_InitStructure.NVIC_IRQChannel = TIM17_IRQn;
-	NVIC_InitStructure.NVIC_IRQChannelPriority = 3;
-	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-	NVIC_Init(&NVIC_InitStructure);
+//	NVIC_InitStructure.NVIC_IRQChannel = TIM17_IRQn;
+//	NVIC_InitStructure.NVIC_IRQChannelPriority = 3;
+//	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+//	NVIC_Init(&NVIC_InitStructure);
 
 }
 
@@ -232,7 +227,7 @@ void init_TIM17_delay_IRQ(void)
 //********************************************************************************
 void SetupUSART1(void)
 {
-	NVIC_InitTypeDef  NVIC_InitStructure;
+//	NVIC_InitTypeDef  NVIC_InitStructure;
 	GPIO_InitTypeDef  GPIO_InitStructure;
 	USART_InitTypeDef USART_InitStructure;
 
@@ -265,7 +260,7 @@ void SetupUSART1(void)
 	GPIO_Init(GPIOA, &GPIO_InitStructure);
 	
 	//setting parametrs common for all uarts
-	USART_InitStructure.USART_BaudRate            = 9600;
+	USART_InitStructure.USART_BaudRate            = 19200;
 	USART_InitStructure.USART_WordLength          = USART_WordLength_8b;
 	USART_InitStructure.USART_StopBits            = USART_StopBits_1;
 	USART_InitStructure.USART_Parity              = USART_Parity_No ;
@@ -275,20 +270,19 @@ void SetupUSART1(void)
 	//USART_OverSampling8Cmd(USART1, ENABLE);
 	USART_Init(USART1, &USART_InitStructure);
 	USART_Cmd(USART1, ENABLE);
-	
+	USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);  				// Enable Receive interrupt
 	//Setting interrupts
-	NVIC_InitStructure.NVIC_IRQChannel = USART1_IRQn;
-	NVIC_InitStructure.NVIC_IRQChannelPriority = 0;
-	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-	NVIC_Init(&NVIC_InitStructure);
-	//NVIC_EnableIRQ(USART1_IRQn); 				//разрешение прерывания USART1_IRQn
-	//NVIC_SetPriority(USART1_IRQn, 0); 	//задаем приоритет прерывания
-	
+//	NVIC_InitStructure.NVIC_IRQChannel = USART1_IRQn;
+//	NVIC_InitStructure.NVIC_IRQChannelPriority = 0;
+//	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+//	NVIC_Init(&NVIC_InitStructure);
+	NVIC_SetPriority(USART1_IRQn, 0); 											// задаем приоритет прерывания
+	NVIC_EnableIRQ(USART1_IRQn); 														// разрешение прерывания USART1_IRQn
+
 //	USART_MSBFirstCmd(USART1, DISABLE);                   // LSB first transmitted/received
 //  USART_SetReceiverTimeOut(USART1, 10);                	// Timeout
 //  USART_ReceiverTimeOutCmd(USART1, ENABLE);             // Enables the receiver Time Out feature.
 //  USART_ITConfig(USART1, USART_IT_RTO, ENABLE);         // Enable receive time out interrupt
-	USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);  			// Enable Receive interrupt
 }
 
 
@@ -299,7 +293,7 @@ void SetupUSART1(void)
 //********************************************************************************
 void SetupTIM14(void)
 {
-	NVIC_InitTypeDef  NVIC_InitStructure;
+//	NVIC_InitTypeDef  NVIC_InitStructure;
 	TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;
 
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM14 , ENABLE);
@@ -317,11 +311,11 @@ void SetupTIM14(void)
 	TIM_Cmd(TIM14, ENABLE);
 
 	//Настройка прерывания
-	NVIC_InitStructure.NVIC_IRQChannel = TIM14_IRQn;
-	NVIC_InitStructure.NVIC_IRQChannelPriority = 2;
-	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-	NVIC_Init(&NVIC_InitStructure);
-	//NVIC_EnableIRQ(TIM14_IRQn); 						//разрешение прерывания TIM17_IRQn
-	//NVIC_SetPriority(TIM14_IRQn, 2); 				//задаем приоритет прерывания
+//	NVIC_InitStructure.NVIC_IRQChannel = TIM14_IRQn;
+//	NVIC_InitStructure.NVIC_IRQChannelPriority = 2;
+//	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+//	NVIC_Init(&NVIC_InitStructure);
+	NVIC_SetPriority(TIM14_IRQn, 2); 				//задаем приоритет прерывания
+	NVIC_EnableIRQ(TIM14_IRQn); 					//разрешение прерывания TIM17_IRQn
 }
 

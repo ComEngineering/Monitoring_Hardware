@@ -14,7 +14,7 @@ void modbus_slave1(typeDef_UART_DATA *MODBUS)
   unsigned int tmp;
 	
      //recive and checking rx query
-	if((MODBUS->buffer[0] != 0) & (MODBUS->rxcnt > 5) & ((MODBUS->buffer[0] == SET_PAR[1]) | (MODBUS->buffer[0] == 255)))
+	if((MODBUS->buffer[0] != 0) & (MODBUS->rxcnt > 5) & ((MODBUS->buffer[0] == MODBUS->address) | (MODBUS->buffer[0] == 255)))
  {
 		tmp=Crc16(MODBUS->buffer,MODBUS->rxcnt-2);
 
@@ -204,7 +204,7 @@ void TX_05(typeDef_UART_DATA *MODBUS)
 void TX_06(typeDef_UART_DATA *MODBUS)
 {
   unsigned int tmp;
-	unsigned int bufReg;
+	//unsigned int bufReg;
   //MODBUS[0] =SET_PAR[0]; // adress - stays a same as in recived
   //MODBUS[1] = 6; //query type - - stay a same as in recived
 
@@ -219,122 +219,8 @@ void TX_06(typeDef_UART_DATA *MODBUS)
 	
 	switch (tmp){
 /***************************************************************************/
-		/*  Значение задания рабочей температуры внутри шкафа*/
+		/*  Значение задания сетевого адреса */
 		case 20:
-			if((MODBUS->buffer[4] != 0) || (MODBUS->buffer[5] > 40) || (MODBUS->buffer[5] < 10)){
-				TX_EXCEPTION(MODBUS,0x03);	//выводим ошибку
-			}
-			else{
-				//MODBUS->buffer[2]  - byte count a same as in rx query
-				if(tmp<OBJ_SZ_F3_6){
-					MODBUS->txlen=MODBUS->rxcnt; //responce length
-					res_table.regsF3_6[tmp]=(MODBUS->buffer[4]<<8)+MODBUS->buffer[5];
-				}
-				else{
-					//illegal data
-					TX_EXCEPTION(MODBUS,0x02);
-				}
-			}
-			break;
-
-/***************************************************************************/
-		/*  Значение задания Δt температуры внутри шкафа*/
-		case 21:
-			if((MODBUS->buffer[4] != 0) || (MODBUS->buffer[5] > 20)){
-				TX_EXCEPTION(MODBUS,0x03);	//выводим ошибку
-			}
-			else{
-				//MODBUS->buffer[2]  - byte count a same as in rx query
-				if(tmp<OBJ_SZ_F3_6){
-					MODBUS->txlen=MODBUS->rxcnt; //responce length
-					res_table.regsF3_6[tmp]=(MODBUS->buffer[4]<<8)+MODBUS->buffer[5];
-				}
-				else{
-					//illegal data
-					TX_EXCEPTION(MODBUS,0x02);
-				}
-			}
-			break;
-
-/***************************************************************************/
-		/*  Значение задания температуры внутри шкафа для срочного включения компрессора*/
-		case 22:
-			if((MODBUS->buffer[4] != 0) || (MODBUS->buffer[5] > 90) || (MODBUS->buffer[5] < 20)){
-				TX_EXCEPTION(MODBUS,0x03);	//выводим ошибку
-			}
-			else{
-				//MODBUS->buffer[2]  - byte count a same as in rx query
-				if(tmp<OBJ_SZ_F3_6){
-					MODBUS->txlen=MODBUS->rxcnt; //responce length
-					res_table.regsF3_6[tmp]=(MODBUS->buffer[4]<<8)+MODBUS->buffer[5];
-				}
-				else{
-					//illegal data
-					TX_EXCEPTION(MODBUS,0x02);
-				}
-			}
-			break;
-
-/***************************************************************************/
-		/*  Значение задания аварийно-высокой температуры внитри шкафа*/
-		case 23:
-			if((MODBUS->buffer[4] != 0) || (MODBUS->buffer[5] > 90) || (MODBUS->buffer[5] < 20)){
-				TX_EXCEPTION(MODBUS,0x03);	//выводим ошибку
-			}
-			else{
-				//MODBUS->buffer[2]  - byte count a same as in rx query
-				if(tmp<OBJ_SZ_F3_6){
-					MODBUS->txlen=MODBUS->rxcnt; //responce length
-					res_table.regsF3_6[tmp]=(MODBUS->buffer[4]<<8)+MODBUS->buffer[5];
-				}
-				else{
-					//illegal data
-					TX_EXCEPTION(MODBUS,0x02);
-				}
-			}
-			break;
-
-/***************************************************************************/
-		/*  Значение задания температуры внутри шкафа для срочного выключения компрессора*/
-		case 24:
-			if((MODBUS->buffer[4] != 0) || (MODBUS->buffer[5] > 30) || (MODBUS->buffer[5] < 5)){
-				TX_EXCEPTION(MODBUS,0x03);	//выводим ошибку
-			}
-			else{
-				//MODBUS->buffer[2]  - byte count a same as in rx query
-				if(tmp<OBJ_SZ_F3_6){
-					MODBUS->txlen=MODBUS->rxcnt; //responce length
-					res_table.regsF3_6[tmp]=(MODBUS->buffer[4]<<8)+MODBUS->buffer[5];
-				}
-				else{
-					//illegal data
-					TX_EXCEPTION(MODBUS,0x02);
-				}
-			}
-			break;
-
-/***************************************************************************/
-		/*  Значение задания аварийно-низкой температуры внитри шкафа*/
-		case 25:
-			if((MODBUS->buffer[4] != 0) || (MODBUS->buffer[5] > 30) || (MODBUS->buffer[5] < 5)){
-				TX_EXCEPTION(MODBUS,0x03);	//выводим ошибку
-			}
-			else{
-				//MODBUS->buffer[2]  - byte count a same as in rx query
-				if(tmp<OBJ_SZ_F3_6){
-					MODBUS->txlen=MODBUS->rxcnt; //responce length
-					res_table.regsF3_6[tmp]=(MODBUS->buffer[4]<<8)+MODBUS->buffer[5];
-				}
-				else{
-					//illegal data
-					TX_EXCEPTION(MODBUS,0x02);
-				}
-			}
-			break;
-
-/***************************************************************************/
-		/*  Значение задания сетевого адреса ModBus (1 - 127)*/
-		case 26:
 			if((MODBUS->buffer[4] != 0) || (MODBUS->buffer[5] > 127) || (MODBUS->buffer[5] < 1)){
 				TX_EXCEPTION(MODBUS,0x03);	//выводим ошибку
 			}
@@ -349,13 +235,13 @@ void TX_06(typeDef_UART_DATA *MODBUS)
 					TX_EXCEPTION(MODBUS,0x02);
 				}
 			}
-			break;			
+			break;	
 
 /***************************************************************************/
-		/*  Значение задания скорости обмена*/
-		case 27:
-			//если задаваемое значение больше 5
-			if((MODBUS->buffer[4] != 0) || (MODBUS->buffer[5] > 5)){
+			/*  Значение задания скорости */
+		case 21:
+			//если задаваемое значение больше 9
+			if((MODBUS->buffer[4] != 0) || (MODBUS->buffer[5] > 9)){
 				TX_EXCEPTION(MODBUS,0x03);	//выводим ошибку
 			}
 			else{
@@ -372,9 +258,10 @@ void TX_06(typeDef_UART_DATA *MODBUS)
 			break;
 
 /***************************************************************************/
-		/*  Значение задания аварийной температуры хладагента*/
-		case 28:
-			if((MODBUS->buffer[4] != 0) || (MODBUS->buffer[5] > 90) || (MODBUS->buffer[5] < 30)){
+		/*  Значение задания состояний выходов сигнальных сухих контактов SDCO */
+		case 22:
+			/* если выходит за предел 13 бита */
+			if(MODBUS->buffer[4] > 0x3F){
 				TX_EXCEPTION(MODBUS,0x03);	//выводим ошибку
 			}
 			else{
@@ -391,202 +278,9 @@ void TX_06(typeDef_UART_DATA *MODBUS)
 			break;
 
 /***************************************************************************/
-		/*  Значение задания Δt аварийной температуры хладагента*/
-		case 29:
-			if((MODBUS->buffer[4] != 0) || (MODBUS->buffer[5] > 30)){
-				TX_EXCEPTION(MODBUS,0x03);	//выводим ошибку
-			}
-			else{
-				//MODBUS->buffer[2]  - byte count a same as in rx query
-				if(tmp<OBJ_SZ_F3_6){
-					MODBUS->txlen=MODBUS->rxcnt; //responce length
-					res_table.regsF3_6[tmp]=(MODBUS->buffer[4]<<8)+MODBUS->buffer[5];
-				}
-				else{
-					//illegal data
-					TX_EXCEPTION(MODBUS,0x02);
-				}
-			}
-			break;
-
-/***************************************************************************/
-		/*  Значение задания температуры для зоны «+» конденсатора*/
-		case 30:
-			if((MODBUS->buffer[4] != 0) || (MODBUS->buffer[5] > 50) || (MODBUS->buffer[5] < 20)){
-				TX_EXCEPTION(MODBUS,0x03);	//выводим ошибку
-			}
-			else{
-				//MODBUS->buffer[2]  - byte count a same as in rx query
-				if(tmp<OBJ_SZ_F3_6){
-					MODBUS->txlen=MODBUS->rxcnt; //responce length
-					res_table.regsF3_6[tmp]=(MODBUS->buffer[4]<<8)+MODBUS->buffer[5];
-				}
-				else{
-					//illegal data
-					TX_EXCEPTION(MODBUS,0x02);
-				}
-			}
-			break;
-
-/***************************************************************************/
-		/*  Значение задания температуры для зоны «++» конденсатора*/
-		case 31:
-			if((MODBUS->buffer[4] != 0) || (MODBUS->buffer[5] > 50) || (MODBUS->buffer[5] < 20)){
-				TX_EXCEPTION(MODBUS,0x03);	//выводим ошибку
-			}
-			else{
-				//MODBUS->buffer[2]  - byte count a same as in rx query
-				if(tmp<OBJ_SZ_F3_6){
-					MODBUS->txlen=MODBUS->rxcnt; //responce length
-					res_table.regsF3_6[tmp]=(MODBUS->buffer[4]<<8)+MODBUS->buffer[5];
-				}
-				else{
-					//illegal data
-					TX_EXCEPTION(MODBUS,0x02);
-				}
-			}
-			break;
-
-/***************************************************************************/
-		/*  Значение задания температуры для зоны «-» конденсатора*/
-		case 32:
-			if((MODBUS->buffer[4] != 0) || (MODBUS->buffer[5] > 50) || (MODBUS->buffer[5] < 15)){
-				TX_EXCEPTION(MODBUS,0x03);	//выводим ошибку
-			}
-			else{
-				//MODBUS->buffer[2]  - byte count a same as in rx query
-				if(tmp<OBJ_SZ_F3_6){
-					MODBUS->txlen=MODBUS->rxcnt; //responce length
-					res_table.regsF3_6[tmp]=(MODBUS->buffer[4]<<8)+MODBUS->buffer[5];
-				}
-				else{
-					//illegal data
-					TX_EXCEPTION(MODBUS,0x02);
-				}
-			}
-			break;
-
-/***************************************************************************/
-		/*  Значение задания температуры для зоны «--» конденсатора*/
-		case 33:
-			if((MODBUS->buffer[4] != 0) || (MODBUS->buffer[5] > 50) || (MODBUS->buffer[5] < 15)){
-				TX_EXCEPTION(MODBUS,0x03);	//выводим ошибку
-			}
-			else{
-				//MODBUS->buffer[2]  - byte count a same as in rx query
-				if(tmp<OBJ_SZ_F3_6){
-					MODBUS->txlen=MODBUS->rxcnt; //responce length
-					res_table.regsF3_6[tmp]=(MODBUS->buffer[4]<<8)+MODBUS->buffer[5];
-				}
-				else{
-					//illegal data
-					TX_EXCEPTION(MODBUS,0x02);
-				}
-			}
-			break;
-
-/***************************************************************************/
-		/*  Значение задания интервала времени для зоны «+» конденсатора*/
-		case 34:
-			bufReg = ((bufReg | MODBUS->buffer[4]) << 8) | MODBUS->buffer[5]; //Объединение байтов регистров
-			if((bufReg > 300) || (bufReg < 1)){
-				TX_EXCEPTION(MODBUS,0x03);	//выводим ошибку
-			}
-			else{
-				//MODBUS->buffer[2]  - byte count a same as in rx query
-				if(tmp<OBJ_SZ_F3_6){
-					MODBUS->txlen=MODBUS->rxcnt; //responce length
-					res_table.regsF3_6[tmp]=(MODBUS->buffer[4]<<8)+MODBUS->buffer[5];
-				}
-				else{
-					//illegal data
-					TX_EXCEPTION(MODBUS,0x02);
-				}
-			}
-			break;
-
-/***************************************************************************/
-		/*  Значение задания интервала времени для зоны «++» конденсатора*/
-		case 35:
-			bufReg = ((bufReg | MODBUS->buffer[4]) << 8) | MODBUS->buffer[5]; //Объединение байтов регистров
-			if((bufReg > 300) || (bufReg < 1)){
-				TX_EXCEPTION(MODBUS,0x03);	//выводим ошибку
-			}
-			else{
-				//MODBUS->buffer[2]  - byte count a same as in rx query
-				if(tmp<OBJ_SZ_F3_6){
-					MODBUS->txlen=MODBUS->rxcnt; //responce length
-					res_table.regsF3_6[tmp]=(MODBUS->buffer[4]<<8)+MODBUS->buffer[5];
-				}
-				else{
-					//illegal data
-					TX_EXCEPTION(MODBUS,0x02);
-				}
-			}
-			break;
-
-/***************************************************************************/
-		/*  Значение задания интервала времени для зоны «-» конденсатора*/
-		case 36:
-			bufReg = ((bufReg | MODBUS->buffer[4]) << 8) | MODBUS->buffer[5]; //Объединение байтов регистров
-			if((bufReg > 300) || (bufReg < 1)){
-				TX_EXCEPTION(MODBUS,0x03);	//выводим ошибку
-			}
-			else{
-				//MODBUS->buffer[2]  - byte count a same as in rx query
-				if(tmp<OBJ_SZ_F3_6){
-					MODBUS->txlen=MODBUS->rxcnt; //responce length
-					res_table.regsF3_6[tmp]=(MODBUS->buffer[4]<<8)+MODBUS->buffer[5];
-				}
-				else{
-					//illegal data
-					TX_EXCEPTION(MODBUS,0x02);
-				}
-			}
-			break;
-
-/***************************************************************************/
-		/*  Значение задания температуры для включения фрикулига*/
-		case 37:
-			if((MODBUS->buffer[4] != 0) || (MODBUS->buffer[5] > 50)){
-				TX_EXCEPTION(MODBUS,0x03);	//выводим ошибку
-			}
-			else{
-				//MODBUS->buffer[2]  - byte count a same as in rx query
-				if(tmp<OBJ_SZ_F3_6){
-					MODBUS->txlen=MODBUS->rxcnt; //responce length
-					res_table.regsF3_6[tmp]=(MODBUS->buffer[4]<<8)+MODBUS->buffer[5];
-				}
-				else{
-					//illegal data
-					TX_EXCEPTION(MODBUS,0x02);
-				}
-			}
-			break;
-
-/***************************************************************************/
-		/*  Значение задания температуры для включения фрикулига*/
-		case 44:
-			if((MODBUS->buffer[4] != 0) || (MODBUS->buffer[5] > 100)){
-				TX_EXCEPTION(MODBUS,0x03);	//выводим ошибку
-			}
-			else{
-				//MODBUS->buffer[2]  - byte count a same as in rx query
-				if(tmp<OBJ_SZ_F3_6){
-					MODBUS->txlen=MODBUS->rxcnt; //responce length
-					res_table.regsF3_6[tmp]=(MODBUS->buffer[4]<<8)+MODBUS->buffer[5];
-				}
-				else{
-					//illegal data
-					TX_EXCEPTION(MODBUS,0x02);
-				}
-			}
-			break;
-
-/***************************************************************************/
-		/*  Значение задания температуры для включения фрикулига*/
-		case 45:
-			if((MODBUS->buffer[4] != 0) || (MODBUS->buffer[5] > 100)){
+		/*  Значение задания состояний выходов силовых сухих контактов PDCO */
+		case 23:
+			if((MODBUS->buffer[4] != 0) || (MODBUS->buffer[5] > 0x0F)){
 				TX_EXCEPTION(MODBUS,0x03);	//выводим ошибку
 			}
 			else{
@@ -615,73 +309,6 @@ void TX_06(typeDef_UART_DATA *MODBUS)
 			}
 			break;
 	}
-/*
-	//если выбран регистр задания аварийно-высокой температуры в шкафу
-	if(tmp == 23){
-		if(MODBUS->buffer[5] <= W_T_INT || MODBUS->buffer[5] <= W_TA1){
-			TX_EXCEPTION(MODBUS,0x03);	//выводим ошибку
-		}
-		else{
-			//MODBUS->buffer[2]  - byte count a same as in rx query
-			if(tmp<OBJ_SZ_F3_6){
-				MODBUS->txlen=MODBUS->rxcnt; //responce length
-				res_table.regsF3_6[tmp]=(MODBUS->buffer[4]<<8)+MODBUS->buffer[5];
-			}
-			else{
-				//illegal data
-				TX_EXCEPTION(MODBUS,0x02);
-			}
-		}
-	}
-	
-	//если выбран регистр задания аварийно-низкой температуры в шкафу
-	else if(tmp == 25){
-		if(MODBUS->buffer[5] >= W_T_INT || MODBUS->buffer[5] >= W_TH1){
-			TX_EXCEPTION(MODBUS,0x03);	//выводим ошибку
-		}
-		else{
-			//MODBUS->buffer[2]  - byte count a same as in rx query
-			if(tmp<OBJ_SZ_F3_6){
-				MODBUS->txlen=MODBUS->rxcnt; //responce length
-				res_table.regsF3_6[tmp]=(MODBUS->buffer[4]<<8)+MODBUS->buffer[5];
-			}
-			else{
-				//illegal data
-				TX_EXCEPTION(MODBUS,0x02);
-			}
-		}
-	}
-	
-	//если выбран регистр задания скорости для ModBus
-	else if(tmp == 27){
-		//если задаваемое значение больше 5
-		if(MODBUS->buffer[5] > 5){
-			TX_EXCEPTION(MODBUS,0x03);	//выводим ошибку
-		}
-		else{
-			//MODBUS->buffer[2]  - byte count a same as in rx query
-			if(tmp<OBJ_SZ_F3_6){
-				MODBUS->txlen=MODBUS->rxcnt; //responce length
-				res_table.regsF3_6[tmp]=(MODBUS->buffer[4]<<8)+MODBUS->buffer[5];
-			}
-			else{
-				//illegal data
-				TX_EXCEPTION(MODBUS,0x02);
-			}
-		}
-	}
-	else{
-		//MODBUS->buffer[2]  - byte count a same as in rx query
-		if(tmp<OBJ_SZ_F3_6){
-			MODBUS->txlen=MODBUS->rxcnt; //responce length
-			res_table.regsF3_6[tmp]=(MODBUS->buffer[4]<<8)+MODBUS->buffer[5];
-		}
-		else{
-			//illegal data
-			TX_EXCEPTION(MODBUS,0x02);
-		}
-}
-*/
 }
 
 
@@ -707,17 +334,17 @@ void TX_43(typeDef_UART_DATA *MODBUS)
 			MODBUS->buffer[7]	= 0x03;								//Number Of Objects
 			MODBUS->buffer[8]	= 0x00;								//Object Id
 			MODBUS->buffer[9]	= 4;									//Object Length
-			MODBUS->buffer[10]= CompanyID[0];				//Object Value	"*"
-			MODBUS->buffer[11]= CompanyID[1];				//Object Value	"*"
-			MODBUS->buffer[12]= CompanyID[2];				//Object Value	"*"
-			MODBUS->buffer[13]= CompanyID[3];				//Object Value	"*"
+			MODBUS->buffer[10]= CompanyID[0];				//Object Value	"T"
+			MODBUS->buffer[11]= CompanyID[1];				//Object Value	"E"
+			MODBUS->buffer[12]= CompanyID[2];				//Object Value	"C"
+			MODBUS->buffer[13]= CompanyID[3];				//Object Value	"O"
 			MODBUS->buffer[14]= 0x01;								//Object Id
 			MODBUS->buffer[15]= 7;									//Object Length
-			MODBUS->buffer[16]= ProdCode[0];				//Object Value	"A"
-			MODBUS->buffer[17]= ProdCode[1];				//Object Value	"i"
-			MODBUS->buffer[18]= ProdCode[2];				//Object Value	"r"
-			MODBUS->buffer[19]= ProdCode[3];				//Object Value	"c"
-			MODBUS->buffer[20]= ProdCode[4];				//Object Value	"o"
+			MODBUS->buffer[16]= ProdCode[0];				//Object Value	"S"
+			MODBUS->buffer[17]= ProdCode[1];				//Object Value	"M"
+			MODBUS->buffer[18]= ProdCode[2];				//Object Value	"-"
+			MODBUS->buffer[19]= ProdCode[3];				//Object Value	"I"
+			MODBUS->buffer[20]= ProdCode[4];				//Object Value	"O"
 //			MODBUS->buffer[21]= ProdCode[5];				//Object Value	"o"
 //			MODBUS->buffer[22]= ProdCode[6];				//Object Value	"l"
 			MODBUS->buffer[23]= 0x02;								//Object Id

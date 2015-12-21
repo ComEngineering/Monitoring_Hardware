@@ -17,19 +17,19 @@ char CompanyID[4] = "TECO";
 char ProdCode[5] = "SM-IO";
 char Version[5] = "1.0.1";
 
-//Номера адресов ModBus
-uint8_t SET_PAR[3];							//[1]-адрес ВНУТРЕННИЙ, [2]-адрес ВНЕШНИЙ
+uint16_t ADC_value[2];
+
 //Значения скоростей для ModBus
 uint32_t N_Speed_uart[]= {2400,			//0 
 													4800, 		//1
 													7200, 		//2
 													9600, 		//3
 													14400, 		//4
-													19200 		//5
-													/*38400, 		//6
+													19200, 		//5
+													38400, 		//6
 													57600, 		//7
-													115200,
-													256000*/};	//8
+													115200,		//8
+													256000};	//9
 
 
 																
@@ -46,7 +46,7 @@ void net_tx1(typeDef_UART_DATA *uart);
 void Flash_Erase(unsigned int pageAddress);
 void Flash_Write(unsigned char* data, unsigned int address, unsigned int count);
 uint32_t Flash_Read(uint32_t address);
-void write_value_default(uint8_t i);
+void write_value_default(void);
 void read_flash_value(void);
 void write_flash_value(void);
 
@@ -72,22 +72,22 @@ void IWDG_Feed(void)
 
 
 //*****************************************************************************
-//Старт отправки данных (НА ВНУТРЕННИЙ) по UART1 если данные готовы
+//Старт отправки данных по UART1 если данные готовы
 //*****************************************************************************
-void net_tx1(typeDef_UART_DATA *uart)
-{
-  if((uart->txlen>0)&(uart->txcnt==0))
-  {
-		//countReqUSART1 = 0;
-		USART_ITConfig(USART1, USART_IT_RXNE, DISABLE);
-		USART_ITConfig(USART1, USART_IT_TC, ENABLE);
+//void net_tx1(typeDef_UART_DATA *uart)
+//{
+//  if((uart->txlen>0)&(uart->txcnt==0))
+//  {
+//		//countReqUSART1 = 0;
+//		USART_ITConfig(USART1, USART_IT_RXNE, DISABLE);
+//		USART_ITConfig(USART1, USART_IT_TC, ENABLE);
 
-		//rs485 DE enable
-		//GPIOA->BSRR = GPIO_Pin_12;
-		GPIO_WriteBit(PIN_USART_DE, Bit_SET);
-		USART_SendData(USART1, uart->buffer[uart->txcnt++]);
-  }
-}
+//		//rs485 DE enable
+//		GPIOA->BSRR = GPIO_Pin_12;
+//		//GPIO_WriteBit(PIN_USART_DE, Bit_SET);
+//		USART_SendData(USART1, uart->buffer[uart->txcnt++]);
+//  }
+//}
 
 
 //*****************************************************************************
@@ -144,8 +144,7 @@ uint32_t Flash_Read(uint32_t address)
 
 
 //Сброс параметрируемых значений в default
-//i - тип сброса (0-первоначальный, 1-рабочий)
-void write_value_default(uint8_t i)
+void write_value_default(void)
 {
 	W_ADDRESS = 127;							//(default)
 	W_SPEED = 3;									//(default)
@@ -154,7 +153,7 @@ void write_value_default(uint8_t i)
 
 	FLASH_Unlock();
 	Flash_Erase(ADDRESS_PAGE_63); 	//стираем 63 страницу в памяти
-	Flash_Write((uint8_t*)&res_table.regsF3_6[20], ADDRESS_PAGE_63, 54);	//Сохраняем на FLASH
+	Flash_Write((uint8_t*)&res_table.regsF3_6[20], ADDRESS_PAGE_63, 8);	//Сохраняем на FLASH
 	FLASH_Lock();
 }
 
@@ -163,10 +162,6 @@ void read_flash_value(void)
 {
 	*(__IO uint32_t*)&res_table.regsF3_6[20] = Flash_Read(ADDRESS_PAGE_63);
 	*(__IO uint32_t*)&res_table.regsF3_6[22] = Flash_Read(ADDRESS_PAGE_63+4);
-	*(__IO uint32_t*)&res_table.regsF3_6[24] = Flash_Read(ADDRESS_PAGE_63+8);
-	*(__IO uint32_t*)&res_table.regsF3_6[26] = Flash_Read(ADDRESS_PAGE_63+12);
-	*(__IO uint32_t*)&res_table.regsF3_6[28] = Flash_Read(ADDRESS_PAGE_63+16);
-	*(__IO uint32_t*)&res_table.regsF3_6[30] = Flash_Read(ADDRESS_PAGE_63+20);
 }
 
 
@@ -184,15 +179,18 @@ void write_flash_value(void)
 int main(void)
 {
 	//NVIC_SystemReset ();
-	//Если параметрируемые значения отсутствуют на FLASH
-//	if(Flash_Read(ADDRESS_PAGE_63) == 0xFFFFFFFF){
-//		write_value_default(0);								//Сбрасываем значения в default
-//	}
-//	read_flash_value();											//Чтение параметрируемых значений из FLASH
+	/* Если параметрируемые значения отсутствуют на FLASH */
+	if(Flash_Read(ADDRESS_PAGE_63) == 0xFFFFFFFF){
+		write_value_default();									//Сбрасываем значения в default
+	}
+	/* Чтение параметрируемых значений из FLASH */
+	res_table.regsF3_6[20] = Flash_Read(ADDRESS_PAGE_63);
+	res_table.regsF3_6[22] = Flash_Read(ADDRESS_PAGE_63+4);
 	
 	init_TIM6_delay();											/*!< Инициализация таймера для временных задержек */
+	//init_EXTI_GPIO();												/*!< Инициализация пина детектора перегрузки */
 	init_GPIO();														/*!< Инициализация пинов входов и выходов */
-	init_ADC((uint32_t*) &R_ADC_IN1);				/*!< Инициализация АЦП в связке с DMA*/
+	init_ADC((uint32_t*) &ADC_value[0]);		/*!< Инициализация АЦП в связке с DMA*/
 	init_one_wire_setting(PIN_ONE_WIRE_T1); /*!< Инициализация порта и датчика Dt1(DS18B20) */
 	init_one_wire_setting(PIN_ONE_WIRE_T2); /*!< Инициализация порта и датчика Dt2(DS18B20) */
 	init_TIM17_delay_IRQ();									/*!< Инициализация таймера для вызова секундного прерывания */
@@ -200,15 +198,20 @@ int main(void)
 	
 	//Настройка переферии для ModBus
 	//тймауты приёма:
-	//2400 	- 150
-	//4800 	- 75
-	//7200 	- 48
-	//9600 	- 38
-	//14400	- 25
-	//19200 - 19
+	//2400 	- 150		//0
+	//4800 	- 75		//1
+	//7200 	- 48		//2
+	//9600 	- 38		//3
+	//14400	- 25		//4
+	//19200 - 19		//5
+	//38400 - 			//6
+	//57600 				//7
+	//115200				//8
+	//256000				//9
+
 	uart1.speed = 3;												//скорость для ВНУТРЕННЕГО
-	uart1.delay = 400; 											//таймаут приема
-	SET_PAR[1] = 1;													//адрес устройства	ВНУТРЕННИЙ
+	uart1.delay = 50; 											//таймаут приема
+	uart1.address = 1;
 	
 	SetupUSART1();													//инициализация USART для ВНУТРЕННЕГО
 	SetupTIM14();														//Инициализация таймера для таймаут приема
@@ -221,13 +224,23 @@ int main(void)
 		
 		if(!GPIO_ReadInputDataBit(PIN_OVERLOAD_12V)){		
 			GPIO_SetBits(PIN_LED_BLINK);				//led blink
-		}
-		else{
+			delay_ms(200);
 			GPIO_ResetBits(PIN_LED_BLINK);				//led blink
+			delay_ms(200);
+			GPIO_SetBits(PIN_LED_BLINK);				//led blink
+			delay_ms(200);
+			GPIO_ResetBits(PIN_LED_BLINK);				//led blink
+			delay_ms(200);
+			GPIO_SetBits(PIN_LED_BLINK);				//led blink
+			delay_ms(200);
+			GPIO_ResetBits(PIN_LED_BLINK);				//led blink
+			delay_ms(200);
 		}
-		delay_ms(10);
+
+
 		
-		SET_PAR[2] = W_ADDRESS;								//Обновление ModBus адреса ВНЕШНЕГО
+		
+//		SET_PAR[2] = W_ADDRESS;								//Обновление ModBus адреса ВНЕШНЕГО
 		
 		//Обновление скорости USART для ВНЕШНЕГО
 //		if(W_SPEED != uart1.speed){
@@ -245,11 +258,11 @@ int main(void)
 		
 
 		//ModBus коммуникация ВНУТРЕННЯЯ
-		if(uart1.rxgap==1)										//если пришёл запрос
-		{
-			modbus_slave1(&uart1);							//подготовка данных на отправку
-			net_tx1(&uart1);										//отправка данных
-		}
+//		if(uart1.rxgap==1)										//если пришёл запрос
+//		{
+//			modbus_slave1(&uart1);							//подготовка данных на отправку
+//			net_tx1(&uart1);										//отправка данных
+//		}
 	
 		//Если параметрируемые значения изменились
 //		if(	*(__IO uint32_t*)&res_table.regsF3_6[20] != Flash_Read(ADDRESS_PAGE_63)

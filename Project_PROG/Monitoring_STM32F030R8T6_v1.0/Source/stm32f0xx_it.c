@@ -1,7 +1,7 @@
 /* Includes ------------------------------------------------------------------*/
 
 #include "stm32f0xx_it.h"
-
+#include "main_ini.h"
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
@@ -88,15 +88,10 @@ void SysTick_Handler(void)
 //***************************************************************************
 //Обработчик прерывания от изменения состояния PA12
 //***************************************************************************
-void EXTI4_15_IRQHandler(void)
+void EXTI0_1_IRQHandler(void)
 {
-//	TIM1->CR1 |= TIM_CR1_CEN;	
-//	GPIO_ToggleBits(GPIOB, GPIO_Pin_10);
-//	tempF();
-//	delay_mks(res_table.regs[10]*10);
-//	GPIO_ResetBits(GPIOA, GPIO_Pin_8);
-	EXTI_ClearFlag(EXTI_Line12);
-
+	EXTI_ClearFlag(EXTI_Line0);
+	GPIO_SetBits(PIN_LED_BLINK);				//led blink
 }
 
 
@@ -131,9 +126,18 @@ void TIM17_IRQHandler(void)
 		R_DT2 = temp;
 	}
 /************************************************************/	
-//Запуск измерения температур
+/* Запуск измерения температур */
 	one_ware_convert_t(PIN_ONE_WIRE_T1);
 	one_ware_convert_t(PIN_ONE_WIRE_T2);
+
+	
+/* Обновление значений ADC */
+	if(ADC_value[1] != R_ADC_IN1){
+		R_ADC_IN1 = ADC_value[1];
+	}
+	if(ADC_value[0] != R_ADC_IN2){
+		R_ADC_IN2 = ADC_value[0];
+	}
 }
 
 
@@ -171,8 +175,8 @@ void USART1_IRQHandler(void)
 			USART_ReceiveData (USART1);
 			uart1.txlen=0;
 			//rs485 DE disable
-			//GPIOA->BRR = GPIO_Pin_12;
-			GPIO_WriteBit(PIN_USART_DE, Bit_RESET);
+			GPIOA->BRR = GPIO_Pin_12;
+			//GPIO_WriteBit(PIN_USART_DE, Bit_RESET);
 			USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);
 			USART_ITConfig(USART1, USART_IT_TC, DISABLE);
 		}
@@ -205,10 +209,39 @@ void TIM14_IRQHandler(void)
 		
 	//проверяем окончание приёма uart1
 	if((uart1.rxtimer++ > uart1.delay) & (uart1.rxcnt > 1)){
-		uart1.rxgap=1;
+		modbus_slave1(&uart1);							//подготовка данных на отправку
+//		net_tx1(&uart1);										//отправка данных
+		
+		if((uart1.txlen>0)&(uart1.txcnt==0))
+  {
+		//countReqUSART1 = 0;
+		USART_ITConfig(USART1, USART_IT_RXNE, DISABLE);
+		USART_ITConfig(USART1, USART_IT_TC, ENABLE);
+
+		//rs485 DE enable
+		GPIOA->BSRR = GPIO_Pin_12;
+		//GPIO_WriteBit(PIN_USART_DE, Bit_SET);
+		USART_SendData(USART1, uart1.buffer[uart1.txcnt++]);
+  }
 	}
-	else{
-		uart1.rxgap=0;
-	}
+
 }
 
+
+//*****************************************************************************
+//Старт отправки данных по UART1 если данные готовы
+//*****************************************************************************
+void net_tx1(typeDef_UART_DATA *uart)
+{
+  if((uart->txlen>0)&(uart->txcnt==0))
+  {
+		//countReqUSART1 = 0;
+		USART_ITConfig(USART1, USART_IT_RXNE, DISABLE);
+		USART_ITConfig(USART1, USART_IT_TC, ENABLE);
+
+		//rs485 DE enable
+		GPIOA->BSRR = GPIO_Pin_12;
+		//GPIO_WriteBit(PIN_USART_DE, Bit_SET);
+		USART_SendData(USART1, uart->buffer[uart->txcnt++]);
+  }
+}

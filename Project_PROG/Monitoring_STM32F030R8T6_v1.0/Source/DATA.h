@@ -56,10 +56,9 @@ extern char CompanyID[4];
 extern char ProdCode[5];
 extern char Version[5];
 
-//[1]-адрес ВНУТРЕННИЙ, [2]-адрес ВНЕШНИЙ
-extern uint8_t SET_PAR[3];
+
 //Массив со значениями скоростей
-extern uint32_t N_Speed_uart[6];
+extern uint32_t N_Speed_uart[10];
 
 //Структура массивов то откуда мы читаем и куда пишем
 typedef struct{
@@ -85,7 +84,7 @@ extern typeDef_table res_table;
 #define R_DT1							res_table.regsF3_6[1]						/*!< значение температуры Dt1 */
 #define R_DT2							res_table.regsF3_6[2]						/*!< значение температуры Dt1 */
 #define R_ADC_IN1 				res_table.regsF3_6[3]						/*!< значение АЦП входа 1 */
-#define R_ADC_IN2 				res_table.regsF3_6[4]						/*!< значение АЦП входа 1 */
+#define R_ADC_IN2 				res_table.regsF3_6[4]						/*!< значение АЦП входа 2 */
 #define R_DI 							res_table.regsF3_6[5]						/*!< значения дискретных входов (один бит = один вход) */
 #define R_DCI 						res_table.regsF3_6[6]						/*!< значения входов сухих контактов (один бит = один вход) */
 
@@ -110,6 +109,7 @@ uint8_t txcnt;						//количество переданных символов
 uint8_t txlen;						//длина посылки на отправку
 uint8_t rxgap;						//окончание приема
 uint8_t speed;						//скорость передачи данных
+uint8_t address;					//адрес устройства
 uint16_t delay;						//задержка
 }typeDef_UART_DATA;
 
@@ -126,7 +126,7 @@ void TX_43(typeDef_UART_DATA *MODBUS);
 void TX_EXCEPTION(typeDef_UART_DATA *MODBUS,unsigned char error_type);
 
 
-
+extern uint16_t ADC_value[2];
 
 #endif
 

@@ -24,10 +24,10 @@
 /* Exported functions ------------------------------------------------------- */
 
 void init_GPIO(void);
+void init_EXTI_GPIO(void);
 void init_ADC(uint32_t* lynkADC);
 void init_TIM6_delay(void);
 void init_TIM17_delay_IRQ(void);
-//void init_EXTI_GPIO(void);
 void SetupUSART1(void);
 void SetupTIM14(void);
 
