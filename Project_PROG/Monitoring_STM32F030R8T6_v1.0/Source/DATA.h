@@ -74,10 +74,10 @@ extern typeDef_table res_table;
 #define R_STATES 							res_table.regsF3_6[0]				/*!< регистр состояний */
 #define STATE_OVERLOAD_12V 		(R_STATES & 0x01)						/*!< перегрузка по выходному внешнему питанию 12В 400 мА 	(0–ok, 1–err) */
 #define STATE_DISCON_DT1 			(R_STATES & 0x02)						/*!< обрыв Dt1 (0–ok, 1–обрыв) */
-#define STATE_SHORT_DT1 			(R_STATES & 0x04)						/*!< замыкание Dt1 (0–ok, 1–кз) */
+#define STATE_CIRCUIT_DT1 		(R_STATES & 0x04)						/*!< замыкание Dt1 (0–ok, 1–кз) */
 #define STATE_CRC_ERR_DT1 		(R_STATES & 0x08)						/*!< ошибка CRC Dt1 (0–ok, 1–err) */
 #define STATE_DISCON_DT2 			(R_STATES & 0x10)						/*!< обрыв Dt2 (0–ok, 1–обрыв) */
-#define STATE_SHORT_DT2 			(R_STATES & 0x20)						/*!< замыкание Dt2 (0–ok, 1–кз) */
+#define STATE_CIRCUIT_DT2 		(R_STATES & 0x20)						/*!< замыкание Dt2 (0–ok, 1–кз) */
 #define STATE_CRC_ERR_DT2 		(R_STATES & 0x40)						/*!< ошибка CRC Dt2 (0–ok, 1–err) */
 
 
@@ -111,19 +111,19 @@ uint8_t rxgap;						//окончание приема
 uint8_t speed;						//скорость передачи данных
 uint8_t address;					//адрес устройства
 uint16_t delay;						//задержка
-}typeDef_UART_DATA;
+}typeDef_MODBUS_DATA;
 
-extern typeDef_UART_DATA uart1;				//структуры для соответсвующих усартов
+extern typeDef_MODBUS_DATA modbus1;				//структура данных ModBus
 
 
-void modbus_slave1(typeDef_UART_DATA *MODBUS);	//функция обработки ModBus и формирования ответа ВНУТРЕННИЙ
+void modbus_slave1(typeDef_MODBUS_DATA *MODBUS);	//функция обработки ModBus и формирования ответа ВНУТРЕННИЙ
 unsigned int Crc16(unsigned char *ptrByte, int byte_cnt);
-void TX_01(typeDef_UART_DATA *MODBUS);
-void TX_03_04(typeDef_UART_DATA *MODBUS);
-void TX_05(typeDef_UART_DATA *MODBUS);
-void TX_06(typeDef_UART_DATA *MODBUS);
-void TX_43(typeDef_UART_DATA *MODBUS);
-void TX_EXCEPTION(typeDef_UART_DATA *MODBUS,unsigned char error_type);
+void TX_01(typeDef_MODBUS_DATA *MODBUS);
+void TX_03_04(typeDef_MODBUS_DATA *MODBUS);
+void TX_05(typeDef_MODBUS_DATA *MODBUS);
+void TX_06(typeDef_MODBUS_DATA *MODBUS);
+void TX_43(typeDef_MODBUS_DATA *MODBUS);
+void TX_EXCEPTION(typeDef_MODBUS_DATA *MODBUS,unsigned char error_type);
 
 
 extern uint16_t ADC_value[2];

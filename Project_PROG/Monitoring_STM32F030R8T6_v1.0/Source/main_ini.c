@@ -149,7 +149,7 @@ void init_ADC(uint32_t* lynkADC){
 	DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_HalfWord;	// Размер данных в периферии
 	DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_HalfWord;					// Размер данных в памяти
 	DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;															// Непрерывная работа
-	DMA_InitStructure.DMA_Priority = DMA_Priority_High;													// Приоритет выше среднего
+	DMA_InitStructure.DMA_Priority = DMA_Priority_Low;													// Приоритет выше среднего
 	DMA_InitStructure.DMA_M2M = DMA_M2M_Disable;																// Режим память->память выключен
 	DMA_Init(DMA1_Channel1, &DMA_InitStructure); 																//Initialise the DMA
 	DMA_Cmd(DMA1_Channel1, ENABLE); 																						//Enable the DMA1 - Channel1
@@ -260,10 +260,10 @@ void SetupUSART1(void)
 	GPIO_Init(GPIOA, &GPIO_InitStructure);
 	
 	//setting parametrs common for all uarts
-	USART_InitStructure.USART_BaudRate            = 19200;
+	USART_InitStructure.USART_BaudRate            = N_Speed_uart[modbus1.speed];
 	USART_InitStructure.USART_WordLength          = USART_WordLength_8b;
 	USART_InitStructure.USART_StopBits            = USART_StopBits_1;
-	USART_InitStructure.USART_Parity              = USART_Parity_No ;
+	USART_InitStructure.USART_Parity              = USART_Parity_No;
 	USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
 	USART_InitStructure.USART_Mode                = USART_Mode_Rx | USART_Mode_Tx;
 	

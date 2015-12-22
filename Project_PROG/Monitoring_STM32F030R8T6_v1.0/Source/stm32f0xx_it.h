@@ -52,7 +52,7 @@ void EXTI0_1_IRQHandler(void);
 void TIM14_IRQHandler(void);
 void USART1_IRQHandler(void);
 void TIM17_IRQHandler(void);
-void net_tx1(typeDef_UART_DATA *uart);
+void net_tx1(typeDef_MODBUS_DATA *uart);
 
 #endif /* __STM32F0XX_IT_H */
 

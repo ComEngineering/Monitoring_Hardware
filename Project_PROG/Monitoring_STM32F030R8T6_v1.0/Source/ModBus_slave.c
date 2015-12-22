@@ -9,7 +9,7 @@
 //*********************************************************************
 //Modbus slave function
 //*********************************************************************
-void modbus_slave1(typeDef_UART_DATA *MODBUS)
+void modbus_slave1(typeDef_MODBUS_DATA *MODBUS)
 {
   unsigned int tmp;
 	
@@ -50,6 +50,7 @@ void modbus_slave1(typeDef_UART_DATA *MODBUS)
 				default:
 				//illegal operation
 				TX_EXCEPTION(MODBUS,0x01);
+				break;
 			}
 				//adding CRC16 to reply
 				tmp=Crc16(MODBUS->buffer,MODBUS->txlen-2);
@@ -115,7 +116,7 @@ void modbus_slave1(typeDef_UART_DATA *MODBUS)
 //******************************************************************
 //READING input & holding registers
 //*******************************************************************
-void TX_03_04(typeDef_UART_DATA *MODBUS)
+void TX_03_04(typeDef_MODBUS_DATA *MODBUS)
 {
 	unsigned int tmp,tmp1;
 	unsigned int m=0,n=0;
@@ -162,7 +163,7 @@ void TX_03_04(typeDef_UART_DATA *MODBUS)
 //*******************************************************
 //Writing one bit
 //*******************************************************
-void TX_05(typeDef_UART_DATA *MODBUS)
+void TX_05(typeDef_MODBUS_DATA *MODBUS)
 {
   unsigned int tmp;
 	unsigned int tmp1;
@@ -201,7 +202,7 @@ void TX_05(typeDef_UART_DATA *MODBUS)
 //*******************************************************
 //Writing register
 //*******************************************************
-void TX_06(typeDef_UART_DATA *MODBUS)
+void TX_06(typeDef_MODBUS_DATA *MODBUS)
 {
   unsigned int tmp;
 	//unsigned int bufReg;
@@ -315,7 +316,7 @@ void TX_06(typeDef_UART_DATA *MODBUS)
 //*******************************************************
 //Read identification
 //*******************************************************
-void TX_43(typeDef_UART_DATA *MODBUS)
+void TX_43(typeDef_MODBUS_DATA *MODBUS)
 {
   //MODBUS[0] = SET_PAR[0]; //adress - stays a same as in recived
   //MODBUS[1] = 43; 				//query type - stay a same as in recived
@@ -373,7 +374,7 @@ void TX_43(typeDef_UART_DATA *MODBUS)
 //*********************************************************************
 
 //modbus exception - illegal data=01 ,adress=02 etc 
-void TX_EXCEPTION(typeDef_UART_DATA *MODBUS,unsigned char error_type)
+void TX_EXCEPTION(typeDef_MODBUS_DATA *MODBUS,unsigned char error_type)
 {
 	//illegal operation	 
 	MODBUS->buffer[1] = MODBUS->buffer[1]|0x80;

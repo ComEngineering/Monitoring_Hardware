@@ -22,27 +22,23 @@ uint16_t ADC_value[2];
 //Значения скоростей для ModBus
 uint32_t N_Speed_uart[]= {2400,			//0 
 													4800, 		//1
-													7200, 		//2
-													9600, 		//3
-													14400, 		//4
-													19200, 		//5
-													38400, 		//6
-													57600, 		//7
-													115200,		//8
+													9600, 		//2
+													19200, 		//3
+													38400, 		//4
+													56000,		//5
+													57600, 		//6
+													115200,		//7
+													128000,		//8
 													256000};	//9
-
-
-																
-uint8_t countReqUSART1;													
+												
 													
-typeDef_UART_DATA uart1;				
+typeDef_MODBUS_DATA modbus1;				
 typeDef_table res_table;
 
 
 /* Private function prototypes -----------------------------------------------*/
 void IWDG_Init(uint8_t prer,uint16_t rlr);
 void IWDG_Feed(void);
-void net_tx1(typeDef_UART_DATA *uart);
 void Flash_Erase(unsigned int pageAddress);
 void Flash_Write(unsigned char* data, unsigned int address, unsigned int count);
 uint32_t Flash_Read(uint32_t address);
@@ -69,25 +65,6 @@ void IWDG_Feed(void)
 {
 	IWDG->KR=0XAAAA;			//перезагрузка
 }
-
-
-//*****************************************************************************
-//Старт отправки данных по UART1 если данные готовы
-//*****************************************************************************
-//void net_tx1(typeDef_UART_DATA *uart)
-//{
-//  if((uart->txlen>0)&(uart->txcnt==0))
-//  {
-//		//countReqUSART1 = 0;
-//		USART_ITConfig(USART1, USART_IT_RXNE, DISABLE);
-//		USART_ITConfig(USART1, USART_IT_TC, ENABLE);
-
-//		//rs485 DE enable
-//		GPIOA->BSRR = GPIO_Pin_12;
-//		//GPIO_WriteBit(PIN_USART_DE, Bit_SET);
-//		USART_SendData(USART1, uart->buffer[uart->txcnt++]);
-//  }
-//}
 
 
 //*****************************************************************************
@@ -147,7 +124,7 @@ uint32_t Flash_Read(uint32_t address)
 void write_value_default(void)
 {
 	W_ADDRESS = 127;							//(default)
-	W_SPEED = 3;									//(default)
+	W_SPEED = 2;									//(default)
 	W_SDCO = 0;										//(default)
 	W_PDCO = 0;										//(default)
 
@@ -170,7 +147,7 @@ void write_flash_value(void)
 {
 	FLASH_Unlock();
 	Flash_Erase(ADDRESS_PAGE_63); 					//стираем 63 страницу в памяти
-	Flash_Write((uint8_t*)&res_table.regsF3_6[20], ADDRESS_PAGE_63, 54); //Сохраняем на FLASH
+	Flash_Write((uint8_t*)&res_table.regsF3_6[20], ADDRESS_PAGE_63, 8); //Сохраняем на FLASH
 	FLASH_Lock();
 }
 
@@ -181,11 +158,11 @@ int main(void)
 	//NVIC_SystemReset ();
 	/* Если параметрируемые значения отсутствуют на FLASH */
 	if(Flash_Read(ADDRESS_PAGE_63) == 0xFFFFFFFF){
-		write_value_default();									//Сбрасываем значения в default
+		write_value_default();								/*!< Сбрасываем значения в default */
 	}
 	/* Чтение параметрируемых значений из FLASH */
-	res_table.regsF3_6[20] = Flash_Read(ADDRESS_PAGE_63);
-	res_table.regsF3_6[22] = Flash_Read(ADDRESS_PAGE_63+4);
+	res_table.regsF3_6[20] = (uint16_t)(Flash_Read(ADDRESS_PAGE_63));
+	res_table.regsF3_6[21] = (uint16_t)(Flash_Read(ADDRESS_PAGE_63) >> 16);
 	
 	init_TIM6_delay();											/*!< Инициализация таймера для временных задержек */
 	//init_EXTI_GPIO();												/*!< Инициализация пина детектора перегрузки */
@@ -204,16 +181,53 @@ int main(void)
 	//9600 	- 38		//3
 	//14400	- 25		//4
 	//19200 - 19		//5
-	//38400 - 			//6
-	//57600 				//7
-	//115200				//8
-	//256000				//9
-
-	uart1.speed = 3;												//скорость для ВНУТРЕННЕГО
-	uart1.delay = 50; 											//таймаут приема
-	uart1.address = 1;
+	//38400 - 10		//6
+	//57600 -	 6		//7
+	//115200 - 3		//8
+	//256000 - 1	  //9
 	
-	SetupUSART1();													//инициализация USART для ВНУТРЕННЕГО
+	//Задание таймаут приема
+	switch(W_SPEED){
+		case 0:
+			modbus1.delay = 150;
+		break;
+		case 1:
+			modbus1.delay = 75;
+		break;
+		case 2:
+			modbus1.delay = 48;
+		break;
+		case 3:
+			modbus1.delay = 38;
+		break;
+		case 4:
+			modbus1.delay = 25;
+		break;
+		case 5:
+			modbus1.delay = 19;
+		break;
+		case 6:
+			modbus1.delay = 10;
+		break;
+		case 7:
+			modbus1.delay = 6;
+		break;
+		case 8:
+			modbus1.delay = 3;
+		break;
+		case 9:
+			modbus1.delay = 1;
+		break;
+		default:
+			modbus1.delay = 50;
+			break;
+	}
+
+
+	modbus1.speed = W_SPEED;									//скорость для ВНУТРЕННЕГО
+	modbus1.address = W_ADDRESS;
+	
+	SetupUSART1();													//инициализация USART
 	SetupTIM14();														//Инициализация таймера для таймаут приема
 	
 //	IWDG_Init(4, 850); 										//Инициализация сторожевого таймера на 1 сек. (625)
@@ -240,20 +254,24 @@ int main(void)
 
 		
 		
-//		SET_PAR[2] = W_ADDRESS;								//Обновление ModBus адреса ВНЕШНЕГО
+		modbus1.address = W_ADDRESS;								//Обновление ModBus адреса ВНЕШНЕГО
 		
 		//Обновление скорости USART для ВНЕШНЕГО
-//		if(W_SPEED != uart1.speed){
-//			uart1.speed = W_SPEED;
-//			USART1->CR1 &= (uint32_t)~((uint32_t)USART_CR1_UE);
-//			if(W_SPEED == 0)uart1.delay = 150;
-//			if(W_SPEED == 1)uart1.delay = 75;
-//			if(W_SPEED == 2)uart1.delay = 48;
-//			if(W_SPEED == 3)uart1.delay = 38;
-//			if(W_SPEED == 4)uart1.delay = 25;
-//			if(W_SPEED == 5)uart1.delay = 19;
-//			SetupUSART1();
-//		}
+		if(W_SPEED != modbus1.speed){
+			modbus1.speed = W_SPEED;
+			USART1->CR1 &= (uint32_t)~((uint32_t)USART_CR1_UE);
+			if(W_SPEED == 0)modbus1.delay = 150;
+			if(W_SPEED == 1)modbus1.delay = 75;
+			if(W_SPEED == 2)modbus1.delay = 48;
+			if(W_SPEED == 3)modbus1.delay = 38;
+			if(W_SPEED == 4)modbus1.delay = 25;
+			if(W_SPEED == 5)modbus1.delay = 19;
+			if(W_SPEED == 6)modbus1.delay = 10;
+			if(W_SPEED == 7)modbus1.delay = 6;
+			if(W_SPEED == 8)modbus1.delay = 3;
+			if(W_SPEED == 9)modbus1.delay = 1;
+			SetupUSART1();
+		}
 
 		
 
@@ -265,18 +283,10 @@ int main(void)
 //		}
 	
 		//Если параметрируемые значения изменились
-//		if(	*(__IO uint32_t*)&res_table.regsF3_6[20] != Flash_Read(ADDRESS_PAGE_63)
-//		||*(__IO uint32_t*)&res_table.regsF3_6[22] != Flash_Read(ADDRESS_PAGE_63+4)
-//		||*(__IO uint32_t*)&res_table.regsF3_6[24] != Flash_Read(ADDRESS_PAGE_63+8)
-//		||*(__IO uint32_t*)&res_table.regsF3_6[26] != Flash_Read(ADDRESS_PAGE_63+12)
-//		||*(__IO uint32_t*)&res_table.regsF3_6[28] != Flash_Read(ADDRESS_PAGE_63+16)
-//		||*(__IO uint32_t*)&res_table.regsF3_6[30] != Flash_Read(ADDRESS_PAGE_63+20)
-//		||*(__IO uint32_t*)&res_table.regsF3_6[32] != Flash_Read(ADDRESS_PAGE_63+24)
-//		||*(__IO uint32_t*)&res_table.regsF3_6[34] != Flash_Read(ADDRESS_PAGE_63+28)
-//		||*(__IO uint32_t*)&res_table.regsF3_6[36] != Flash_Read(ADDRESS_PAGE_63+32)
-//		||*(__IO uint32_t*)&res_table.regsF3_6[38] != Flash_Read(ADDRESS_PAGE_63+36)){
-//			write_flash_value();								//записываем новые значения на FLASH
-//		}
+		if(	res_table.regsF3_6[20] != (uint16_t)(Flash_Read(ADDRESS_PAGE_63))
+			||res_table.regsF3_6[21] != (uint16_t)(Flash_Read(ADDRESS_PAGE_63) >> 16)){
+			write_flash_value();								//записываем новые значения на FLASH
+		}
 		
 	}
 }

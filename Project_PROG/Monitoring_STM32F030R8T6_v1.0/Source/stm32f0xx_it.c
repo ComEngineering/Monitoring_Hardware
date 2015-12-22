@@ -107,14 +107,41 @@ void TIM17_IRQHandler(void)
 	
 //Обновление значений температур
 /************************************************************/	
-	int16_t temp;
+	uint16_t temp;
 	temp = one_wire_read_byte(PIN_ONE_WIRE_T1);
 	if((temp == 850) && count85C[0] < 3){
 		count85C[0]++;
 	}
 	else{
 		count85C[0] = 0;
-		R_DT1 = temp;
+		/* если обрыв или не подключен датчик */
+		if(temp == 0xFFFF){
+			R_STATES &= ~CIRCUIT_DT1;
+			R_STATES &= ~CRC_ERR_DT1;
+			R_STATES |= DISCON_DT1;
+			R_DT1 = 0xFFFF;
+		}
+		/* если замыкание шины данных на землю */
+		else if(temp == 0x01){
+			R_STATES &= ~DISCON_DT1;
+			R_STATES &= ~CRC_ERR_DT1;
+			R_STATES |= CIRCUIT_DT1;
+			R_DT1 = 0xFFFF;
+		}
+		/* если ошибка CRC */
+		else if(temp == 0x02){
+			R_STATES &= ~DISCON_DT1;
+			R_STATES &= ~CIRCUIT_DT1;
+			R_STATES |= CRC_ERR_DT1;
+			R_DT1 = 0xFFFF;
+		}
+		/* иначе сбрасываем все ошибки и обновляем температуру */
+		else{
+			R_STATES &= ~DISCON_DT1;
+			R_STATES &= ~CIRCUIT_DT1;
+			R_STATES &= ~CRC_ERR_DT1;
+			R_DT1 = temp;
+		}
 	}
 /************************************************************/	
 	temp = one_wire_read_byte(PIN_ONE_WIRE_T2);
@@ -123,7 +150,34 @@ void TIM17_IRQHandler(void)
 	}
 	else{
 		count85C[1] = 0;
-		R_DT2 = temp;
+		/* если обрыв или не подключен датчик */
+		if(temp == 0xFFFF){
+			R_STATES &= ~CIRCUIT_DT2;
+			R_STATES &= ~CRC_ERR_DT2;
+			R_STATES |= DISCON_DT2;
+			R_DT2 = 0xFFFF;
+		}
+		/* если замыкание шины данных на землю */
+		else if(temp == 0x01){
+			R_STATES &= ~DISCON_DT2;
+			R_STATES &= ~CRC_ERR_DT2;
+			R_STATES |= CIRCUIT_DT2;
+			R_DT2 = 0xFFFF;
+		}
+		/* если ошибка CRC */
+		else if(temp == 0x02){
+			R_STATES &= ~DISCON_DT2;
+			R_STATES &= ~CIRCUIT_DT2;
+			R_STATES |= CRC_ERR_DT2;
+			R_DT2 = 0xFFFF;
+		}
+		/* иначе сбрасываем все ошибки и обновляем температуру */
+		else{
+			R_STATES &= ~DISCON_DT2;
+			R_STATES &= ~CIRCUIT_DT2;
+			R_STATES &= ~CRC_ERR_DT2;
+			R_DT2 = temp;
+		}
 	}
 /************************************************************/	
 /* Запуск измерения температур */
@@ -151,11 +205,11 @@ void USART1_IRQHandler(void)
 	if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET)
 	{
 		USART_ClearITPendingBit(USART1, USART_IT_RXNE);
-		uart1.rxtimer=0;
-		if(uart1.rxcnt>(BUF_SZ-2)){
-			uart1.rxcnt=0;
+		modbus1.rxtimer=0;
+		if(modbus1.rxcnt>(BUF_SZ-2)){
+			modbus1.rxcnt=0;
 		}
-		uart1.buffer[uart1.rxcnt++] = USART_ReceiveData (USART1);
+		modbus1.buffer[modbus1.rxcnt++] = USART_ReceiveData (USART1);
 	}
 
 	//Transmission complete interrupt
@@ -163,9 +217,9 @@ void USART1_IRQHandler(void)
 	{
 		USART_ClearITPendingBit(USART1, USART_IT_TC);
 		USART_ClearITPendingBit(USART1, USART_IT_FE);
-		if(uart1.txcnt<uart1.txlen)
+		if(modbus1.txcnt<modbus1.txlen)
 		{
-			USART_SendData(USART1, uart1.buffer[uart1.txcnt++]);
+			USART_SendData(USART1, modbus1.buffer[modbus1.txcnt++]);
 //			countReqUSART1 = 0; //сброс счётчика запросов
 		}
 		else
@@ -173,7 +227,7 @@ void USART1_IRQHandler(void)
 //			USART1->CR1 &= (uint32_t)~((uint32_t)USART_CR1_UE);
 //			USART1->CR1 |= USART_CR1_UE;
 			USART_ReceiveData (USART1);
-			uart1.txlen=0;
+			modbus1.txlen=0;
 			//rs485 DE disable
 			GPIOA->BRR = GPIO_Pin_12;
 			//GPIO_WriteBit(PIN_USART_DE, Bit_RESET);
@@ -208,40 +262,22 @@ void TIM14_IRQHandler(void)
 //		GPIO_WriteBit(GPIOA,GPIO_Pin_5,Bit_SET);
 		
 	//проверяем окончание приёма uart1
-	if((uart1.rxtimer++ > uart1.delay) & (uart1.rxcnt > 1)){
-		modbus_slave1(&uart1);							//подготовка данных на отправку
-//		net_tx1(&uart1);										//отправка данных
-		
-		if((uart1.txlen>0)&(uart1.txcnt==0))
-  {
-		//countReqUSART1 = 0;
-		USART_ITConfig(USART1, USART_IT_RXNE, DISABLE);
-		USART_ITConfig(USART1, USART_IT_TC, ENABLE);
+	if((modbus1.rxtimer++ > modbus1.delay) & (modbus1.rxcnt > 1)){
+		modbus_slave1(&modbus1);							//подготовка данных на отправку
 
-		//rs485 DE enable
-		GPIOA->BSRR = GPIO_Pin_12;
-		//GPIO_WriteBit(PIN_USART_DE, Bit_SET);
-		USART_SendData(USART1, uart1.buffer[uart1.txcnt++]);
-  }
+/* Старт отправки данных по UART1 если данные готовы */
+		if((modbus1.txlen>0)&(modbus1.txcnt==0))
+		{
+			//countReqUSART1 = 0;
+			USART_ITConfig(USART1, USART_IT_RXNE, DISABLE);
+			USART_ITConfig(USART1, USART_IT_TC, ENABLE);
+
+			//rs485 DE enable
+			GPIOA->BSRR = GPIO_Pin_12;
+			//GPIO_WriteBit(PIN_USART_DE, Bit_SET);
+			USART_SendData(USART1, modbus1.buffer[modbus1.txcnt++]);
+		}
 	}
-
 }
 
 
-//*****************************************************************************
-//Старт отправки данных по UART1 если данные готовы
-//*****************************************************************************
-void net_tx1(typeDef_UART_DATA *uart)
-{
-  if((uart->txlen>0)&(uart->txcnt==0))
-  {
-		//countReqUSART1 = 0;
-		USART_ITConfig(USART1, USART_IT_RXNE, DISABLE);
-		USART_ITConfig(USART1, USART_IT_TC, ENABLE);
-
-		//rs485 DE enable
-		GPIOA->BSRR = GPIO_Pin_12;
-		//GPIO_WriteBit(PIN_USART_DE, Bit_SET);
-		USART_SendData(USART1, uart->buffer[uart->txcnt++]);
-  }
-}
