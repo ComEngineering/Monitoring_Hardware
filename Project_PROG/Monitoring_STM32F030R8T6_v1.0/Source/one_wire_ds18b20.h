@@ -8,15 +8,6 @@
 #define THERM_CMD_WSCRATCHPAD 	0x4E						/*!< запись в ОЗУ 3х байт (TH, TL, разрядность) */
 #define THERM_CMD_SKIPROM 			0xCC						/*!< обращение ко всем устройстав на шине */
 
-#define ALL_STAT_DT1 						STATE_DISCON_DT1 | STATE_CIRCUIT_DT1 | STATE_CRC_ERR_DT1						
-#define DISCON_DT1 							0x02						/*!< не подключен датчик Dt1 */
-#define CIRCUIT_DT1 						0x04						/*!< короткое замыкание шины данных на землю Dt1*/
-#define CRC_ERR_DT1 						0x08						/*!< ошибка CRC Dt1 */
-
-#define ALL_STAT_DT2 						STATE_DISCON_DT2 | STATE_CIRCUIT_DT2 | STATE_CRC_ERR_DT2
-#define DISCON_DT2 							0x10						/*!< не подключен датчик Dt2 */
-#define CIRCUIT_DT2 						0x20						/*!< короткое замыкание шины данных на землю Dt2*/
-#define CRC_ERR_DT2 						0x40						/*!< ошибка CRC Dt2 */
 
 
 /* Includes ------------------------------------------------------------------*/

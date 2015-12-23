@@ -165,7 +165,7 @@ int main(void)
 	res_table.regsF3_6[21] = (uint16_t)(Flash_Read(ADDRESS_PAGE_63) >> 16);
 	
 	init_TIM6_delay();											/*!< Инициализация таймера для временных задержек */
-	//init_EXTI_GPIO();												/*!< Инициализация пина детектора перегрузки */
+//	init_EXTI_GPIO();												/*!< Инициализация пина детектора перегрузки */
 	init_GPIO();														/*!< Инициализация пинов входов и выходов */
 	init_ADC((uint32_t*) &ADC_value[0]);		/*!< Инициализация АЦП в связке с DMA*/
 	init_one_wire_setting(PIN_ONE_WIRE_T1); /*!< Инициализация порта и датчика Dt1(DS18B20) */
@@ -173,20 +173,22 @@ int main(void)
 	init_TIM17_delay_IRQ();									/*!< Инициализация таймера для вызова секундного прерывания */
 	
 	
+	
 	//Настройка переферии для ModBus
 	//тймауты приёма:
 	//2400 	- 150		//0
 	//4800 	- 75		//1
-	//7200 	- 48		//2
-	//9600 	- 38		//3
-	//14400	- 25		//4
-	//19200 - 19		//5
-	//38400 - 10		//6
-	//57600 -	 6		//7
-	//115200 - 3		//8
-	//256000 - 1	  //9
+	//9600 	- 40		//2
+	//19200 - 20		//3
+	//38400 - 10		//4
+	//56000	- 8			//5
+	//57600 -	 8		//6
+	//115200 - 3		//7
+	//128000 - 2		//2
+	//256000 - 1	  //8
 	
-	//Задание таймаут приема
+	
+/* Задание таймаут приема */
 	switch(W_SPEED){
 		case 0:
 			modbus1.delay = 150;
@@ -195,25 +197,25 @@ int main(void)
 			modbus1.delay = 75;
 		break;
 		case 2:
-			modbus1.delay = 48;
+			modbus1.delay = 40;
 		break;
 		case 3:
-			modbus1.delay = 38;
+			modbus1.delay = 20;
 		break;
 		case 4:
-			modbus1.delay = 25;
-		break;
-		case 5:
-			modbus1.delay = 19;
-		break;
-		case 6:
 			modbus1.delay = 10;
 		break;
+		case 5:
+			modbus1.delay = 8;
+		break;
+		case 6:
+			modbus1.delay = 8;
+		break;
 		case 7:
-			modbus1.delay = 6;
+			modbus1.delay = 3;
 		break;
 		case 8:
-			modbus1.delay = 3;
+			modbus1.delay = 2;
 		break;
 		case 9:
 			modbus1.delay = 1;
@@ -224,39 +226,34 @@ int main(void)
 	}
 
 
-	modbus1.speed = W_SPEED;									//скорость для ВНУТРЕННЕГО
+	modbus1.speed = W_SPEED;											//скорость для ВНУТРЕННЕГО
 	modbus1.address = W_ADDRESS;
 	
-	SetupUSART1();													//инициализация USART
-	SetupTIM14();														//Инициализация таймера для таймаут приема
+	SetupUSART1();																//инициализация USART
+	SetupTIM14();																	//Инициализация таймера для таймаут приема
 	
-//	IWDG_Init(4, 850); 										//Инициализация сторожевого таймера на 1 сек. (625)
+//	SetupTIM16();
 	
-	while (1)
-  {
-//		IWDG_Feed(); 												//Сброс сторожевого таймера
-		
-		if(!GPIO_ReadInputDataBit(PIN_OVERLOAD_12V)){		
-			GPIO_SetBits(PIN_LED_BLINK);				//led blink
-			delay_ms(200);
-			GPIO_ResetBits(PIN_LED_BLINK);				//led blink
-			delay_ms(200);
-			GPIO_SetBits(PIN_LED_BLINK);				//led blink
-			delay_ms(200);
-			GPIO_ResetBits(PIN_LED_BLINK);				//led blink
-			delay_ms(200);
-			GPIO_SetBits(PIN_LED_BLINK);				//led blink
-			delay_ms(200);
-			GPIO_ResetBits(PIN_LED_BLINK);				//led blink
-			delay_ms(200);
+//	IWDG_Init(4, 850); 													//Инициализация сторожевого таймера на 1 сек. (625)
+	
+	while (1){
+//		IWDG_Feed(); 															//Сброс сторожевого таймера
+
+		if(!GPIO_ReadInputDataBit(PIN_OVERLOAD_12V)){
+			GPIO_SetBits(PIN_LED_BLINK);							//led blink
+			R_STATES |= STATE_OVERLOAD_12V;
+			delay_ms(500);
 		}
-
-
+		else{
+			GPIO_ResetBits(PIN_LED_BLINK);						//led blink
+			R_STATES &= ~STATE_OVERLOAD_12V;
+		}
+		
 		
 		
 		modbus1.address = W_ADDRESS;								//Обновление ModBus адреса ВНЕШНЕГО
 		
-		//Обновление скорости USART для ВНЕШНЕГО
+/* Обновление скорости USART для ВНЕШНЕГО */
 		if(W_SPEED != modbus1.speed){
 			modbus1.speed = W_SPEED;
 			USART1->CR1 &= (uint32_t)~((uint32_t)USART_CR1_UE);
@@ -273,21 +270,11 @@ int main(void)
 			SetupUSART1();
 		}
 
-		
-
-		//ModBus коммуникация ВНУТРЕННЯЯ
-//		if(uart1.rxgap==1)										//если пришёл запрос
-//		{
-//			modbus_slave1(&uart1);							//подготовка данных на отправку
-//			net_tx1(&uart1);										//отправка данных
-//		}
-	
-		//Если параметрируемые значения изменились
+/* Если параметрируемые значения изменились */
 		if(	res_table.regsF3_6[20] != (uint16_t)(Flash_Read(ADDRESS_PAGE_63))
 			||res_table.regsF3_6[21] != (uint16_t)(Flash_Read(ADDRESS_PAGE_63) >> 16)){
 			write_flash_value();								//записываем новые значения на FLASH
-		}
-		
+		}	
 	}
 }
 

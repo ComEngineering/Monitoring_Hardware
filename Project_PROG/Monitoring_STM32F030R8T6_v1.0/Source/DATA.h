@@ -72,14 +72,16 @@ extern typeDef_table res_table;
 
 /* для функций 3 и 6 */
 #define R_STATES 							res_table.regsF3_6[0]				/*!< регистр состояний */
-#define STATE_OVERLOAD_12V 		(R_STATES & 0x01)						/*!< перегрузка по выходному внешнему питанию 12В 400 мА 	(0–ok, 1–err) */
-#define STATE_DISCON_DT1 			(R_STATES & 0x02)						/*!< обрыв Dt1 (0–ok, 1–обрыв) */
-#define STATE_CIRCUIT_DT1 		(R_STATES & 0x04)						/*!< замыкание Dt1 (0–ok, 1–кз) */
-#define STATE_CRC_ERR_DT1 		(R_STATES & 0x08)						/*!< ошибка CRC Dt1 (0–ok, 1–err) */
-#define STATE_DISCON_DT2 			(R_STATES & 0x10)						/*!< обрыв Dt2 (0–ok, 1–обрыв) */
-#define STATE_CIRCUIT_DT2 		(R_STATES & 0x20)						/*!< замыкание Dt2 (0–ok, 1–кз) */
-#define STATE_CRC_ERR_DT2 		(R_STATES & 0x40)						/*!< ошибка CRC Dt2 (0–ok, 1–err) */
+#define STATE_OVERLOAD_12V 		0x01												/*!< перегрузка по выходному внешнему питанию 12В 400 мА 	(0–ok, 1–err) */
+#define STATE_DISCON_DT1 			0x02												/*!< обрыв Dt1 (0–ok, 1–обрыв) */
+#define STATE_CIRCUIT_DT1 		0x04												/*!< замыкание Dt1 (0–ok, 1–кз) */
+#define STATE_CRC_ERR_DT1 		0x08												/*!< ошибка CRC Dt1 (0–ok, 1–err) */
+#define STATE_DISCON_DT2 			0x10												/*!< обрыв Dt2 (0–ok, 1–обрыв) */
+#define STATE_CIRCUIT_DT2 		0x20												/*!< замыкание Dt2 (0–ok, 1–кз) */
+#define STATE_CRC_ERR_DT2 		0x40												/*!< ошибка CRC Dt2 (0–ok, 1–err) */
 
+#define ALL_STATE_DT1 				STATE_DISCON_DT1 | STATE_CIRCUIT_DT1 | STATE_CRC_ERR_DT1		
+#define ALL_STATE_DT2 				STATE_DISCON_DT2 | STATE_CIRCUIT_DT2 | STATE_CRC_ERR_DT2
 
 #define R_DT1							res_table.regsF3_6[1]						/*!< значение температуры Dt1 */
 #define R_DT2							res_table.regsF3_6[2]						/*!< значение температуры Dt1 */
@@ -93,6 +95,10 @@ extern typeDef_table res_table;
 #define W_SPEED						res_table.regsF3_6[21]					/*!< задание скорости обмена */
 #define W_SDCO						res_table.regsF3_6[22]					/*!< выхода сигнальных сухих контактов (один бит = один выход) */
 #define W_PDCO						res_table.regsF3_6[23]					/*!< выхода силовых сухих контактов (один бит = один выход) */
+
+
+
+
 
 
 

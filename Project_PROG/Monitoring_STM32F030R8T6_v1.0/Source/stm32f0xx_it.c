@@ -8,6 +8,7 @@
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 static uint8_t count85C[2];
+
 //extern value_dTem data_T;
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
@@ -85,17 +86,6 @@ void SysTick_Handler(void)
   * @}
   */ 
 
-//***************************************************************************
-//Обработчик прерывания от изменения состояния PA12
-//***************************************************************************
-void EXTI0_1_IRQHandler(void)
-{
-	EXTI_ClearFlag(EXTI_Line0);
-	GPIO_SetBits(PIN_LED_BLINK);				//led blink
-}
-
-
-
 
 //***************************************************************************
 //Обработчик прерывания TIM17 (секундное прерывание)
@@ -116,30 +106,28 @@ void TIM17_IRQHandler(void)
 		count85C[0] = 0;
 		/* если обрыв или не подключен датчик */
 		if(temp == 0xFFFF){
-			R_STATES &= ~CIRCUIT_DT1;
-			R_STATES &= ~CRC_ERR_DT1;
-			R_STATES |= DISCON_DT1;
+			R_STATES |=  STATE_DISCON_DT1;
+			R_STATES &= ~STATE_CIRCUIT_DT1;
+			R_STATES &= ~STATE_CRC_ERR_DT1;
 			R_DT1 = 0xFFFF;
 		}
 		/* если замыкание шины данных на землю */
 		else if(temp == 0x01){
-			R_STATES &= ~DISCON_DT1;
-			R_STATES &= ~CRC_ERR_DT1;
-			R_STATES |= CIRCUIT_DT1;
+			R_STATES &= ~STATE_DISCON_DT1;
+			R_STATES |=  STATE_CIRCUIT_DT1;
+			R_STATES &= ~STATE_CRC_ERR_DT1;
 			R_DT1 = 0xFFFF;
 		}
 		/* если ошибка CRC */
 		else if(temp == 0x02){
-			R_STATES &= ~DISCON_DT1;
-			R_STATES &= ~CIRCUIT_DT1;
-			R_STATES |= CRC_ERR_DT1;
+			R_STATES &= ~STATE_DISCON_DT1;
+			R_STATES &= ~STATE_CIRCUIT_DT1;
+			R_STATES |=  STATE_CRC_ERR_DT1;
 			R_DT1 = 0xFFFF;
 		}
 		/* иначе сбрасываем все ошибки и обновляем температуру */
 		else{
-			R_STATES &= ~DISCON_DT1;
-			R_STATES &= ~CIRCUIT_DT1;
-			R_STATES &= ~CRC_ERR_DT1;
+			R_STATES &= ~ALL_STATE_DT1;
 			R_DT1 = temp;
 		}
 	}
@@ -152,30 +140,28 @@ void TIM17_IRQHandler(void)
 		count85C[1] = 0;
 		/* если обрыв или не подключен датчик */
 		if(temp == 0xFFFF){
-			R_STATES &= ~CIRCUIT_DT2;
-			R_STATES &= ~CRC_ERR_DT2;
-			R_STATES |= DISCON_DT2;
+			R_STATES |=  STATE_DISCON_DT2;
+			R_STATES &= ~STATE_CIRCUIT_DT2;
+			R_STATES &= ~STATE_CRC_ERR_DT2;
 			R_DT2 = 0xFFFF;
 		}
 		/* если замыкание шины данных на землю */
 		else if(temp == 0x01){
-			R_STATES &= ~DISCON_DT2;
-			R_STATES &= ~CRC_ERR_DT2;
-			R_STATES |= CIRCUIT_DT2;
+			R_STATES &= ~STATE_DISCON_DT2;
+			R_STATES |=  STATE_CIRCUIT_DT2;
+			R_STATES &= ~STATE_CRC_ERR_DT2;
 			R_DT2 = 0xFFFF;
 		}
 		/* если ошибка CRC */
 		else if(temp == 0x02){
-			R_STATES &= ~DISCON_DT2;
-			R_STATES &= ~CIRCUIT_DT2;
-			R_STATES |= CRC_ERR_DT2;
+			R_STATES &= ~STATE_DISCON_DT2;
+			R_STATES &= ~STATE_CIRCUIT_DT2;
+			R_STATES |=  STATE_CRC_ERR_DT2;
 			R_DT2 = 0xFFFF;
 		}
 		/* иначе сбрасываем все ошибки и обновляем температуру */
 		else{
-			R_STATES &= ~DISCON_DT2;
-			R_STATES &= ~CIRCUIT_DT2;
-			R_STATES &= ~CRC_ERR_DT2;
+			R_STATES &= ~ALL_STATE_DT2;
 			R_DT2 = temp;
 		}
 	}
@@ -279,5 +265,59 @@ void TIM14_IRQHandler(void)
 		}
 	}
 }
+
+
+//***************************************************************************
+//Обработчик прерывания TIM16
+//***************************************************************************
+//void TIM16_IRQHandler(void)
+//{
+//	TIM_ClearITPendingBit(TIM16, TIM_IT_Update);
+
+//	if(countOVL12 < 6){
+//		countOVL12++;
+//		if(GPIO_ReadInputDataBit(PIN_OVERLOAD_12V)){
+//			GPIO_ResetBits(PIN_LED_BLINK);				//led blink
+//		}
+//		else{
+//			GPIO_SetBits(PIN_LED_BLINK);				//led blink
+//		}
+//	}
+//	else{
+//		countOVL12=0;
+//			TIM_Cmd(TIM16, DISABLE);
+//			EXTI_InitTypeDef EXTI_InitStruct;
+//			EXTI_InitStruct.EXTI_LineCmd = ENABLE;
+//			EXTI_Init(&EXTI_InitStruct);
+//			R_STATES &= ~STATE_OVERLOAD_12V;
+
+//	}
+//	
+
+//}
+
+
+//***************************************************************************
+//Обработчик прерывания от изменения состояния PA12
+//***************************************************************************
+//void EXTI0_1_IRQHandler(void)
+//{
+//	
+//	EXTI_ClearFlag(EXTI_Line0);
+
+//		EXTI_InitTypeDef EXTI_InitStruct;
+//		EXTI_InitStruct.EXTI_LineCmd = DISABLE;
+//		EXTI_Init(&EXTI_InitStruct);
+//		
+//		
+//		TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;
+//		TIM_TimeBaseStructure.TIM_Period=500;
+//		TIM_TimeBaseInit(TIM16, &TIM_TimeBaseStructure);
+//		TIM_Cmd(TIM16, ENABLE);
+//		
+//		R_STATES |= STATE_OVERLOAD_12V;
+//		
+//		//GPIO_ToggleBits(PIN_LED_BLINK);				//led blink
+//}
 
 

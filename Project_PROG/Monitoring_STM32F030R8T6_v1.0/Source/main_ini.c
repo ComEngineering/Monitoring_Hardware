@@ -10,45 +10,6 @@
 
 
 //*****************************************************************************
-//Инициализация прерывания от пина отслеживания перехода через ноль
-//*****************************************************************************
-
-void init_EXTI_GPIO(void)
-{
-//	NVIC_InitTypeDef NVIC_InitStructure;
-	GPIO_InitTypeDef GPIO_InitStruct;
-	EXTI_InitTypeDef EXTI_InitStruct;
-	
-	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA, ENABLE);
-	//Init port_A
-	GPIO_InitStruct.GPIO_Pin = GPIO_Pin_0;	
-	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_10MHz;
-	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_AF;
-	GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;
-	GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_DOWN;
-	GPIO_Init(GPIOA, &GPIO_InitStruct);
-	GPIO_PinAFConfig(GPIOA, GPIO_PinSource0, GPIO_AF_0);
-	
-	
-	RCC_APB2PeriphClockCmd(RCC_APB2ENR_SYSCFGEN, ENABLE);
-	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOA, EXTI_PinSource0);
-	
-	EXTI_InitStruct.EXTI_Line = EXTI_Line0;
-  EXTI_InitStruct.EXTI_Mode = EXTI_Mode_Interrupt;
-  EXTI_InitStruct.EXTI_Trigger = EXTI_Trigger_Rising_Falling;
-  EXTI_InitStruct.EXTI_LineCmd = ENABLE;
-	EXTI_Init(&EXTI_InitStruct);
-
-//	NVIC_InitStructure.NVIC_IRQChannel = EXTI0_1_IRQn;
-//	NVIC_InitStructure.NVIC_IRQChannelPriority = 3;
-//	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-//	NVIC_Init(&NVIC_InitStructure);
-	NVIC_SetPriority(EXTI0_1_IRQn, 3); 	//задаем приоритет прерывания
-	NVIC_EnableIRQ(EXTI0_1_IRQn); 				//разрешение прерывания EXTI0_1
-}
-
-
-//*****************************************************************************
 //Настраиваем порты дискретных входов/выходов
 //*****************************************************************************
 void init_GPIO(void)
@@ -317,5 +278,63 @@ void SetupTIM14(void)
 //	NVIC_Init(&NVIC_InitStructure);
 	NVIC_SetPriority(TIM14_IRQn, 2); 				//задаем приоритет прерывания
 	NVIC_EnableIRQ(TIM14_IRQn); 					//разрешение прерывания TIM17_IRQn
+}
+
+
+//********************************************************************************
+//Инициализация таймера для проверки КЗ по 12 вольтам
+//********************************************************************************
+void SetupTIM16(void)
+{
+	TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;
+
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_TIM16 , ENABLE);
+	TIM_DeInit(TIM16);
+
+	TIM_TimeBaseStructure.TIM_Prescaler= 48000;										//Настраиваем на мс
+	TIM_TimeBaseStructure.TIM_ClockDivision=TIM_CKD_DIV1;
+	TIM_TimeBaseStructure.TIM_CounterMode=TIM_CounterMode_Up;
+	TIM_TimeBaseStructure.TIM_Period=300;												//Считаем до 1 мс
+
+	TIM_TimeBaseInit(TIM16, &TIM_TimeBaseStructure);
+	TIM_ClearFlag(TIM16, TIM_FLAG_Update);
+	TIM_ITConfig(TIM16,TIM_IT_Update,ENABLE);
+	NVIC_SetPriority(TIM16_IRQn, 3); 				//задаем приоритет прерывания
+	NVIC_EnableIRQ(TIM16_IRQn); 						//разрешение прерывания TIM16_IRQn
+	//TIM_Cmd(TIM16, ENABLE);
+
+}
+
+//*****************************************************************************
+//Инициализация прерывания от пина отслеживания перехода через ноль
+//*****************************************************************************
+
+void init_EXTI_GPIO(void)
+{
+	GPIO_InitTypeDef GPIO_InitStruct;
+	EXTI_InitTypeDef EXTI_InitStruct;
+	
+	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA, ENABLE);
+	//Init port_A
+	GPIO_InitStruct.GPIO_Pin = GPIO_Pin_0;	
+	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_10MHz;
+	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_AF;
+	GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;
+	GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_DOWN;
+	GPIO_Init(GPIOA, &GPIO_InitStruct);
+	GPIO_PinAFConfig(GPIOA, GPIO_PinSource0, GPIO_AF_0);
+	
+	
+	RCC_APB2PeriphClockCmd(RCC_APB2ENR_SYSCFGEN, ENABLE);
+	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOA, EXTI_PinSource0);
+	
+	EXTI_InitStruct.EXTI_Line = EXTI_Line0;
+  EXTI_InitStruct.EXTI_Mode = EXTI_Mode_Interrupt;
+  EXTI_InitStruct.EXTI_Trigger = EXTI_Trigger_Falling;
+  EXTI_InitStruct.EXTI_LineCmd = ENABLE;
+	EXTI_Init(&EXTI_InitStruct);
+
+	NVIC_SetPriority(EXTI0_1_IRQn, 3); 		//задаем приоритет прерывания
+	NVIC_EnableIRQ(EXTI0_1_IRQn); 				//разрешение прерывания EXTI0_1
 }
 

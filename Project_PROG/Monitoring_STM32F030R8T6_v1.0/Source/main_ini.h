@@ -30,5 +30,6 @@ void init_TIM6_delay(void);
 void init_TIM17_delay_IRQ(void);
 void SetupUSART1(void);
 void SetupTIM14(void);
+void SetupTIM16(void);
 
 #endif /* __MAIN_INI_H */
