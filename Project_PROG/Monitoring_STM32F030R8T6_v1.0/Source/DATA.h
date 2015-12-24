@@ -23,8 +23,8 @@
 #define PIN_DIN2 							GPIOA, GPIO_Pin_5			//пин дискретного сигнального входа 2
 #define PIN_DIN3 							GPIOA, GPIO_Pin_6			//пин дискретного сигнального входа 3
 #define PIN_DIN4 							GPIOA, GPIO_Pin_7			//пин дискретного сигнального входа 4
-#define PIN_DIN5 							GPIOС, GPIO_Pin_4			//пин дискретного сигнального входа 5
-#define PIN_DIN6 							GPIOС, GPIO_Pin_5			//пин дискретного сигнального входа 6
+#define PIN_DIN5 							GPIOC, GPIO_Pin_4			//пин дискретного сигнального входа 5
+#define PIN_DIN6 							GPIOC, GPIO_Pin_5			//пин дискретного сигнального входа 6
 #define PIN_DIN7 							GPIOB, GPIO_Pin_0			//пин дискретного сигнального входа 7
 #define PIN_DIN8 							GPIOB, GPIO_Pin_1			//пин дискретного сигнального входа 8
 

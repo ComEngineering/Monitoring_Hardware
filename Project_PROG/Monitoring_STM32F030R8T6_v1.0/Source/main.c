@@ -239,17 +239,23 @@ int main(void)
 	while (1){
 //		IWDG_Feed(); 															//Сброс сторожевого таймера
 
-		if(!GPIO_ReadInputDataBit(PIN_OVERLOAD_12V)){
-			GPIO_SetBits(PIN_LED_BLINK);							//led blink
-			R_STATES |= STATE_OVERLOAD_12V;
-			delay_ms(500);
-		}
-		else{
-			GPIO_ResetBits(PIN_LED_BLINK);						//led blink
-			R_STATES &= ~STATE_OVERLOAD_12V;
-		}
+/* Обработчик перегрузки по питанию 12В */	
+	if(!GPIO_ReadInputDataBit(PIN_OVERLOAD_12V)){
+		GPIO_SetBits(PIN_LED_BLINK);							//led blink
+		R_STATES |= STATE_OVERLOAD_12V;
+		delay_ms(500);
+	}
+	else{
+		GPIO_ResetBits(PIN_LED_BLINK);						//led blink
+		R_STATES &= ~STATE_OVERLOAD_12V;
+	}
 		
 		
+	/* Обработчик состояния входных дискретных сигналов */	
+	R_DI = !GPIO_ReadInputDataBit(PIN_DIN1) | (!GPIO_ReadInputDataBit(PIN_DIN2) << 1) | (!GPIO_ReadInputDataBit(PIN_DIN3) << 2) | (!GPIO_ReadInputDataBit(PIN_DIN4) << 3)
+			| (!GPIO_ReadInputDataBit(PIN_DIN5) << 4) | (!GPIO_ReadInputDataBit(PIN_DIN6) << 5) | (!GPIO_ReadInputDataBit(PIN_DIN7) << 6) | (!GPIO_ReadInputDataBit(PIN_DIN8) << 7);
+
+	
 		
 		modbus1.address = W_ADDRESS;								//Обновление ModBus адреса ВНЕШНЕГО
 		
