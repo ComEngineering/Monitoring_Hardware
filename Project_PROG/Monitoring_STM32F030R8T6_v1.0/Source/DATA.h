@@ -28,15 +28,34 @@
 #define PIN_DIN7 							GPIOB, GPIO_Pin_0			//пин дискретного сигнального входа 7
 #define PIN_DIN8 							GPIOB, GPIO_Pin_1			//пин дискретного сигнального входа 8
 
-#define PIN_DCIN1 						GPIOС, GPIO_Pin_6			//пин входа сухого контата 1
-#define PIN_DCIN2 						GPIOС, GPIO_Pin_7			//пин входа сухого контата 2
-#define PIN_DCIN3 						GPIOС, GPIO_Pin_8			//пин входа сухого контата 3
-#define PIN_DCIN4 						GPIOС, GPIO_Pin_9			//пин входа сухого контата 4
+#define PIN_DCIN1 						GPIOC, GPIO_Pin_6			//пин входа сухого контата 1
+#define PIN_DCIN2 						GPIOC, GPIO_Pin_7			//пин входа сухого контата 2
+#define PIN_DCIN3 						GPIOC, GPIO_Pin_8			//пин входа сухого контата 3
+#define PIN_DCIN4 						GPIOC, GPIO_Pin_9			//пин входа сухого контата 4
 #define PIN_DCIN5 						GPIOB, GPIO_Pin_12		//пин входа сухого контата 5
 #define PIN_DCIN6 						GPIOB, GPIO_Pin_13		//пин входа сухого контата 6
 #define PIN_DCIN7 						GPIOB, GPIO_Pin_14		//пин входа сухого контата 7
 #define PIN_DCIN8 						GPIOB, GPIO_Pin_15		//пин входа сухого контата 8
 
+#define PIN_SDCO1 						GPIOF, GPIO_Pin_6			//пин выхода сигнального сухого контата 1
+#define PIN_SDCO2 						GPIOF, GPIO_Pin_7			//пин выхода сигнального сухого контата 2
+#define PIN_SDCO3 						GPIOA, GPIO_Pin_15		//пин выхода сигнального сухого контата 3
+#define PIN_SDCO4 						GPIOC, GPIO_Pin_10		//пин выхода сигнального сухого контата 4
+#define PIN_SDCO5 						GPIOC, GPIO_Pin_11		//пин выхода сигнального сухого контата 5
+#define PIN_SDCO6 						GPIOC, GPIO_Pin_12		//пин выхода сигнального сухого контата 6
+#define PIN_SDCO7 						GPIOD, GPIO_Pin_2			//пин выхода сигнального сухого контата 7
+#define PIN_SDCO8 						GPIOB, GPIO_Pin_3			//пин выхода сигнального сухого контата 8
+#define PIN_SDCO9 						GPIOB, GPIO_Pin_4			//пин выхода сигнального сухого контата 9
+#define PIN_SDCO10 						GPIOB, GPIO_Pin_5			//пин выхода сигнального сухого контата 10
+#define PIN_SDCO11 						GPIOB, GPIO_Pin_6			//пин выхода сигнального сухого контата 11
+#define PIN_SDCO12 						GPIOB, GPIO_Pin_7			//пин выхода сигнального сухого контата 12
+#define PIN_SDCO13 						GPIOB, GPIO_Pin_8			//пин выхода сигнального сухого контата 13
+#define PIN_SDCO14 						GPIOB, GPIO_Pin_9			//пин выхода сигнального сухого контата 14
+
+#define PIN_PDCO1 						GPIOC, GPIO_Pin_0			//пин выхода силового сухого контата 1
+#define PIN_PDCO2 						GPIOC, GPIO_Pin_1			//пин выхода силового сухого контата 2
+#define PIN_PDCO3 						GPIOC, GPIO_Pin_2			//пин выхода силового сухого контата 3
+#define PIN_PDCO4 						GPIOC, GPIO_Pin_3			//пин выхода силового сухого контата 4
 
 //***************************************************************************
 //Дефайны для работы ModBus

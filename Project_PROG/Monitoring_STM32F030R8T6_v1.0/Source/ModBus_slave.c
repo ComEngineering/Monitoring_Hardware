@@ -222,7 +222,7 @@ void TX_06(typeDef_MODBUS_DATA *MODBUS)
 /***************************************************************************/
 		/*  Значение задания сетевого адреса */
 		case 20:
-			if((MODBUS->buffer[4] != 0) || (MODBUS->buffer[5] > 127) || (MODBUS->buffer[5] < 1)){
+			if((MODBUS->buffer[4] != 0) || (MODBUS->buffer[5] != 127)/* || (MODBUS->buffer[5] < 1)*/){
 				TX_EXCEPTION(MODBUS,0x03);	//выводим ошибку
 			}
 			else{
@@ -346,8 +346,6 @@ void TX_43(typeDef_MODBUS_DATA *MODBUS)
 			MODBUS->buffer[18]= ProdCode[2];				//Object Value	"-"
 			MODBUS->buffer[19]= ProdCode[3];				//Object Value	"I"
 			MODBUS->buffer[20]= ProdCode[4];				//Object Value	"O"
-//			MODBUS->buffer[21]= ProdCode[5];				//Object Value	"o"
-//			MODBUS->buffer[22]= ProdCode[6];				//Object Value	"l"
 			MODBUS->buffer[23]= 0x02;								//Object Id
 			MODBUS->buffer[24]= 5;									//Object Length
 			MODBUS->buffer[25]= Version[0];					//Object Value	"x"

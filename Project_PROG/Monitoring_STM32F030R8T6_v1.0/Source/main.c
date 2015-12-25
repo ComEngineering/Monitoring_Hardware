@@ -234,10 +234,10 @@ int main(void)
 	
 //	SetupTIM16();
 	
-//	IWDG_Init(4, 850); 													//Инициализация сторожевого таймера на 1 сек. (625)
+	IWDG_Init(4, 850); 													//Инициализация сторожевого таймера на 1 сек. (625)
 	
 	while (1){
-//		IWDG_Feed(); 															//Сброс сторожевого таймера
+		IWDG_Feed(); 															//Сброс сторожевого таймера
 
 /* Обработчик перегрузки по питанию 12В */	
 	if(!GPIO_ReadInputDataBit(PIN_OVERLOAD_12V)){
@@ -255,9 +255,35 @@ int main(void)
 	R_DI = !GPIO_ReadInputDataBit(PIN_DIN1) | (!GPIO_ReadInputDataBit(PIN_DIN2) << 1) | (!GPIO_ReadInputDataBit(PIN_DIN3) << 2) | (!GPIO_ReadInputDataBit(PIN_DIN4) << 3)
 			| (!GPIO_ReadInputDataBit(PIN_DIN5) << 4) | (!GPIO_ReadInputDataBit(PIN_DIN6) << 5) | (!GPIO_ReadInputDataBit(PIN_DIN7) << 6) | (!GPIO_ReadInputDataBit(PIN_DIN8) << 7);
 
+	/* Обработчик состояния входных сухих контактов */	
+	R_DCI = !GPIO_ReadInputDataBit(PIN_DCIN1) | (!GPIO_ReadInputDataBit(PIN_DCIN2) << 1) | (!GPIO_ReadInputDataBit(PIN_DCIN3) << 2) | (!GPIO_ReadInputDataBit(PIN_DCIN4) << 3)
+			| (!GPIO_ReadInputDataBit(PIN_DCIN5) << 4) | (!GPIO_ReadInputDataBit(PIN_DCIN6) << 5) | (!GPIO_ReadInputDataBit(PIN_DCIN7) << 6) | (!GPIO_ReadInputDataBit(PIN_DCIN8) << 7);
+	
+	
+	/* Обработчик состояния выходных сигнальных реле */
+	GPIO_WriteBit(PIN_SDCO1, W_SDCO & 0x01);
+	GPIO_WriteBit(PIN_SDCO2, (W_SDCO >> 1) & 0x01);
+	GPIO_WriteBit(PIN_SDCO3, (W_SDCO >> 2) & 0x01);
+	GPIO_WriteBit(PIN_SDCO4, (W_SDCO >> 3) & 0x01);
+	GPIO_WriteBit(PIN_SDCO5, (W_SDCO >> 4) & 0x01);
+	GPIO_WriteBit(PIN_SDCO6, (W_SDCO >> 5) & 0x01);
+	GPIO_WriteBit(PIN_SDCO7, (W_SDCO >> 6) & 0x01);
+	GPIO_WriteBit(PIN_SDCO8, (W_SDCO >> 7) & 0x01);
+	GPIO_WriteBit(PIN_SDCO9, (W_SDCO >> 8) & 0x01);
+	GPIO_WriteBit(PIN_SDCO10, (W_SDCO >> 9) & 0x01);
+	GPIO_WriteBit(PIN_SDCO11, (W_SDCO >> 10) & 0x01);
+	GPIO_WriteBit(PIN_SDCO12, (W_SDCO >> 11) & 0x01);
+	GPIO_WriteBit(PIN_SDCO13, (W_SDCO >> 12) & 0x01);
+	GPIO_WriteBit(PIN_SDCO14, (W_SDCO >> 13) & 0x01);
+	
+	/* Обработчик состояния выходных силовых реле */
+	GPIO_WriteBit(PIN_PDCO1, W_PDCO & 0x01);
+	GPIO_WriteBit(PIN_PDCO2, (W_PDCO >> 1) & 0x01);
+	GPIO_WriteBit(PIN_PDCO3, (W_PDCO >> 2) & 0x01);
+	GPIO_WriteBit(PIN_PDCO4, (W_PDCO >> 3) & 0x01);
 	
 		
-		modbus1.address = W_ADDRESS;								//Обновление ModBus адреса ВНЕШНЕГО
+	//modbus1.address = W_ADDRESS;								//Обновление ModBus адреса ВНЕШНЕГО
 		
 /* Обновление скорости USART для ВНЕШНЕГО */
 		if(W_SPEED != modbus1.speed){
