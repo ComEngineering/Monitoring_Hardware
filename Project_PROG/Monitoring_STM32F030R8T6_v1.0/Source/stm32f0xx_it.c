@@ -216,9 +216,17 @@ void USART1_IRQHandler(void)
 			modbus1.txlen=0;
 			//rs485 DE disable
 			//GPIOA->BRR = GPIO_Pin_12;
-			//GPIO_WriteBit(PIN_USART_DE, Bit_RESET);
+			GPIO_WriteBit(PIN_USART_DE, Bit_RESET);
 			USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);
 			USART_ITConfig(USART1, USART_IT_TC, DISABLE);
+			
+			/* Configure USART1 TX (PA9) as alternate function push-pull*/	
+//			GPIO_InitTypeDef  GPIO_InitStructure;
+//			GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_9;
+//			GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
+//			GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_IN;
+//			GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_NOPULL;
+//			GPIO_Init(GPIOA, &GPIO_InitStructure);
 		}
 	}
 
@@ -254,12 +262,21 @@ void TIM14_IRQHandler(void)
 /* Старт отправки данных по UART1 если данные готовы */
 		if((modbus1.txlen>0)&(modbus1.txcnt==0))
 		{
+			/* Configure USART1 TX (PA9) as alternate function push-pull*/	
+//			GPIO_InitTypeDef  GPIO_InitStructure;
+//			GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_9;
+//			GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
+//			GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_AF;
+//			GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_NOPULL;
+//			GPIO_Init(GPIOA, &GPIO_InitStructure);
+//			GPIO_PinAFConfig(GPIOA, GPIO_PinSource9, GPIO_AF_1);
+			
 			//countReqUSART1 = 0;
 			USART_ITConfig(USART1, USART_IT_RXNE, DISABLE);
 			USART_ITConfig(USART1, USART_IT_TC, ENABLE);
 
 			//rs485 DE enable
-//			GPIOA->BSRR = GPIO_Pin_12;
+			GPIOA->BSRR = GPIO_Pin_12;
 			//GPIO_WriteBit(PIN_USART_DE, Bit_SET);
 			USART_SendData(USART1, modbus1.buffer[modbus1.txcnt++]);
 		}
