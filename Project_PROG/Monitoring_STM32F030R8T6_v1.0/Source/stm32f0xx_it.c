@@ -216,7 +216,7 @@ void USART1_IRQHandler(void)
 			modbus1.txlen=0;
 			//rs485 DE disable
 			//GPIOA->BRR = GPIO_Pin_12;
-			GPIO_WriteBit(PIN_USART_DE, Bit_RESET);
+//			GPIO_WriteBit(PIN_USART_DE, Bit_RESET);
 			USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);
 			USART_ITConfig(USART1, USART_IT_TC, DISABLE);
 			
@@ -276,7 +276,7 @@ void TIM14_IRQHandler(void)
 			USART_ITConfig(USART1, USART_IT_TC, ENABLE);
 
 			//rs485 DE enable
-			GPIOA->BSRR = GPIO_Pin_12;
+//			GPIOA->BSRR = GPIO_Pin_12;
 			//GPIO_WriteBit(PIN_USART_DE, Bit_SET);
 			USART_SendData(USART1, modbus1.buffer[modbus1.txcnt++]);
 		}

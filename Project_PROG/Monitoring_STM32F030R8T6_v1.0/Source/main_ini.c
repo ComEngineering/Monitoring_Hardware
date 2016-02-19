@@ -213,19 +213,19 @@ void SetupUSART1(void)
 	GPIO_PinAFConfig(GPIOA, GPIO_PinSource9, GPIO_AF_1);
 
 	/* Configure PA12 as rs485 DE select*/
-	GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_12;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
-	GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_OUT;
-	GPIO_InitStructure.GPIO_OType = GPIO_OType_OD;
-	GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_DOWN;
-	GPIO_Init(GPIOA, &GPIO_InitStructure);
-	
 //	GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_12;
 //	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
-//	GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_IN;
-//	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
-//	GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_NOPULL;
+//	GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_OUT;
+//	GPIO_InitStructure.GPIO_OType = GPIO_OType_OD;
+//	GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_DOWN;
 //	GPIO_Init(GPIOA, &GPIO_InitStructure);
+	
+	GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_12;
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
+	GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_IN;
+	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+	GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_NOPULL;
+	GPIO_Init(GPIOA, &GPIO_InitStructure);
 	
 	//setting parametrs common for all uarts
 	USART_InitStructure.USART_BaudRate            = N_Speed_uart[modbus1.speed];
