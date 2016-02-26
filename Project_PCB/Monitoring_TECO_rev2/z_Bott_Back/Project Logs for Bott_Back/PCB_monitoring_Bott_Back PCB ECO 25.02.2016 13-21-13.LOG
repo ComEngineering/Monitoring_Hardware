@@ -1,0 +1,89 @@
+Removed Pin From Net: NetName=12V_B Pin=K3-3
+Removed Pin From Net: NetName=C_OSR1 Pin=K3-5
+Removed Pin From Net: NetName=12V_B Pin=K4-3
+Removed Pin From Net: NetName=C_OSR2 Pin=K4-5
+Removed Pin From Net: NetName=C_OSR3 Pin=K5-5
+Removed Pin From Net: NetName=C_OSR4 Pin=K6-5
+Removed Pin From Net: NetName=C_OSR5 Pin=K7-5
+Removed Pin From Net: NetName=C_OSR6 Pin=K8-5
+Removed Pin From Net: NetName=C_OSR7 Pin=K9-5
+Removed Pin From Net: NetName=12V_B Pin=K10-1
+Removed Pin From Net: NetName=C_OPR2 Pin=K10-2
+Removed Pin From Net: NetName=12V_B Pin=K11-1
+Removed Pin From Net: NetName=C_OPR1 Pin=K11-2
+Removed Pin From Net: NetName=NetK5_1 Pin=X1-5
+Removed Pin From Net: NetName=NetK5_7 Pin=X1-6
+Removed Pin From Net: NetName=NetK6_1 Pin=X1-7
+Removed Pin From Net: NetName=NetK6_7 Pin=X1-8
+Removed Pin From Net: NetName=NetK7_1 Pin=X2-1
+Removed Pin From Net: NetName=NetK7_7 Pin=X2-2
+Removed Pin From Net: NetName=NetK8_1 Pin=X2-3
+Removed Pin From Net: NetName=NetK8_7 Pin=X2-4
+Removed Pin From Net: NetName=NetK9_1 Pin=X2-5
+Removed Pin From Net: NetName=NetK9_7 Pin=X2-6
+Change Component DesignItemId : Designator=K3 Old DesignItemId=BRS-1A12 New DesignItemId=JQC-3F-DC12VH-7A
+Change Component DesignItemId : Designator=K4 Old DesignItemId=BRS-1A12 New DesignItemId=JQC-3F-DC12VH-7A
+Change Component DesignItemId : Designator=K10 Old DesignItemId=JQC-3F-DC12VH-7A New DesignItemId=BRS-1A12
+Change Component DesignItemId : Designator=K11 Old DesignItemId=JQC-3F-DC12VH-7A New DesignItemId=BRS-1A12
+Change Component Footprint: Designator=K10 Old Footprint=BS-115C-12A New Footprint=R_BRS
+Change Component Footprint: Designator=K11 Old Footprint=BS-115C-12A New Footprint=R_BRS
+Change Component Footprint: Designator=K3 Old Footprint=R_BRS New Footprint=BS-115C-12A
+Change Component Footprint: Designator=K4 Old Footprint=R_BRS New Footprint=BS-115C-12A
+Change Component Comment : Designator=K3 Old Comment=BRS-1A12 New Comment=JQC-3F-DC12VH-15A
+Change Component Comment : Designator=K4 Old Comment=BRS-1A12 New Comment=JQC-3F-DC12VH-15A
+Change Component Comment : Designator=K10 Old Comment=JQC-3F-DC12VH-15A New Comment=BRS-1A12
+Change Component Comment : Designator=K11 Old Comment=JQC-3F-DC12VH-15A New Comment=BRS-1A12
+Added Pin To Net: NetName=12V_B Pin=K3-1
+Added Pin To Net: NetName=C_OPR2 Pin=K3-2
+Added Pin To Net: NetName=12V_B Pin=K4-1
+Added Pin To Net: NetName=C_OPR1 Pin=K4-2
+Added Pin To Net: NetName=C_OSR1 Pin=K5-5
+Added Pin To Net: NetName=C_OSR2 Pin=K6-5
+Added Pin To Net: NetName=C_OSR3 Pin=K7-5
+Added Pin To Net: NetName=C_OSR4 Pin=K8-5
+Added Pin To Net: NetName=C_OSR5 Pin=K9-5
+Added Pin To Net: NetName=12V_B Pin=K10-3
+Added Pin To Net: NetName=C_OSR6 Pin=K10-5
+Added Pin To Net: NetName=12V_B Pin=K11-3
+Added Pin To Net: NetName=C_OSR7 Pin=K11-5
+Added Pin To Net: NetName=NetK5_1 Pin=X1-1
+Added Pin To Net: NetName=NetK5_7 Pin=X1-2
+Added Pin To Net: NetName=NetK6_1 Pin=X1-3
+Added Pin To Net: NetName=NetK6_7 Pin=X1-4
+Added Pin To Net: NetName=NetK7_1 Pin=X1-5
+Added Pin To Net: NetName=NetK7_7 Pin=X1-6
+Added Pin To Net: NetName=NetK8_1 Pin=X1-7
+Added Pin To Net: NetName=NetK8_7 Pin=X1-8
+Added Pin To Net: NetName=NetK9_1 Pin=X2-1
+Added Pin To Net: NetName=NetK9_7 Pin=X2-2
+Added Pin To Net: NetName=NetK3_3 Pin=K3-3
+Added Pin To Net: NetName=NetK3_3 Pin=X7-1
+Added Net: Name=NetK3_3
+Added Pin To Net: NetName=NetK3_4 Pin=K3-4
+Added Pin To Net: NetName=NetK3_4 Pin=X7-2
+Added Net: Name=NetK3_4
+Added Pin To Net: NetName=NetK3_5 Pin=K3-5
+Added Pin To Net: NetName=NetK3_5 Pin=X7-3
+Added Net: Name=NetK3_5
+Added Pin To Net: NetName=NetK4_3 Pin=K4-3
+Added Pin To Net: NetName=NetK4_3 Pin=X8-1
+Added Net: Name=NetK4_3
+Added Pin To Net: NetName=NetK4_4 Pin=K4-4
+Added Pin To Net: NetName=NetK4_4 Pin=X8-2
+Added Net: Name=NetK4_4
+Added Pin To Net: NetName=NetK4_5 Pin=K4-5
+Added Pin To Net: NetName=NetK4_5 Pin=X8-3
+Added Net: Name=NetK4_5
+Added Pin To Net: NetName=NetK10_1 Pin=K10-1
+Added Pin To Net: NetName=NetK10_1 Pin=X2-3
+Added Net: Name=NetK10_1
+Added Pin To Net: NetName=NetK10_7 Pin=K10-7
+Added Pin To Net: NetName=NetK10_7 Pin=X2-4
+Added Net: Name=NetK10_7
+Added Pin To Net: NetName=NetK11_1 Pin=K11-1
+Added Pin To Net: NetName=NetK11_1 Pin=X2-5
+Added Net: Name=NetK11_1
+Added Pin To Net: NetName=NetK11_7 Pin=K11-7
+Added Pin To Net: NetName=NetK11_7 Pin=X2-6
+Added Net: Name=NetK11_7
+Added Room: Name=Sheet_Bott_Back
