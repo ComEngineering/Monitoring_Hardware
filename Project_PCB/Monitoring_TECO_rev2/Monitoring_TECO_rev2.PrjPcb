@@ -28,7 +28,7 @@ PowerPortNamesTakePriority=0
 PushECOToAnnotationFile=1
 DItemRevisionGUID=
 ReportSuppressedErrorsInMessages=0
-OutputPath=
+OutputPath=Project Outputs for Monitoring_TECO_rev2
 LogFolderPath=
 ManagedProjectGUID=
 
@@ -88,23 +88,6 @@ GenerateClassCluster=0
 DocumentUniqueId=
 
 [Document4]
-DocumentPath=PCB_monitoring_CPU.PcbDoc
-AnnotationEnabled=1
-AnnotateStartValue=1
-AnnotationIndexControlEnabled=0
-AnnotateSuffix=
-AnnotateScope=All
-AnnotateOrder=-1
-DoLibraryUpdate=1
-DoDatabaseUpdate=1
-ClassGenCCAutoEnabled=1
-ClassGenCCAutoRoomEnabled=1
-ClassGenNCAutoScope=None
-DItemRevisionGUID=
-GenerateClassCluster=0
-DocumentUniqueId=WNBMYCPR
-
-[Document5]
 DocumentPath=Sheet_MCU_IO.Harness
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -121,7 +104,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=
 
-[Document6]
+[Document5]
 DocumentPath=..\..\..\..\My_Altium_lib\Battery.PcbLib
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -138,7 +121,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=
 
-[Document7]
+[Document6]
 DocumentPath=..\..\..\..\My_Altium_lib\Capacitor.PcbLib
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -155,7 +138,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=
 
-[Document8]
+[Document7]
 DocumentPath=..\..\..\..\My_Altium_lib\Chip_Packaging.PcbLib
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -172,7 +155,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=
 
-[Document9]
+[Document8]
 DocumentPath=..\..\..\..\My_Altium_lib\Connect.PcbLib
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -189,7 +172,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=MVBLVRRK
 
-[Document10]
+[Document9]
 DocumentPath=..\..\..\..\My_Altium_lib\Diode.PcbLib
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -206,7 +189,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=
 
-[Document11]
+[Document10]
 DocumentPath=..\..\..\..\My_Altium_lib\Induction.PcbLib
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -223,7 +206,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=
 
-[Document12]
+[Document11]
 DocumentPath=..\..\..\..\My_Altium_lib\LEDs.PcbLib
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -238,9 +221,9 @@ ClassGenCCAutoRoomEnabled=1
 ClassGenNCAutoScope=None
 DItemRevisionGUID=
 GenerateClassCluster=0
-DocumentUniqueId=
+DocumentUniqueId=FEDPWMQV
 
-[Document13]
+[Document12]
 DocumentPath=..\..\..\..\My_Altium_lib\Oscillator.PcbLib
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -257,7 +240,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=
 
-[Document14]
+[Document13]
 DocumentPath=..\..\..\..\My_Altium_lib\Other.PcbLib
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -274,7 +257,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=
 
-[Document15]
+[Document14]
 DocumentPath=..\..\..\..\My_Altium_lib\Relay.PcbLib
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -291,7 +274,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=XFSMKYUS
 
-[Document16]
+[Document15]
 DocumentPath=..\..\..\..\My_Altium_lib\Resistors.PcbLib
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -308,7 +291,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=NBKAPOPI
 
-[Document17]
+[Document16]
 DocumentPath=..\..\..\..\My_Altium_lib\Transformator.PcbLib
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -325,7 +308,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=
 
-[Document18]
+[Document17]
 DocumentPath=..\..\..\..\My_Altium_lib\Transistors.PcbLib
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -342,7 +325,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=
 
-[Document19]
+[Document18]
 DocumentPath=..\..\..\..\My_Altium_lib\Battery.SchLib
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -359,7 +342,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=
 
-[Document20]
+[Document19]
 DocumentPath=..\..\..\..\My_Altium_lib\Capacitor.SchLib
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -376,7 +359,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=IWBTRLPF
 
-[Document21]
+[Document20]
 DocumentPath=..\..\..\..\My_Altium_lib\Chip_Packaging.SchLib
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -393,7 +376,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=YDDWXXVW
 
-[Document22]
+[Document21]
 DocumentPath=..\..\..\..\My_Altium_lib\Connect.SchLib
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -410,7 +393,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=
 
-[Document23]
+[Document22]
 DocumentPath=..\..\..\..\My_Altium_lib\Diode.SchLib
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -427,7 +410,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=
 
-[Document24]
+[Document23]
 DocumentPath=..\..\..\..\My_Altium_lib\Induction.SchLib
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -444,7 +427,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=
 
-[Document25]
+[Document24]
 DocumentPath=..\..\..\..\My_Altium_lib\LEDs.SchLib
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -461,7 +444,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=
 
-[Document26]
+[Document25]
 DocumentPath=..\..\..\..\My_Altium_lib\Oscillator.SchLib
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -478,7 +461,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=
 
-[Document27]
+[Document26]
 DocumentPath=..\..\..\..\My_Altium_lib\Other.SchLib
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -495,7 +478,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=
 
-[Document28]
+[Document27]
 DocumentPath=..\..\..\..\My_Altium_lib\Power.SchLib
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -512,7 +495,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=
 
-[Document29]
+[Document28]
 DocumentPath=..\..\..\..\My_Altium_lib\Relay.SchLib
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -529,7 +512,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=ILCLQXJN
 
-[Document30]
+[Document29]
 DocumentPath=..\..\..\..\My_Altium_lib\Resistors.SchLib
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -546,7 +529,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=
 
-[Document31]
+[Document30]
 DocumentPath=..\..\..\..\My_Altium_lib\Transformator.SchLib
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -563,7 +546,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=
 
-[Document32]
+[Document31]
 DocumentPath=..\..\..\..\My_Altium_lib\Transistors.SchLib
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -580,6 +563,40 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=DBJQDTWG
 
+[Document32]
+DocumentPath=PCB_monitoring_MOTHB.PcbDoc
+AnnotationEnabled=1
+AnnotateStartValue=1
+AnnotationIndexControlEnabled=0
+AnnotateSuffix=
+AnnotateScope=All
+AnnotateOrder=-1
+DoLibraryUpdate=1
+DoDatabaseUpdate=1
+ClassGenCCAutoEnabled=1
+ClassGenCCAutoRoomEnabled=1
+ClassGenNCAutoScope=None
+DItemRevisionGUID=
+GenerateClassCluster=0
+DocumentUniqueId=BGKSNQCX
+
+[Document33]
+DocumentPath=PCB_monitoring_IO.PcbDoc
+AnnotationEnabled=1
+AnnotateStartValue=1
+AnnotationIndexControlEnabled=0
+AnnotateSuffix=
+AnnotateScope=All
+AnnotateOrder=-1
+DoLibraryUpdate=1
+DoDatabaseUpdate=1
+ClassGenCCAutoEnabled=1
+ClassGenCCAutoRoomEnabled=1
+ClassGenNCAutoScope=None
+DItemRevisionGUID=
+GenerateClassCluster=0
+DocumentUniqueId=WNBMYCPR
+
 [Configuration1]
 Name=Default Configuration
 ParameterCount=0
@@ -591,7 +608,7 @@ GenerateBOM=1
 OutputJobsCount=0
 
 [Generic_EDE]
-OutputDir=
+OutputDir=Project Outputs for Monitoring_TECO_rev2
 
 [OutputGroup1]
 Name=Netlist Outputs
@@ -1274,7 +1291,7 @@ Type7=1
 Type8=1
 Type9=1
 Type10=1
-Type11=2
+Type11=1
 Type12=2
 Type13=2
 Type14=1
