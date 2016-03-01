@@ -1,0 +1,96 @@
+Removed Pin From Net: NetName=5V Pin=C7-2
+Removed Pin From Net: NetName=GND Pin=C28-1
+Removed Pin From Net: NetName=NetC31_2 Pin=C28-2
+Removed Pin From Net: NetName=NetC32_2 Pin=C30-2
+Removed Pin From Net: NetName=3.3V Pin=R14-1
+Removed Pin From Net: NetName=3.3V Pin=R16-1
+Removed Pin From Net: NetName=IN_D3 Pin=R16-2
+Removed Pin From Net: NetName=3.3V Pin=R22-1
+Removed Pin From Net: NetName=IN_D4 Pin=R22-2
+Removed Pin From Net: NetName=GND Pin=U2-1
+Removed Pin From Net: NetName=3.3V Pin=U2-2
+Removed Pin From Net: NetName=5V Pin=U2-3
+Removed Pin From Net: NetName=NetC21_1 Pin=U8-1
+Removed Pin From Net: NetName=IN_D1 Pin=U8-4
+Removed Pin From Net: NetName=NetC27_1 Pin=U10-1
+Removed Pin From Net: NetName=IN_D3 Pin=U10-4
+Removed Pin From Net: NetName=NetC30_1 Pin=U11-1
+Removed Pin From Net: NetName=IN_D4 Pin=U11-4
+Removed Member From Class: ClassName=Sheet_Power Member=C21
+Removed Member From Class: ClassName=Sheet_Power Member=R29
+Added Component: Designator=C8(C_0805)
+Added Component: Designator=C31(C_0805)
+Added Component: Designator=C32(C_0805)
+Added Component: Designator=R9(R_0805)
+Added Component: Designator=R30(R_0805)
+Added Component: Designator=R32(R_0805)
+Added Component: Designator=R35(R_0805)
+Added Component: Designator=R38(R_0805)
+Added Component: Designator=U3(SOT-223_N)
+Added Component: Designator=U13(DIP-4)
+Added Component: Designator=U14(DIP-4)
+Added Component: Designator=U17(DIP-4)
+Added Component: Designator=U18(DIP-4)
+Added Pin To Net: NetName=12V Pin=C7-2
+Added Pin To Net: NetName=GND Pin=C7-1
+Added Pin To Net: NetName=5V Pin=C7-2
+Added Pin To Net: NetName=GND_BUS Pin=C28-1
+Added Pin To Net: NetName=5V_BUS Pin=C28-2
+Added Pin To Net: NetName=GND_EXT Pin=C30-2
+Added Pin To Net: NetName=GND Pin=C28-1
+Added Pin To Net: NetName=NetC31_2 Pin=C28-2
+Added Pin To Net: NetName=GND Pin=C30-1
+Added Pin To Net: NetName=NetC32_2 Pin=C30-2
+Added Pin To Net: NetName=GND_OD Pin=R8-1
+Added Pin To Net: NetName=NetC13_2 Pin=R8-2
+Added Pin To Net: NetName=5V_CPU Pin=R14-1
+Added Pin To Net: NetName=B Pin=R16-1
+Added Pin To Net: NetName=GND_BUS Pin=R16-2
+Added Pin To Net: NetName=5V_CPU Pin=R22-1
+Added Pin To Net: NetName=NetDS2_1 Pin=R22-2
+Added Pin To Net: NetName=NetC21_1 Pin=R13-1
+Added Pin To Net: NetName=DI1 Pin=R13-2
+Added Pin To Net: NetName=3.3V Pin=R14-1
+Added Pin To Net: NetName=IN_D2 Pin=R14-2
+Added Pin To Net: NetName=3.3V Pin=R16-1
+Added Pin To Net: NetName=IN_D3 Pin=R16-2
+Added Pin To Net: NetName=3.3V Pin=R22-1
+Added Pin To Net: NetName=IN_D4 Pin=R22-2
+Added Pin To Net: NetName=12V Pin=U2-1
+Added Pin To Net: NetName=5V Pin=U2-2
+Added Pin To Net: NetName=GND Pin=U2-3
+Added Pin To Net: NetName=GND Pin=U2-1
+Added Pin To Net: NetName=3.3V Pin=U2-2
+Added Pin To Net: NetName=5V Pin=U2-3
+Added Pin To Net: NetName=5V_BUS Pin=U10-1
+Added Pin To Net: NetName=GND_BUS Pin=U10-4
+Added Pin To Net: NetName=5V_BUS Pin=U11-1
+Added Pin To Net: NetName=GND_BUS Pin=U11-4
+Added Pin To Net: NetName=NetC21_1 Pin=U8-1
+Added Pin To Net: NetName=GND_EXT Pin=U8-2
+Added Pin To Net: NetName=GND Pin=U8-3
+Added Pin To Net: NetName=IN_D1 Pin=U8-4
+Added Pin To Net: NetName=NetC23_1 Pin=U9-1
+Added Pin To Net: NetName=GND_EXT Pin=U9-2
+Added Pin To Net: NetName=GND Pin=U9-3
+Added Pin To Net: NetName=IN_D2 Pin=U9-4
+Added Pin To Net: NetName=NetC27_1 Pin=U10-1
+Added Pin To Net: NetName=GND_EXT Pin=U10-2
+Added Pin To Net: NetName=GND Pin=U10-3
+Added Pin To Net: NetName=IN_D3 Pin=U10-4
+Added Pin To Net: NetName=NetC30_1 Pin=U11-1
+Added Pin To Net: NetName=GND_EXT Pin=U11-2
+Added Pin To Net: NetName=GND Pin=U11-3
+Added Pin To Net: NetName=IN_D4 Pin=U11-4
+Added Member To Class: ClassName=Sheet_Power Member=Component C5 Cap_Semi
+Added Member To Class: ClassName=Sheet_Power Member=Component C8 Cap_Semi
+Added Member To Class: ClassName=Sheet_Power Member=Component C10 Cap_Polar
+Added Member To Class: ClassName=Sheet_MCU_IO Member=Component C21 Cap_Semi
+Added Member To Class: ClassName=Sheet_MCU_IO Member=Component C32 Cap_Semi
+Added Member To Class: ClassName=Sheet_MCU_IO Member=Component C43 Cap_Polar
+Added Member To Class: ClassName=Sheet_Power Member=Component D3 VS-30BQ040
+Added Member To Class: ClassName=Sheet_Power Member=Component R9 Resistor
+Added Member To Class: ClassName=Sheet_Power Member=Component R10 Resistor
+Added Member To Class: ClassName=Sheet_MCU_IO Member=Component R32 Resistor
+Added Member To Class: ClassName=Sheet_MCU_IO Member=Component R48 Resistor
+Added Member To Class: ClassName=Sheet_Power Member=Component U3 LD1117AS33TR

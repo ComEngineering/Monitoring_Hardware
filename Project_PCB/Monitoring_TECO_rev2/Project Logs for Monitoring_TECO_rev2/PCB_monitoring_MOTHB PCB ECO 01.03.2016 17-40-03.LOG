@@ -1,0 +1,4 @@
+Added Component: Designator=X12(PLS-2-3D)
+Added Pin To Net: NetName=5V_CPU Pin=X12-1
+Added Pin To Net: NetName=GND Pin=X12-2
+Added Member To Class: ClassName=Sheet_Power Member=Component X12 PLS-2
