@@ -1,0 +1,24 @@
+Removed Pin From Net: NetName=TX6 Pin=-1
+Removed Pin From Net: NetName=TX6. Pin=-2
+Added Component: Designator=R50(R_0805)
+Added Component: Designator=R51(R_0805)
+Added Component: Designator=R52(R_0805)
+Added Component: Designator=R53(R_0805)
+Added Pin To Net: NetName=RX6. Pin=R50-1
+Added Pin To Net: NetName=RX6 Pin=R50-2
+Added Pin To Net: NetName=TX6. Pin=R51-1
+Added Pin To Net: NetName=TX6 Pin=R51-2
+Added Pin To Net: NetName=TX6 Pin=R52-2
+Added Pin To Net: NetName=RX6 Pin=R53-2
+Added Pin To Net: NetName=NetR52_1 Pin=R52-1
+Added Pin To Net: NetName=NetR52_1 Pin=U15-11
+Added Pin To Net: NetName=NetR52_1 Pin=X6-2
+Added Net: Name=NetR52_1
+Added Pin To Net: NetName=NetR53_1 Pin=R53-1
+Added Pin To Net: NetName=NetR53_1 Pin=U15-12
+Added Pin To Net: NetName=NetR53_1 Pin=X7-2
+Added Net: Name=NetR53_1
+Added Member To Class: ClassName=Sheet_MCU_IO Member=Component R50 Resistor
+Added Member To Class: ClassName=Sheet_MCU_IO Member=Component R51 Resistor
+Added Member To Class: ClassName=Sheet_MCU_IO Member=Component R52 Resistor
+Added Member To Class: ClassName=Sheet_MCU_IO Member=Component R53 Resistor
