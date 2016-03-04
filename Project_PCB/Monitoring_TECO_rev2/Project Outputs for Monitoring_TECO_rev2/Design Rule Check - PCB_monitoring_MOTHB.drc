@@ -1,0 +1,67 @@
+Protel Design System Design Rule Check
+PCB File : D:\WORK\Monitoring_Hardware\Project_PCB\Monitoring_TECO_rev2\PCB_monitoring_MOTHB.PcbDoc
+Date     : 04.03.2016
+Time     : 11:48:54
+
+Processing Rule : Clearance Constraint (Gap=0.4mm) (InPolygon And InNetClass('GND')),(All)
+Rule Violations :0
+
+Processing Rule : Clearance Constraint (Gap=0.6mm) (InPolygon And OnLayer('Bottom Layer')),(All)
+Rule Violations :0
+
+Processing Rule : Clearance Constraint (Gap=0.7mm) (InPolygon And OnLayer('Top Layer')),(All)
+Rule Violations :0
+
+Processing Rule : Clearance Constraint (Gap=0.25mm) (All),(All)
+Rule Violations :0
+
+Processing Rule : Width Constraint (Min=0.25mm) (Max=4mm) (Preferred=0.5mm) (All)
+Rule Violations :0
+
+Processing Rule : Power Plane Connect Rule(Relief Connect )(Expansion=0.5mm) (Conductor Width=0.3mm) (Air Gap=0.25mm) (Entries=4) (All)
+Rule Violations :0
+
+Processing Rule : Short-Circuit Constraint (Allowed=No) (All),(All)
+Rule Violations :0
+
+Processing Rule : Un-Routed Net Constraint ( (All) )
+Rule Violations :0
+
+Processing Rule : Hole Size Constraint (Min=0.2mm) (Max=5mm) (All)
+Rule Violations :0
+
+Processing Rule : Height Constraint (Min=0mm) (Max=30mm) (Prefered=12.7mm) (All)
+Rule Violations :0
+
+Processing Rule : Hole To Hole Clearance (Gap=0.25mm) (All),(All)
+Rule Violations :0
+
+Processing Rule : Minimum Solder Mask Sliver (Gap=0mm) (All),(All)
+Rule Violations :0
+
+Processing Rule : Silk To Solder Mask (Clearance=0mm) (IsPad),(All)
+Rule Violations :0
+
+Processing Rule : Silk to Silk (Clearance=0mm) (All),(All)
+Rule Violations :0
+
+Processing Rule : Net Antennae (Tolerance=0mm) (All)
+   Violation between Net Antennae: Via (26.6mm,63.35mm) Top Layer to Bottom Layer
+   Violation between Net Antennae: Via (26.6mm,61.35mm) Top Layer to Bottom Layer
+   Violation between Net Antennae: Via (28.1mm,61.35mm) Top Layer to Bottom Layer
+   Violation between Net Antennae: Via (28.1mm,65.35mm) Top Layer to Bottom Layer
+   Violation between Net Antennae: Via (26.6mm,65.35mm) Top Layer to Bottom Layer
+   Violation between Net Antennae: Via (25.1mm,65.35mm) Top Layer to Bottom Layer
+   Violation between Net Antennae: Via (25.1mm,63.35mm) Top Layer to Bottom Layer
+   Violation between Net Antennae: Via (29.6mm,61.35mm) Top Layer to Bottom Layer
+Rule Violations :8
+
+Processing Rule : Silk primitive without silk layer
+Rule Violations :0
+
+Processing Rule : Modified Polygon (Allow modified: No), (Allow shelved: No)
+Rule Violations :0
+
+
+Violations Detected : 8
+Time Elapsed        : 00:00:01
