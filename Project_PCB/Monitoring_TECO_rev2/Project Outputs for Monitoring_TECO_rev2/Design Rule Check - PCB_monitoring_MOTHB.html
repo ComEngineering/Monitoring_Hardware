@@ -3,21 +3,31 @@
 <META http-equiv="Content-Type" content="text/html">
 <style type="text/css">
 		h1, h2, h3, h4, h5, h6 {
-			font-family : sans-serif;
-			color : white;
-			background-color : #21489e;
+			font-family : segoe ui;
+			color : black;
+			background-color : #EDE7D9;
 			padding: 0.3em;
 		}
-		body {
-			font-family : verdana;
+
+		h1 {
+			font-size: 1.2em;
+		}		
+
+		h2 {
+			font-size: 1.2em;
 		}
+
+		body {
+			font-family : segoe ui;
+		}
+
 		td, th {
 			padding: 0.5em;
-			text-align : center;
-			width : 18%;
+			text-align : left;
+			width: 10em;
 		}
 		th {
-			background-color : #A6CAF0;
+			background-color : #EEEEEE;
 
 		}
 		th.column1, td.column1 {
@@ -26,120 +36,99 @@
 		}
 		table {
 			width : 100%;
+			font-size: 0.9em;
 		}
-		
-		.DRC_summary_header {							
+
+		.DRC_summary_header {
 			padding-bottom : 0.1em;
-			border : 0px solid black;							
-			width: 100%;
-                        align: right;
-                        
-		}
-
-		.DRC_summary_header_col1, 
-		.DRC_summary_header_col2, 
-		.DRC_summary_header_col3
-		{
-			color : black;
-			font-size:150%;
-                        padding : 0em;
-			padding-top : 0.2em;
-			padding-bottom 0.2: 0em;
 			border : 0px solid black;
-			width : auto;
+			width: 100%;
+			align: left;
+		}
+
+		.DRC_summary_header_col1,
+		.DRC_summary_header_col2, 
+		.DRC_summary_header_col3 {
+			color : black;
+			font-size:100%;
+			padding : 0em;
+			padding-top : 0.2em;
+			padding-bottom 0.2em;
+			border : 0px solid black;
 			vertical-align: top;
-			font-weight: bold;				
-		}
-		
-		.DRC_summary_header_col1 	
-		{		                       
-			text-align: right;
-                        width: auto;	
+			text-align: left;
 		}
 
-		.DRC_summary_header_col2 	
-		{		
-			text-align: center;	
+		.DRC_summary_header_col1 {
+			font-weight: bold;
+			width: 8em;
 		}
 
-		.DRC_summary_header_col3 	
-		{		
-			text-align: left;	
+		.DRC_summary_header_col2 {
+			width: 0.1em;
+		
+		}
+
+		.DRC_summary_header_col3 {
+			width : auto;
+		}
+
+		.header_holder {
+		    Width = 100%;
+		    border = 0px solid green;
+		    padding = 0;
 		}
 
 
-		
-		.header_holder
-		{
-		Width = 100%;
-		border = 0px solid green;
-		padding = 0;
-		}
-		
-		
-		
 		.front_matter, .front_matter_column1, .front_matter_column2, .front_matter_column3
-                {
-			left:0;
-			top:0;
-			padding-top : 0.1em;			
+		{
+			left : 0;
+			top : 0;
+			padding: 0em;
+			padding-top : 0.1em;
 			border : 0px solid black;
 			width : 100%;
-			vertical-align: top
+			vertical-align: top;
+			text-align: left;
+		}
 
-		}
-		.front_matter {	
-			
-			margin-top: 5px;
- 			margin-left: 0px;					 			
- 			horizontal-align: left;
-		}
-				
-		
 		.front_matter_column1 {
-			width : 10em;	
-			text-align  : right;
-			padding-right:0.1em;
-			
+			width : 8em;
+			font-weight: bold;
 		}
-		
+
 		.front_matter_column2 {
-                        width: 0.1em;
-			align: center;
-			text-align : center;
-			margin-right  : 0.1em;	
-			margin-left   : 0.1em;
+			width: 0.1em;
 		}
+
 		.front_matter_column3 {
-			width         : auto;  
-			text-align    : left;	
-			margin-right  : 0.5em;				
+			width : auto;
 		}
-		
+
 		.total_column1, .total_column {
 			font-weight : bold;
 		}
 		.total_column1 {
-			text-align : right;
+			text-align : left;
 		}
 		.warning, .error {
 			color : red;
 			font-weight : bold;
 		}
 		tr.onmouseout_odd {
-			background-color : #EEEEE0 
+			background-color : #white;
 		}
 		tr.onmouseout_even { 
-			background-color : #F3F3E3   
+			background-color : #FAFAFA;
 		}
 		tr.onmouseover_odd, tr.onmouseover_even { 
-			background-color : lightYellow
+			background-color : #EEEEEE;
 		} 
 		a:link, a:visited, .q a:link,.q a:active,.q {
 			color: #21489e; 
 		}
 		a:link.callback, a:visited.callback { 
-			color: #008000 
+			color: #21489e;
 		}
 		a:link.customize, a:visited.customize {
 			color: #C0C0C0;
@@ -222,47 +211,46 @@
 	</script><title>Design Rule Verification Report</title>
 </head>
 <body onload=""><img ALT="Altium" src="
-			file://C:\Users\Public\Documents\Altium\AD15\Templates\AD-rgb_logo_223x64.gif
-		"><a href="dxpprocess://Client:SetupPreferences?Server=PCB|PageName=Reports" class="customize"><acronym title="dxpprocess://Client:SetupPreferences?Server=PCB|PageName=Reports">customize</acronym></a><h1>Design Rule Verification Report</h1>
+			file://E:\Program Files\Documents\Altium\AD16\Templates\AD_logo.png
+		"><h1>Design Rule Verification Report</h1>
 <table class="header_holder">
-<td Style="width:70%">
+<td class="column1">
 <table class="front_matter">
 <tr class="front_matter">
-<td class="front_matter_column1">Date</td>
-<td class="front_matter_column2">:</td>
-<td class="front_matter_column3">04.03.2016</td>
+<td class="front_matter_column1">Date:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3">11.03.2016</td>
 </tr>
 <tr class="front_matter">
-<td class="front_matter_column1">Time</td>
-<td class="front_matter_column2">:</td>
-<td class="front_matter_column3">11:48:54</td>
+<td class="front_matter_column1">Time:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3">16:08:08</td>
 </tr>
 <tr class="front_matter">
-<td class="front_matter_column1">Elapsed Time</td>
-<td class="front_matter_column2">:</td>
-<td class="front_matter_column3">00:00:01</td>
+<td class="front_matter_column1">Elapsed Time:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3">00:00:02</td>
 </tr>
 <tr class="front_matter">
-<td class="front_matter_column1">Filename</td>
-<td class="front_matter_column2">:</td>
-<td class="front_matter_column3"><a href="file:///D:\WORK\Monitoring_Hardware\Project_PCB\Monitoring_TECO_rev2\PCB_monitoring_MOTHB.PcbDoc" class="file"><acronym title="D:\WORK\Monitoring_Hardware\Project_PCB\Monitoring_TECO_rev2\PCB_monitoring_MOTHB.PcbDoc">D:\WORK\Monitoring_Hardware\Project_PCB\Monitoring_TECO_rev2\PCB_monitoring_MOTHB.PcbDoc</acronym></a></td>
+<td class="front_matter_column1">Filename:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3"><a href="file:///D:\!WORK\TECO\TECO_Monitoring_Hardware\Project_PCB\Monitoring_TECO_rev2\PCB_monitoring_MOTHB.PcbDoc" class="file"><acronym title="D:\!WORK\TECO\TECO_Monitoring_Hardware\Project_PCB\Monitoring_TECO_rev2\PCB_monitoring_MOTHB.PcbDoc">D:\!WORK\TECO\TECO_Monitoring_Hardware\Project_PCB\Monitoring_TECO_rev2\PCB_monitoring_MOTHB.PcbDoc</acronym></a></td>
 </tr>
 </table>
 </td>
-<td Style="Width:30%">
+<td class="column2">
 <table class="DRC_summary_header">
 <tr>
-<td class="DRC_summary_header_col1">Warnings</td>
-<td class="DRC_summary_header_col2">:</td>
+<td class="DRC_summary_header_col1">Warnings:</td>
+<td class="DRC_summary_header_col2"></td>
 <td class="DRC_summary_header_col3">0</td></tr>
 <tr>
-<td class="DRC_summary_header_col1">Rule Violations</td>
-<td class="DRC_summary_header_col2">:</td>
-<td class="DRC_summary_header_col3" style="color : red">8</td></tr>
+<td class="DRC_summary_header_col1">Rule Violations:</td>
+<td class="DRC_summary_header_col2"></td>
+<td class="DRC_summary_header_col3">0</td></tr>
 </table>
 </td>
-</table>
-<hr><a name="IDASAU1C"><h2>Summary</h2></a><table>
+</table><a name="IDGTC3YT41BE2ZI2RMCP2UIHXZTE5ZWVVFF2ENBMGA1VP5WHUQ5H3D"><h2>Summary</h2></a><table>
 <tr>
 <th class="column1">Warnings</th>
 <th class="column2">Count</th>
@@ -277,104 +265,76 @@
 <th class="column2">Count</th>
 </tr>
 <tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
-<td class="column1"><a href="#IDAEBU1C">Clearance Constraint (Gap=0.4mm) (InPolygon And InNetClass('GND')),(All)</a></td>
+<td class="column1"><a href="#IDQYXU3KMIGRSDJSVVJELVYEUCUIM4KTJIMGAPOOLFWP1LT5YP22WI">Modified Polygon (Allow modified: No), (Allow shelved: No)</a></td>
 <td class="column2">0</td>
 </tr>
 <tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
-<td class="column1"><a href="#IDAKBU1C">Clearance Constraint (Gap=0.6mm) (InPolygon And OnLayer('Bottom Layer')),(All)</a></td>
+<td class="column1"><a href="#ID4C1RY2L4JLBLLYJ20LT1I4RT0IEK1AWW2F4MLAH0ADOF2BDRKFEG">Silk primitive without silk layer</a></td>
 <td class="column2">0</td>
 </tr>
 <tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
-<td class="column1"><a href="#IDAQBU1C">Clearance Constraint (Gap=0.7mm) (InPolygon And OnLayer('Top Layer')),(All)</a></td>
+<td class="column1"><a href="#ID5AXIYRRMMJGRNP3EY42CP1GIBLT5WD1JLYGDDTLRKKQSMYDPF4HP">Net Antennae (Tolerance=0mm) (All)</a></td>
 <td class="column2">0</td>
 </tr>
 <tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
-<td class="column1"><a href="#IDAWBU1C">Clearance Constraint (Gap=0.25mm) (All),(All)</a></td>
+<td class="column1"><a href="#IDLEKPGPKBDTEBMHIFUYFQXKH12U45QUOB1TQ21GMNXYESUYZJYM">Silk to Silk (Clearance=0mm) (All),(All)</a></td>
 <td class="column2">0</td>
 </tr>
 <tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
-<td class="column1"><a href="#IDA2BU1C">Width Constraint (Min=0.25mm) (Max=4mm) (Preferred=0.5mm) (All)</a></td>
+<td class="column1"><a href="#IDEFP2NYXQWYHXLCHECDQNT1FHCO4PONXDD3A0ZDLBMU30AGZHU5DP">Silk To Solder Mask (Clearance=0mm) (IsPad),(All)</a></td>
 <td class="column2">0</td>
 </tr>
 <tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
-<td class="column1"><a href="#IDACCU1C">Power Plane Connect Rule(Relief Connect )(Expansion=0.5mm) (Conductor Width=0.3mm) (Air Gap=0.25mm) (Entries=4) (All)</a></td>
+<td class="column1"><a href="#IDV1ZQGHXW1KSPIL5RWFQ4LPZANI0E1AAB0GNF4QBWEPBCA03XDSRJ">Minimum Solder Mask Sliver (Gap=0mm) (All),(All)</a></td>
 <td class="column2">0</td>
 </tr>
 <tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
-<td class="column1"><a href="#IDAICU1C">Short-Circuit Constraint (Allowed=No) (All),(All)</a></td>
+<td class="column1"><a href="#ID5HGDL311RNKKB5FFCNA2VIXPDN1ANPTNXO4X0QO4BS0TCL2M4XZM">Hole To Hole Clearance (Gap=0.25mm) (All),(All)</a></td>
 <td class="column2">0</td>
 </tr>
 <tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
-<td class="column1"><a href="#IDAOCU1C">Un-Routed Net Constraint ( (All) )</a></td>
+<td class="column1"><a href="#IDB1QAA5RWJPCHMWGOCGMOTKHX3COL110OK2WVB1CVSPNC2A1SYUBB">Height Constraint (Min=0mm) (Max=30mm) (Prefered=12.7mm) (All)</a></td>
 <td class="column2">0</td>
 </tr>
 <tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
-<td class="column1"><a href="#IDAUCU1C">Hole Size Constraint (Min=0.2mm) (Max=5mm) (All)</a></td>
+<td class="column1"><a href="#IDQHYJU1A2VRWGHLEV0HA4GBSKWPM0Y41PFGX4KNNBYYADMUGZL0GG">Hole Size Constraint (Min=0.2mm) (Max=5mm) (All)</a></td>
 <td class="column2">0</td>
 </tr>
 <tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
-<td class="column1"><a href="#IDA0CU1C">Height Constraint (Min=0mm) (Max=30mm) (Prefered=12.7mm) (All)</a></td>
+<td class="column1"><a href="#IDEQOQD0X0NDEVGXRVR4A0KVKZWBLTSIHSTKWVPCIA5MMDPPD4YUCP">Un-Routed Net Constraint ( (All) )</a></td>
 <td class="column2">0</td>
 </tr>
 <tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
-<td class="column1"><a href="#IDAADU1C">Hole To Hole Clearance (Gap=0.25mm) (All),(All)</a></td>
+<td class="column1"><a href="#IDQ55ANSGGE32DCP11YEAPSRE5VKSJ50BXVOFAZQM0OI44HESP5EHH">Short-Circuit Constraint (Allowed=No) (All),(All)</a></td>
 <td class="column2">0</td>
 </tr>
 <tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
-<td class="column1"><a href="#IDAGDU1C">Minimum Solder Mask Sliver (Gap=0mm) (All),(All)</a></td>
+<td class="column1"><a href="#IDBIKWZP3QMGBKJ5UD3HJ203AQIIMDFMEJ1FUAVTBORM0KBFIMFILE">Power Plane Connect Rule(Relief Connect )(Expansion=0.5mm) (Conductor Width=0.3mm) (Air Gap=0.25mm) (Entries=4) (All)</a></td>
 <td class="column2">0</td>
 </tr>
 <tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
-<td class="column1"><a href="#IDAMDU1C">Silk To Solder Mask (Clearance=0mm) (IsPad),(All)</a></td>
+<td class="column1"><a href="#IDX5NF1Y303X2IMVJID3Z4ZYLOUO4EIQUYSH1XI0KCRQLOYAZL5SUL">Width Constraint (Min=0.25mm) (Max=4mm) (Preferred=0.5mm) (All)</a></td>
 <td class="column2">0</td>
 </tr>
 <tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
-<td class="column1"><a href="#IDASDU1C">Silk to Silk (Clearance=0mm) (All),(All)</a></td>
+<td class="column1"><a href="#IDYQICFJABVC0LHSOKEACE3TCIKKP5WF5GJDKZFIPBQJFYKTCALB2E">Clearance Constraint (Gap=0.25mm) (All),(All)</a></td>
 <td class="column2">0</td>
 </tr>
 <tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
-<td class="column1"><a href="#IDAYDU1C">Net Antennae (Tolerance=0mm) (All)</a></td>
-<td class="column2">8</td>
+<td class="column1"><a href="#IDITDM0VWJZMV5DPEQJGDLO4EKBKWGA2S2NY5Q4VI1CNH5RV50ORUJ">Clearance Constraint (Gap=0.7mm) (InPolygon And OnLayer('Top Layer')),(All)</a></td>
+<td class="column2">0</td>
 </tr>
 <tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
-<td class="column1"><a href="#IDAOFU1C">Silk primitive without silk layer</a></td>
+<td class="column1"><a href="#ID5QA154KIJ4R4EZVLOVSRTSZMSIFLNBCOBJ2SQFLUTN4TYAQTXQIO">Clearance Constraint (Gap=0.6mm) (InPolygon And OnLayer('Bottom Layer')),(All)</a></td>
 <td class="column2">0</td>
 </tr>
 <tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
-<td class="column1"><a href="#IDAUFU1C">Modified Polygon (Allow modified: No), (Allow shelved: No)</a></td>
+<td class="column1"><a href="#IDPH1G1MRWAZBUGQFKQVA1WCXHMNXBIFMYQKVS13FXAB1Q4AUBTGCC">Clearance Constraint (Gap=0.4mm) (InPolygon And InNetClass('GND')),(All)</a></td>
 <td class="column2">0</td>
 </tr>
 <tr>
 <td style="font-weight : bold; text-align : right" class="column1">Total</td>
-<td style="font-weight : bold" class="column2">8</td>
+<td style="font-weight : bold" class="column2">0</td>
 </tr>
-</table><br><hr><a name="IDAYDU1C"><table>
-<tr>
-<th style="text-align : left" colspan="1" class="rule">Net Antennae (Tolerance=0mm) (All)</th>
-</tr>
-<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
-<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\WORK\Monitoring_Hardware\Project_PCB\Monitoring_TECO_rev2\PCB_monitoring_MOTHB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=10925.122mil|Location2.X=10989.25mil|Location1.Y=10246.972mil|Location2.Y=10349.154mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\WORK\Monitoring_Hardware\Project_PCB\Monitoring_TECO_rev2\PCB_monitoring_MOTHB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=10925.122mil|Location2.X=10989.25mil|Location1.Y=10246.972mil|Location2.Y=10349.154mil|Absolute=True">Net Antennae: Via (26.6mm,63.35mm) Top Layer to Bottom Layer</acronym></a><br></td>
-</tr>
-<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
-<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\WORK\Monitoring_Hardware\Project_PCB\Monitoring_TECO_rev2\PCB_monitoring_MOTHB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=10925.122mil|Location2.X=10989.25mil|Location1.Y=10168.232mil|Location2.Y=10270.414mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\WORK\Monitoring_Hardware\Project_PCB\Monitoring_TECO_rev2\PCB_monitoring_MOTHB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=10925.122mil|Location2.X=10989.25mil|Location1.Y=10168.232mil|Location2.Y=10270.414mil|Absolute=True">Net Antennae: Via (26.6mm,61.35mm) Top Layer to Bottom Layer</acronym></a><br></td>
-</tr>
-<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
-<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\WORK\Monitoring_Hardware\Project_PCB\Monitoring_TECO_rev2\PCB_monitoring_MOTHB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=10984.177mil|Location2.X=11048.305mil|Location1.Y=10168.232mil|Location2.Y=10270.414mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\WORK\Monitoring_Hardware\Project_PCB\Monitoring_TECO_rev2\PCB_monitoring_MOTHB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=10984.177mil|Location2.X=11048.305mil|Location1.Y=10168.232mil|Location2.Y=10270.414mil|Absolute=True">Net Antennae: Via (28.1mm,61.35mm) Top Layer to Bottom Layer</acronym></a><br></td>
-</tr>
-<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
-<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\WORK\Monitoring_Hardware\Project_PCB\Monitoring_TECO_rev2\PCB_monitoring_MOTHB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=10984.177mil|Location2.X=11048.305mil|Location1.Y=10325.713mil|Location2.Y=10427.894mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\WORK\Monitoring_Hardware\Project_PCB\Monitoring_TECO_rev2\PCB_monitoring_MOTHB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=10984.177mil|Location2.X=11048.305mil|Location1.Y=10325.713mil|Location2.Y=10427.894mil|Absolute=True">Net Antennae: Via (28.1mm,65.35mm) Top Layer to Bottom Layer</acronym></a><br></td>
-</tr>
-<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
-<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\WORK\Monitoring_Hardware\Project_PCB\Monitoring_TECO_rev2\PCB_monitoring_MOTHB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=10925.122mil|Location2.X=10989.25mil|Location1.Y=10325.713mil|Location2.Y=10427.894mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\WORK\Monitoring_Hardware\Project_PCB\Monitoring_TECO_rev2\PCB_monitoring_MOTHB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=10925.122mil|Location2.X=10989.25mil|Location1.Y=10325.713mil|Location2.Y=10427.894mil|Absolute=True">Net Antennae: Via (26.6mm,65.35mm) Top Layer to Bottom Layer</acronym></a><br></td>
-</tr>
-<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
-<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\WORK\Monitoring_Hardware\Project_PCB\Monitoring_TECO_rev2\PCB_monitoring_MOTHB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=10866.067mil|Location2.X=10930.195mil|Location1.Y=10325.713mil|Location2.Y=10427.894mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\WORK\Monitoring_Hardware\Project_PCB\Monitoring_TECO_rev2\PCB_monitoring_MOTHB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=10866.067mil|Location2.X=10930.195mil|Location1.Y=10325.713mil|Location2.Y=10427.894mil|Absolute=True">Net Antennae: Via (25.1mm,65.35mm) Top Layer to Bottom Layer</acronym></a><br></td>
-</tr>
-<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
-<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\WORK\Monitoring_Hardware\Project_PCB\Monitoring_TECO_rev2\PCB_monitoring_MOTHB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=10866.067mil|Location2.X=10930.195mil|Location1.Y=10246.972mil|Location2.Y=10349.154mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\WORK\Monitoring_Hardware\Project_PCB\Monitoring_TECO_rev2\PCB_monitoring_MOTHB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=10866.067mil|Location2.X=10930.195mil|Location1.Y=10246.972mil|Location2.Y=10349.154mil|Absolute=True">Net Antennae: Via (25.1mm,63.35mm) Top Layer to Bottom Layer</acronym></a><br></td>
-</tr>
-<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
-<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\WORK\Monitoring_Hardware\Project_PCB\Monitoring_TECO_rev2\PCB_monitoring_MOTHB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=11043.232mil|Location2.X=11107.36mil|Location1.Y=10168.232mil|Location2.Y=10270.414mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\WORK\Monitoring_Hardware\Project_PCB\Monitoring_TECO_rev2\PCB_monitoring_MOTHB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=11043.232mil|Location2.X=11107.36mil|Location1.Y=10168.232mil|Location2.Y=10270.414mil|Absolute=True">Net Antennae: Via (29.6mm,61.35mm) Top Layer to Bottom Layer</acronym></a><br></td>
-</tr>
-</table></a><a href="#top">Back to top</a><br><br></body>
+</table><br></body>
 </html>
