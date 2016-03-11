@@ -1,0 +1,15 @@
+Added Pin To Net: NetName=GND_T Pin=X2-1
+Added Pin To Net: NetName=IN_D5_T Pin=X2-2
+Added Pin To Net: NetName=IN_D7_T Pin=X2-3
+Added Pin To Net: NetName=1-WIRE3_T Pin=X2-4
+Added Pin To Net: NetName=1-WIRE5_T Pin=X2-5
+Added Pin To Net: NetName=ISR2_T Pin=X2-6
+Added Pin To Net: NetName=ISR4_T Pin=X2-7
+Added Pin To Net: NetName=ISR3_T Pin=X2-8
+Added Pin To Net: NetName=ISR1_T Pin=X2-9
+Added Pin To Net: NetName=1-WIRE4_T Pin=X2-10
+Added Pin To Net: NetName=IN_D8_T Pin=X2-11
+Added Pin To Net: NetName=IN_D6_T Pin=X2-12
+Added Pin To Net: NetName=5V_T Pin=X2-13
+Added Pin To Net: NetName=3.3V_T Pin=X2-14
+Added Member To Class: ClassName=Sheet_Top_Front Member=Component X2 PLS2-14
