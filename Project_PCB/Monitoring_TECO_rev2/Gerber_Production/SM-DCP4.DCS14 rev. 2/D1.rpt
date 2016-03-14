@@ -1,0 +1,15 @@
+Format: 4.2
+Units: Metric (mm.)
+Step & Repeat Codes Used: NO
+
+
+TOOL		SIZE		COUNT
+====		======		=====
+
+ 1 		0.5000		3
+ 2 		0.8000		56
+ 3 		0.9000		28
+ 4 		1.3000		16
+ 5 		1.4000		28
+ 6 		1.5000		20
+ 7 		3.0000		2

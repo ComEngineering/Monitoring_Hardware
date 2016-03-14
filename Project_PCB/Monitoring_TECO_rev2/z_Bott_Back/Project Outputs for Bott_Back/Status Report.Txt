@@ -1,0 +1,12 @@
+Output: NC Drill Files
+Type  : NC Drill
+From  : Project [Bott_Back.PrjPcb]
+   Generated File[PCB_monitoring_Bott_Back.TXT]
+   Generated File[PCB_monitoring_Bott_Back.LDP]
+   Generated File[PCB_monitoring_Bott_Back.DRR]
+
+
+Files Generated   : 3
+Documents Printed : 0
+
+Finished Output Generation At 9:36:09 On 14.03.2016

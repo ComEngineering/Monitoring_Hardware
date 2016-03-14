@@ -1,0 +1,12 @@
+Output: NC Drill Files
+Type  : NC Drill
+From  : Project [ConnectA10.PrjPcb]
+   Generated File[PCB_monitoring_ConnectA10.TXT]
+   Generated File[PCB_monitoring_ConnectA10.LDP]
+   Generated File[PCB_monitoring_ConnectA10.DRR]
+
+
+Files Generated   : 3
+Documents Printed : 0
+
+Finished Output Generation At 10:10:57 On 14.03.2016
