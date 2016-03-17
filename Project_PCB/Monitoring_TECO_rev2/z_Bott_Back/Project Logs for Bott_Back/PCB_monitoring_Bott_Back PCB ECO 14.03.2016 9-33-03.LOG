@@ -1,4 +1,0 @@
-Removed Pin From Net: NetName=NetX9_2 Pin=X10-1
-Removed Pin From Net: NetName=NetX9_1 Pin=X10-2
-Added Pin To Net: NetName=NetX9_1 Pin=X10-1
-Added Pin To Net: NetName=NetX9_2 Pin=X10-2

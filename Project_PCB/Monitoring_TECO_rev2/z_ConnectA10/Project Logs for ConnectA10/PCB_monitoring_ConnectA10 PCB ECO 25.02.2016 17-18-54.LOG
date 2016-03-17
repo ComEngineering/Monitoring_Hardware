@@ -1,5 +1,0 @@
-Removed Pin From Net: NetName=CAN_TX_ Pin=P1-2
-Removed Pin From Net: NetName=CAN_RX_ Pin=P1-4
-Added Pin To Net: NetName=CAN_RX_ Pin=P1-2
-Added Pin To Net: NetName=CAN_TX_ Pin=P1-4
-Added Member To Class: ClassName=Sheet_ConnectA10 Member=Component X4 PBD2-20
