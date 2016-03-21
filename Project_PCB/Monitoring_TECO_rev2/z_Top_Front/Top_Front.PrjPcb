@@ -30,7 +30,7 @@ DItemRevisionGUID=
 ReportSuppressedErrorsInMessages=0
 FSMCodingStyle=eFMSDropDownList_OneProcess
 FSMEncodingStyle=eFMSDropDownList_OneHot
-OutputPath=Project Outputs for Top_Front
+OutputPath=
 LogFolderPath=
 ManagedProjectGUID=
 
@@ -100,7 +100,7 @@ GenerateBOM=1
 OutputJobsCount=0
 
 [Generic_EDE]
-OutputDir=Project Outputs for Top_Front
+OutputDir=
 
 [OutputGroup1]
 Name=Netlist Outputs
