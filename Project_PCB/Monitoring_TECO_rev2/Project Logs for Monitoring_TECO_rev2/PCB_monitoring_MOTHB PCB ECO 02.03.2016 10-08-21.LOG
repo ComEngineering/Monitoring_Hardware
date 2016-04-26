@@ -1,6 +1,0 @@
-Removed Pin From Net: NetName=1-WIRE1 Pin=X8-4
-Removed Pin From Net: NetName=1-WIRE3 Pin=X8-5
-Removed Pin From Net: NetName=1-WIRE2 Pin=X8-10
-Added Pin To Net: NetName=1-WIRE3 Pin=X8-4
-Added Pin To Net: NetName=1-WIRE5 Pin=X8-5
-Added Pin To Net: NetName=1-WIRE4 Pin=X8-10
