@@ -244,7 +244,7 @@ int main(void)
 	if(!GPIO_ReadInputDataBit(PIN_OVERLOAD_12V)){
 //		GPIO_SetBits(PIN_LED_BLINK);							//led blink
 		R_STATES |= STATE_OVERLOAD_12V;
-		delay_ms(500);
+	//	delay_ms(500);
 	}
 	else{
 //		GPIO_ResetBits(PIN_LED_BLINK);						//led blink
@@ -259,7 +259,7 @@ int main(void)
 	/* Обработчик состояния входных сухих контактов */	
 	R_DCI = !GPIO_ReadInputDataBit(PIN_DCIN1) | (!GPIO_ReadInputDataBit(PIN_DCIN2) << 1) | (!GPIO_ReadInputDataBit(PIN_DCIN3) << 2) | (!GPIO_ReadInputDataBit(PIN_DCIN4) << 3)
 			| (!GPIO_ReadInputDataBit(PIN_DCIN5) << 4) | (!GPIO_ReadInputDataBit(PIN_DCIN6) << 5) | (!GPIO_ReadInputDataBit(PIN_DCIN7) << 6) | (!GPIO_ReadInputDataBit(PIN_DCIN8) << 7);
-	
+
 	
 	/* Обработчик состояния выходных сигнальных реле */
 	GPIO_WriteBit(PIN_SDCO1, W_SDCO & 0x01);

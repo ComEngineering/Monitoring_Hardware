@@ -234,6 +234,9 @@ int main(void)
 	
 	IWDG_Init(4, 850); 													//Инициализация сторожевого таймера на 1 сек. (625)
 	
+	
+	
+	
 	while (1){
 		IWDG_Feed(); 															//Сброс сторожевого таймера
 
@@ -256,7 +259,7 @@ int main(void)
 	/* Обработчик состояния входных сухих контактов */	
 	R_DCI = !GPIO_ReadInputDataBit(PIN_DCIN1) | (!GPIO_ReadInputDataBit(PIN_DCIN2) << 1) | (!GPIO_ReadInputDataBit(PIN_DCIN3) << 2) | (!GPIO_ReadInputDataBit(PIN_DCIN4) << 3)
 			| (!GPIO_ReadInputDataBit(PIN_DCIN5) << 4) | (!GPIO_ReadInputDataBit(PIN_DCIN6) << 5) | (!GPIO_ReadInputDataBit(PIN_DCIN7) << 6) | (!GPIO_ReadInputDataBit(PIN_DCIN8) << 7);
-	
+
 	
 	/* Обработчик состояния выходных сигнальных реле */
 	GPIO_WriteBit(PIN_SDCO1, W_SDCO & 0x01);
